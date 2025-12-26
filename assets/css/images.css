@@ -1,0 +1,71 @@
+/* Styles spécifiques pour améliorer la visibilité des images - SANS COULEURS */
+
+/* Assurer que les images de fond sont bien visibles */
+.hero-section {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll;
+}
+
+/* Overlay très léger noir pour voir mieux les images - SANS COULEURS */
+.hero-section::after {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Améliorer le contraste du texte sur les images */
+.hero-section h1,
+.hero-section .lead,
+.hero-section p {
+    text-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.9),
+        0 0 15px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+/* Images dans les cards */
+.card img,
+.news-card img,
+.project-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Assurer que les images se chargent */
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Fallback pour les images qui ne se chargent pas */
+img[src=""],
+img:not([src]) {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img[src=""]::before,
+img:not([src])::before {
+    content: 'Image';
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Supprimer tous les overlays colorés */
+section[style*="background-image"]::after,
+.hero-section::after {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Assurer que les images de fond sont prioritaires */
+.hero-section {
+    background-blend-mode: normal !important;
+}

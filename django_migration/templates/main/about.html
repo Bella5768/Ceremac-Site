@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "À propos" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section avec Image -->
+<section class="hero-section" style="padding: 80px 0 60px; background-image: url('https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); color: white;">{% trans "À propos du CEREMAC" %}</h1>
+                <p class="lead" style="font-size: 1.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); color: white;">{% trans "Excellence scientifique au service de l'océanographie et de l'environnement marin" %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Historique -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="bi bi-clock-history me-2"></i> {% trans "Historique" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <p class="lead" style="font-size: 1.2rem; color: #555;">
+                                    {% trans "Le CEREMAC (Centre de Recherche en Océanographie, Environnement Marin et Côtier) a été créé en réponse aux défis environnementaux et scientifiques croissants auxquels fait face la région guinéenne et l'Afrique de l'Ouest." %}
+                                </p>
+                                <p style="line-height: 1.9; font-size: 1.05rem;">
+                                    {% trans "Depuis sa création, le centre s'est positionné comme un acteur majeur de la recherche scientifique de pointe dans les domaines de l'océanographie, de l'environnement marin et côtier. Notre mission fondamentale est de contribuer à la compréhension, à la protection et à la gestion durable des écosystèmes marins de la Guinée et de la région ouest-africaine." %}
+                                </p>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card" style="background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-calendar-check display-1 text-primary mb-3"></i>
+                                        <h4>{% trans "Fondé en 2015" %}</h4>
+                                        <p class="text-muted">{% trans "Plus de 8 ans d'excellence scientifique" %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Missions -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title">{% trans "Missions" %}</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="bi bi-search display-4 text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="card-title">{% trans "Recherche Scientifique" %}</h5>
+                                        <p class="card-text">
+                                            {% trans "Conduire des recherches de haut niveau en océanographie physique, biologie marine, écologie côtière et changements climatiques." %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="bi bi-mortarboard display-4 text-success"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="card-title">{% trans "Formation & Éducation" %}</h5>
+                                        <p class="card-text">
+                                            {% trans "Former la prochaine génération de chercheurs, de spécialistes et de professionnels en environnement marin." %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

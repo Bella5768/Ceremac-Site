@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Partenaires" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Nos Partenaires" %}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        {% if national_partners %}
+        <h2 class="section-title mb-4">{% trans "Partenaires Nationaux" %}</h2>
+        <div class="row mb-5">
+            {% for partner in national_partners %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 text-center">
+                    {% if partner.logo %}
+                    <img src="{{ partner.logo.url }}" class="card-img-top" alt="{{ partner.name }}" style="height: 150px; object-fit: contain; padding: 20px;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ partner.name }}</h5>
+                        {% if partner.website %}
+                        <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-link-45deg"></i> {% trans "Site web" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if international_partners %}
+        <h2 class="section-title mb-4">{% trans "Partenaires Internationaux" %}</h2>
+        <div class="row">
+            {% for partner in international_partners %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 text-center">
+                    {% if partner.logo %}
+                    <img src="{{ partner.logo.url }}" class="card-img-top" alt="{{ partner.name }}" style="height: 150px; object-fit: contain; padding: 20px;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ partner.name }}</h5>
+                        {% if partner.website %}
+                        <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-link-45deg"></i> {% trans "Site web" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not national_partners and not international_partners %}
+        <div class="alert alert-info">{% trans "Aucun partenaire pour le moment." %}</div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Accueil" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section avec Image -->
+<section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 class="fade-in-up">{% trans "CEREMAC Guinée" %}</h1>
+                <p class="lead fade-in-up">{% trans "Centre de Recherche en Océanographie, Environnement Marin et Côtier" %}</p>
+                <p class="fade-in-up" style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.95;">
+                    {% trans "Excellence scientifique au service de la protection et de la compréhension des écosystèmes marins et côtiers de la Guinée" %}
+                </p>
+                <div class="fade-in-up" style="position: relative; z-index: 1;">
+                    <a href="{% url 'main:about' %}" class="btn btn-light btn-lg me-3" style="box-shadow: 0 5px 20px rgba(0,0,0,0.3);">{% trans "À propos" %}</a>
+                    <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg" style="border: 2px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">{% trans "Nos Projets" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistiques -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">{{ stats.projects }}+</div>
+                    <div class="stat-label">{% trans "Projets Actifs" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">{{ stats.publications }}+</div>
+                    <div class="stat-label">{% trans "Publications" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">{{ stats.partners }}+</div>
+                    <div class="stat-label">{% trans "Partenaires" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">{{ stats.news }}+</div>
+                    <div class="stat-label">{% trans "Actualités" %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="py-5 section-alt">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">{% trans "Notre Mission" %}</h2>
+                <p class="lead" style="font-size: 1.2rem; color: #555;">
+                    {% trans "Le CEREMAC est un centre d'excellence dédié à la recherche scientifique de pointe dans les domaines de l'océanographie, de l'environnement marin et côtier. Notre mission est de contribuer à la compréhension, à la protection et à la gestion durable des écosystèmes marins de la Guinée et de la région ouest-africaine." %}
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="hero-card fade-in">
+                    <div style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; padding: 30px; border-radius: 15px; min-height: 350px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.1); border-radius: 15px;"></div>
+                        <div style="position: relative; z-index: 1;">
+                            <i class="bi bi-water" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); font-size: 3rem;"></i>
+                            <h5 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">{% trans "Océanographie" %}</h5>
+                            <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); margin-top: 15px;">
+                                {% trans "Recherche approfondie sur les océans, les courants marins, la température, la salinité et les écosystèmes océaniques." %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="hero-card fade-in">
+                    <div style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; padding: 30px; border-radius: 15px; min-height: 350px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.1); border-radius: 15px;"></div>
+                        <div style="position: relative; z-index: 1;">
+                            <i class="bi bi-tree" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); font-size: 3rem;"></i>
+                            <h5 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">{% trans "Environnement" %}</h5>
+                            <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); margin-top: 15px;">
+                                {% trans "Protection et préservation de l'environnement marin et côtier. Surveillance de la qualité des eaux, protection de la biodiversité marine." %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="hero-card fade-in">
+                    <div style="background-image: url('https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; padding: 30px; border-radius: 15px; min-height: 350px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.1); border-radius: 15px;"></div>
+                        <div style="position: relative; z-index: 1;">
+                            <i class="bi bi-book" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); font-size: 3rem;"></i>
+                            <h5 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">{% trans "Recherche" %}</h5>
+                            <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); margin-top: 15px;">
+                                {% trans "Publications scientifiques dans des revues internationales, projets de recherche innovants, formation de la prochaine génération de chercheurs." %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Valeurs -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">{% trans "Nos Valeurs" %}</h2>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-award display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">{% trans "Excellence" %}</h5>
+                        <p class="card-text">{% trans "Nous visons l'excellence dans toutes nos recherches et publications scientifiques." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-people display-4 text-success mb-3"></i>
+                        <h5 class="card-title">{% trans "Collaboration" %}</h5>
+                        <p class="card-text">{% trans "Travail en partenariat avec des institutions nationales et internationales." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-shield-check display-4 text-info mb-3"></i>
+                        <h5 class="card-title">{% trans "Durabilité" %}</h5>
+                        <p class="card-text">{% trans "Engagement en faveur du développement durable et de la protection environnementale." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-lightbulb display-4 text-warning mb-3"></i>
+                        <h5 class="card-title">{% trans "Innovation" %}</h5>
+                        <p class="card-text">{% trans "Recherche de solutions innovantes pour les défis environnementaux marins." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+{% if latest_news %}
+<section class="py-5 section-alt">
+    <div class="container">
+        <h2 class="section-title">{% trans "Dernières Actualités" %}</h2>
+        <div class="row">
+            {% for news in latest_news %}
+            <div class="col-md-4 mb-4">
+                <div class="card news-card fade-in">
+                    {% if news.image %}
+                    <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 220px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="{{ news.title }}" style="height: 220px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge badge-custom">{{ news.date_created|date:"d/m/Y" }}</span>
+                        <h5 class="card-title mt-3">{{ news.title }}</h5>
+                        <p class="card-text">{{ news.content|truncatewords:20 }}</p>
+                        <a href="{% url 'main:news_detail' news.pk %}" class="btn btn-primary btn-sm">{% trans "Lire la suite" %} <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'main:news_list' %}" class="btn btn-outline-primary btn-lg">{% trans "Voir tout" %} <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action avec Image -->
+<section class="py-5" style="background: linear-gradient(135deg, #003366 0%, #0066cc 50%, #00a896 100%); color: white; position: relative; min-height: 400px;">
+    <div class="container text-center" style="position: relative; z-index: 1;">
+        <h2 style="color: white; margin-bottom: 20px; font-weight: 700; text-shadow: 3px 3px 6px rgba(0,0,0,0.3);">{% trans "Rejoignez-nous dans notre mission" %}</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+            {% trans "Participez à nos projets de recherche ou collaborez avec notre équipe pour un avenir durable des océans" %}
+        </p>
+        <a href="{% url 'main:contact' %}" class="btn btn-light btn-lg me-3" style="box-shadow: 0 5px 20px rgba(0,0,0,0.4);">{% trans "Nous Contacter" %}</a>
+        <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg" style="border: 2px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.4);">{% trans "Découvrir nos Projets" %}</a>
+    </div>
+</section>
+{% endblock %}
+

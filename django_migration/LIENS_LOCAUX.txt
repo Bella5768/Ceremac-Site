@@ -1,0 +1,52 @@
+==========================================
+LIENS LOCAUX POUR TESTER LE SITE DJANGO
+==========================================
+
+🌐 PAGE D'ACCUEIL
+http://localhost:8080/
+http://127.0.0.1:8080/
+
+📄 PAGES PUBLIQUES
+- À propos: http://localhost:8080/about/
+- Services et Directions: http://localhost:8080/projects/
+- Publications: http://localhost:8080/publications/
+- Partenaires: http://localhost:8080/partners/
+- Actualités: http://localhost:8080/news/
+- Contact: http://localhost:8080/contact/
+
+🔐 CONNEXION
+- Page de connexion: http://localhost:8080/login/
+- Espace membres: http://localhost:8080/members/ (après connexion)
+- Dashboard admin: http://localhost:8080/admin-panel/ (après connexion)
+
+⚙️ ADMINISTRATION DJANGO
+- Interface admin: http://localhost:8080/admin/
+
+==========================================
+IDENTIFIANTS
+==========================================
+Username: admin
+Password: admin123
+
+==========================================
+COMMANDES UTILES
+==========================================
+# Activer l'environnement virtuel et lancer le serveur
+cd C:\wamp64\www\Ceremac-Site\django_migration
+.\venv\Scripts\activate
+python manage.py runserver 8080
+
+# Arrêter le serveur
+Ctrl + C dans le terminal
+
+# Créer un superutilisateur
+python manage.py createsuperuser
+
+# Migrations
+python manage.py makemigrations
+python manage.py migrate
+
+# Collecter les fichiers statiques
+python manage.py collectstatic
+
+==========================================

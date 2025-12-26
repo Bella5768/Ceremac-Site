@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Publications" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Publications" %}</h1>
+                <p class="lead" style="font-size: 1.4rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); color: white;">{% trans "Nos publications scientifiques" %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        {% if publications %}
+        <div class="row">
+            {% for publication in publications %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ publication.title }}</h5>
+                        <p class="text-muted"><i class="bi bi-person"></i> {{ publication.author }}</p>
+                        {% if publication.publication_date %}
+                        <p class="text-muted"><i class="bi bi-calendar"></i> {{ publication.publication_date|date:"Y" }}</p>
+                        {% endif %}
+                        {% if publication.description %}
+                        <p class="card-text">{{ publication.description|truncatewords:30 }}</p>
+                        {% endif %}
+                        {% if publication.file_path %}
+                        <a href="{{ publication.file_path.url }}" class="btn btn-primary btn-sm" download>
+                            <i class="bi bi-download"></i> {% trans "Télécharger" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info">{% trans "Aucune publication pour le moment." %}</div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+

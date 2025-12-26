@@ -1,0 +1,36 @@
+# Django
+django_migration/db.sqlite3
+django_migration/db.sqlite3-journal
+django_migration/.env
+django_migration/venv/
+django_migration/__pycache__/
+django_migration/*/__pycache__/
+django_migration/*/migrations/__pycache__/
+django_migration/media/
+django_migration/staticfiles/
+django_migration/*.pyc
+django_migration/.DS_Store
+
+# Fichiers PHP (ancien projet)
+*.php
+*.bat
+config/
+admin/
+includes/
+members/
+
+# Fichiers temporaires
+*.log
+*.bak
+*.backup
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

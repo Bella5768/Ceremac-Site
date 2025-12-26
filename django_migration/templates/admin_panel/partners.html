@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Gérer les partenaires" %}{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-4">
+    <div class="container">
+        <h2><i class="bi bi-handshake"></i> {% trans "Gérer les partenaires" %}</h2>
+        <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-primary mb-4">
+            <i class="bi bi-arrow-left"></i> {% trans "Retour" %}
+        </a>
+        <div class="card">
+            <div class="card-body">
+                {% if partners %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Nom" %}</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Actions" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for partner in partners %}
+                            <tr>
+                                <td>{{ partner.name }}</td>
+                                <td>
+                                    <span class="badge {% if partner.type == 'national' %}bg-primary{% else %}bg-info{% endif %}">
+                                        {% if partner.type == 'national' %}{% trans "National" %}{% else %}{% trans "International" %}{% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/admin/main/partner/{{ partner.id }}/change/" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i> {% trans "Modifier" %}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">{% trans "Aucun partenaire pour le moment." %}</div>
+                {% endif %}
+                <a href="/admin/main/partner/add/" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle"></i> {% trans "Ajouter un partenaire" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

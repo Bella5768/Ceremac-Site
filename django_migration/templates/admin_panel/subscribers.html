@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Gérer les abonnés" %}{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-4">
+    <div class="container">
+        <h2><i class="bi bi-envelope-paper"></i> {% trans "Gérer les abonnés à la newsletter" %}</h2>
+        <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-primary mb-4">
+            <i class="bi bi-arrow-left"></i> {% trans "Retour" %}
+        </a>
+        <div class="card">
+            <div class="card-body">
+                {% if subscribers %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Email" %}</th>
+                                <th>{% trans "Date d'inscription" %}</th>
+                                <th>{% trans "Statut" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subscriber in subscribers %}
+                            <tr>
+                                <td>{{ subscriber.email }}</td>
+                                <td>{{ subscriber.date_subscribed|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if subscriber.is_active %}
+                                    <span class="badge bg-success">{% trans "Actif" %}</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{% trans "Inactif" %}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">{% trans "Aucun abonné pour le moment." %}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

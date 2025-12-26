@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Contact" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Contactez-nous" %}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-body p-5">
+                        <form method="POST" action="{% url 'main:contact' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_name" class="form-label">{% trans "Nom" %}</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">{% trans "Email" %}</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_subject" class="form-label">{% trans "Sujet" %}</label>
+                                {{ form.subject }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_message" class="form-label">{% trans "Message" %}</label>
+                                {{ form.message }}
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send"></i> {% trans "Envoyer" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
