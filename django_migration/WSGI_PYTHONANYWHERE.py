@@ -4,17 +4,8 @@
 import os
 import sys
 
-# Chemin vers votre projet Django
-# IMPORTANT: Ajustez ce chemin selon votre structure sur PythonAnywhere
-# Si vous avez cloné depuis GitHub dans /home/Boubacar32/mysite/
-# et que django_migration est dans ce dossier, utilisez:
-path = '/home/Boubacar32/mysite/django_migration'
-
-# OU si vous avez directement uploadé django_migration dans /home/Boubacar32/
-# path = '/home/Boubacar32/django_migration'
-
-# OU si le projet est dans /home/Boubacar32/Ceremac-Site/django_migration/
-# path = '/home/Boubacar32/Ceremac-Site/django_migration'
+# Chemin vers votre projet Django sur PythonAnywhere
+path = '/home/Boubacar32/Ceremac-Site/django_migration'
 
 if path not in sys.path:
     sys.path.insert(0, path)
