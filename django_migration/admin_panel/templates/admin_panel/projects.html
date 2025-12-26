@@ -1,35 +1,39 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Gérer les actualités" %}{% endblock %}
+{% block title %}{% trans "Gérer les projets" %}{% endblock %}
 
 {% block content %}
 <section class="py-5 mt-4">
     <div class="container">
-        <h2><i class="bi bi-newspaper"></i> {% trans "Gérer les actualités" %}</h2>
+        <h2><i class="bi bi-folder"></i> {% trans "Gérer les projets" %}</h2>
         <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-primary mb-4">
             <i class="bi bi-arrow-left"></i> {% trans "Retour" %}
         </a>
         <div class="card">
             <div class="card-body">
-                {% if news_list %}
+                {% if projects %}
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>{% trans "Titre" %}</th>
-                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Statut" %}</th>
                                 <th>{% trans "Actions" %}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for news in news_list %}
+                            {% for project in projects %}
                             <tr>
-                                <td>{{ news.title }}</td>
-                                <td>{{ news.date_created|date:"d/m/Y" }}</td>
+                                <td>{{ project.title }}</td>
                                 <td>
-                                    <a href="/admin/main/news/{{ news.id }}/change/" class="btn btn-sm btn-warning">
+                                    <span class="badge {% if project.status == 'current' %}badge-custom{% else %}bg-secondary{% endif %}">
+                                        {% if project.status == 'current' %}{% trans "En cours" %}{% else %}{% trans "Terminé" %}{% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/admin/main/project/{{ project.id }}/change/" class="btn btn-sm btn-warning">
                                         <i class="bi bi-pencil"></i> {% trans "Modifier" %}
                                     </a>
                                 </td>
@@ -39,10 +43,10 @@
                     </table>
                 </div>
                 {% else %}
-                <div class="alert alert-info">{% trans "Aucune actualité pour le moment." %}</div>
+                <div class="alert alert-info">{% trans "Aucun projet pour le moment." %}</div>
                 {% endif %}
-                <a href="/admin/main/news/add/" class="btn btn-primary mt-3">
-                    <i class="bi bi-plus-circle"></i> {% trans "Ajouter une actualité" %}
+                <a href="/admin/main/project/add/" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle"></i> {% trans "Ajouter un projet" %}
                 </a>
             </div>
         </div>
