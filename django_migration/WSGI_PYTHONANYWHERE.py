@@ -5,18 +5,18 @@ import os
 import sys
 
 # Chemin vers votre projet Django sur PythonAnywhere
-path = '/home/Boubacar32/Ceremac-Site/django_migration'
+# IMPORTANT: Ajustez ce chemin selon votre structure sur PythonAnywhere
+project_path = '/home/Boubacar32/Ceremac-Site/django_migration'
 
-if path not in sys.path:
-    sys.path.insert(0, path)
+# Ajouter le chemin du projet au PYTHONPATH
+if project_path not in sys.path:
+    sys.path.insert(0, project_path)
 
-# Ajouter aussi le répertoire parent au PYTHONPATH
-parent_path = os.path.dirname(path)
-if parent_path not in sys.path:
-    sys.path.insert(0, parent_path)
+# Changer le répertoire de travail vers le projet
+os.chdir(project_path)
 
-# Définir le module de settings
-os.environ['DJANGO_SETTINGS_MODULE'] = 'ceremac_site.settings'
+# Définir le module de settings AVANT d'importer Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ceremac_site.settings')
 
 # Charger l'application Django
 from django.core.wsgi import get_wsgi_application

@@ -42,26 +42,29 @@ Allez dans **Web** → **WSGI configuration file** sur PythonAnywhere.
 import os
 import sys
 
-# IMPORTANT: Ajustez ce chemin selon votre structure réelle
+# ⚠️ IMPORTANT: Ajustez ce chemin selon votre structure réelle
 # Vérifiez d'abord où se trouve votre projet avec: ls -la ~
-path = '/home/Boubacar32/Ceremac-Site/django_migration'
+project_path = '/home/Boubacar32/Ceremac-Site/django_migration'
 
 # Si votre projet est ailleurs, changez le chemin ci-dessus
 # Par exemple:
-# path = '/home/Boubacar32/mysite/django_migration'
+# project_path = '/home/Boubacar32/mysite/django_migration'
 # OU
-# path = '/home/Boubacar32/django_migration'
+# project_path = '/home/Boubacar32/django_migration'
 
-if path not in sys.path:
-    sys.path.insert(0, path)
+# Vérifier que le chemin existe
+if not os.path.exists(project_path):
+    raise Exception(f"❌ ERREUR: Le chemin {project_path} n'existe pas!\nVérifiez le chemin dans la console Bash.")
 
-# Ajouter le répertoire parent
-parent_path = os.path.dirname(path)
-if parent_path not in sys.path:
-    sys.path.insert(0, parent_path)
+# Ajouter au PYTHONPATH
+if project_path not in sys.path:
+    sys.path.insert(0, project_path)
+
+# Changer le répertoire de travail
+os.chdir(project_path)
 
 # Définir le module de settings
-os.environ['DJANGO_SETTINGS_MODULE'] = 'ceremac_site.settings'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ceremac_site.settings')
 
 # Charger l'application Django
 from django.core.wsgi import get_wsgi_application
