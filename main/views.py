@@ -102,7 +102,7 @@ def contact(request):
                 message=form.cleaned_data['message'],
             )
             messages.success(request, 'Votre message a été envoyé avec succès!')
-            return redirect('contact')
+            return redirect('main:contact')
     else:
         form = ContactForm()
     
