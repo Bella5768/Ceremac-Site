@@ -152,3 +152,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 
+# CSRF settings for PythonAnywhere
+CSRF_TRUSTED_ORIGINS = [
+    'https://ceremacsite.pythonanywhere.com',
+    'https://bella5768.pythonanywhere.com',
+    'http://127.0.0.1:8001',
+    'http://localhost:8001',
+]
+
