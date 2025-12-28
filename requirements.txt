@@ -1,6 +1,6 @@
-# Python 3.10
+# Python 3.10+
 Django==4.2.7
 python-decouple==3.8
 whitenoise==6.6.0
 mysqlclient==2.2.0
-Pillow==10.1.0
+Pillow>=10.0.0
