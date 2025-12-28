@@ -30,7 +30,7 @@ def about(request):
 
 
 def projects(request):
-    """Page Services et Directions"""
+    """Page Départements et Services"""
     current_projects = Project.objects.filter(status='current')
     past_projects = Project.objects.filter(status='past')
     
