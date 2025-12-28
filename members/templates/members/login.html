@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Connexion" %}{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">{% trans "Connexion" %}</h2>
+                        <form method="POST" action="{% url 'members:login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">{% trans "Nom d'utilisateur" %}</label>
+                                <input type="text" name="username" class="form-control" id="id_username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password" class="form-label">{% trans "Mot de passe" %}</label>
+                                <input type="password" name="password" class="form-control" id="id_password" required>
+                            </div>
+                            <input type="hidden" name="next" value="{{ next }}">
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> {% trans "Se connecter" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

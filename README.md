@@ -2,74 +2,81 @@
 
 Site web du Centre de Recherche en Océanographie, Environnement Marin et Côtier (CEREMAC) en Guinée.
 
-## 📦 Versions
+## 🛠️ Technologies
 
-Ce repository contient deux versions du site:
-
-1. **Version Django** (actuelle) - `django_migration/`
-   - Framework: Django 4.2.7
-   - Base de données: SQLite/MySQL
-   - Prêt pour déploiement sur PythonAnywhere
-
-2. **Version PHP** (ancienne) - Fichiers supprimés
-   - Les fichiers PHP ont été supprimés lors de la migration vers Django
+- **Framework**: Django 4.2.7
+- **Base de données**: SQLite (dev) / MySQL (prod)
+- **Frontend**: Bootstrap 5, Bootstrap Icons
+- **Fichiers statiques**: WhiteNoise
 
 ## 🚀 Démarrage Rapide
 
-### Version Django
-
-Voir le README dans `django_migration/README.md` pour les instructions complètes.
-
 ```bash
-cd django_migration
+# Cloner le repository
+git clone https://github.com/votre-username/Ceremac-Site.git
+cd Ceremac-Site
+
+# Créer l'environnement virtuel
 python -m venv venv
 venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
+
+# Installer les dépendances
 pip install -r requirements.txt
+
+# Appliquer les migrations
 python manage.py migrate
+
+# Créer un superutilisateur
 python manage.py createsuperuser
+
+# Lancer le serveur
 python manage.py runserver
 ```
+
+Le site sera accessible sur http://127.0.0.1:8000/
 
 ## 📁 Structure
 
 ```
 Ceremac-Site/
-├── django_migration/      # Projet Django (version actuelle)
-│   ├── ceremac_site/     # Configuration Django
-│   ├── main/             # App principale
-│   ├── admin_panel/      # App administration
-│   ├── members/          # App espace membres
-│   ├── templates/        # Templates HTML
-│   ├── static/           # Fichiers statiques
-│   └── requirements.txt  # Dépendances
-├── assets/               # Fichiers statiques (CSS, JS, images)
-├── database.sql          # Structure de base de données
-└── README.md            # Ce fichier
+├── manage.py              # Point d'entrée Django
+├── ceremac_site/          # Configuration du projet
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── main/                  # App principale (pages publiques)
+├── admin_panel/           # App administration personnalisée
+├── members/               # App espace membres
+├── media/                 # Fichiers uploadés
+├── staticfiles/           # Fichiers statiques collectés
+├── requirements.txt       # Dépendances Python
+└── README.md
+```
+
+## 🔐 Configuration
+
+Créez un fichier `.env` à la racine:
+
+```env
+SECRET_KEY=votre-cle-secrete
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+DB_ENGINE=sqlite
 ```
 
 ## 🌐 Déploiement
 
 ### PythonAnywhere
 
-Le projet est configuré pour être déployé sur PythonAnywhere. Voir `django_migration/MIGRATION_GUIDE.md` pour les instructions.
-
-## 📝 Documentation
-
-- `django_migration/README.md` - Documentation complète Django
-- `django_migration/MIGRATION_GUIDE.md` - Guide de migration vers PythonAnywhere
-- `django_migration/QUICK_START.md` - Démarrage rapide
-- `django_migration/TEMPLATE_EXAMPLE.md` - Exemples de templates
-
-## 🔐 Sécurité
-
-⚠️ **IMPORTANT**: 
-- Ne commitez JAMAIS le fichier `.env` contenant les secrets
-- Changez le `SECRET_KEY` en production
-- Utilisez `DEBUG=False` en production
+1. Cloner le repo sur PythonAnywhere
+2. Créer un virtualenv et installer les dépendances
+3. Configurer le fichier WSGI
+4. Configurer les fichiers statiques
 
 ## 📧 Contact
 
-CEREMAC Guinée
+CEREMAC Guinée  
 Email: contact@ceremac.gn
 
 ---

@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Espace Membres" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 80px; background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Espace Membres" %}</h1>
+                <p class="lead" style="font-size: 1.4rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); color: white;">{% trans "Bienvenue" %}, {{ user.full_name|default:user.username }}!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title"><i class="bi bi-file-earmark-text text-primary"></i> {% trans "Documents réservés" %}</h5>
+                        <p class="card-text">{% trans "Accédez aux documents exclusifs aux membres" %}</p>
+                        <a href="{% url 'members:documents' %}" class="btn btn-primary">{% trans "Voir les documents" %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title"><i class="bi bi-folder text-success"></i> {% trans "Projets internes" %}</h5>
+                        <p class="card-text">{% trans "Consultez les projets internes du centre" %}</p>
+                        <a href="{% url 'members:projects' %}" class="btn btn-success">{% trans "Voir les projets" %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title"><i class="bi bi-person-circle text-info"></i> {% trans "Mon profil" %}</h5>
+                        <p class="card-text">{% trans "Gérez votre profil utilisateur" %}</p>
+                        <a href="{% url 'members:profile' %}" class="btn btn-info">{% trans "Voir mon profil" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% if user.is_admin %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">
+                    <div class="card-body p-4 text-white">
+                        <h5 class="card-title"><i class="bi bi-shield-lock-fill"></i> {% trans "Administration" %}</h5>
+                        <p class="card-text">{% trans "Panneau d'administration" %}</p>
+                        <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-light">{% trans "Accéder à l'admin" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
