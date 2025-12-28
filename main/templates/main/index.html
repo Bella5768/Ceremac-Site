@@ -6,18 +6,21 @@
 
 {% block content %}
 <!-- Hero Section avec Image -->
-<section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+<section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); min-height: 600px;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-10 mx-auto text-center">
-                <h1 class="fade-in-up">{% trans "CEREMAC Guinée" %}</h1>
-                <p class="lead fade-in-up">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
-                <p class="fade-in-up" style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.95;">
+                <div class="mb-4">
+                    <img src="{% static 'main/images/ceremac-logo.png' %}" alt="CEREMAC" style="height: 120px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fade-in-up" style="font-size: 3.5rem; font-weight: 800; letter-spacing: 2px;">{% trans "CEREMAC" %}</h1>
+                <p class="lead fade-in-up" style="font-size: 1.6rem; font-weight: 500;">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
+                <p class="fade-in-up" style="font-size: 1.15rem; margin-bottom: 35px; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto;">
                     {% trans "Établissement public scientifique guinéen dédié à l'océanographie, l'environnement et les écosystèmes marins et côtiers" %}
                 </p>
                 <div class="fade-in-up" style="position: relative; z-index: 1;">
-                    <a href="{% url 'main:about' %}" class="btn btn-light btn-lg me-3" style="box-shadow: 0 5px 20px rgba(0,0,0,0.3);">{% trans "À propos" %}</a>
-                    <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg" style="border: 2px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">{% trans "Nos Projets" %}</a>
+                    <a href="{% url 'main:about' %}" class="btn btn-light btn-lg me-3 px-4 py-3" style="box-shadow: 0 5px 20px rgba(0,0,0,0.3); font-weight: 600;">{% trans "Découvrir le CEREMAC" %}</a>
+                    <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg px-4 py-3" style="border: 2px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.3); font-weight: 600;">{% trans "Nos Départements" %}</a>
                 </div>
             </div>
         </div>
@@ -25,31 +28,35 @@
 </section>
 
 <!-- Statistiques -->
-<section class="stats-section">
+<section class="stats-section" style="background: linear-gradient(135deg, var(--ceremac-light-blue) 0%, #ffffff 100%); padding: 60px 0;">
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item fade-in">
-                    <div class="stat-number">{{ stats.projects }}+</div>
-                    <div class="stat-label">{% trans "Projets Actifs" %}</div>
+                <div class="stat-item fade-in text-center">
+                    <div class="stat-icon mb-3"><i class="bi bi-folder-check" style="font-size: 2.5rem; color: var(--ceremac-blue);"></i></div>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: 700; color: var(--ceremac-chocolate);">{{ stats.projects }}+</div>
+                    <div class="stat-label" style="font-size: 1rem; color: #666; text-transform: uppercase; letter-spacing: 1px;">{% trans "Projets Actifs" %}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item fade-in">
-                    <div class="stat-number">{{ stats.publications }}+</div>
-                    <div class="stat-label">{% trans "Publications" %}</div>
+                <div class="stat-item fade-in text-center">
+                    <div class="stat-icon mb-3"><i class="bi bi-journal-richtext" style="font-size: 2.5rem; color: var(--ceremac-blue);"></i></div>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: 700; color: var(--ceremac-chocolate);">{{ stats.publications }}+</div>
+                    <div class="stat-label" style="font-size: 1rem; color: #666; text-transform: uppercase; letter-spacing: 1px;">{% trans "Publications" %}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item fade-in">
-                    <div class="stat-number">{{ stats.partners }}+</div>
-                    <div class="stat-label">{% trans "Partenaires" %}</div>
+                <div class="stat-item fade-in text-center">
+                    <div class="stat-icon mb-3"><i class="bi bi-people-fill" style="font-size: 2.5rem; color: var(--ceremac-blue);"></i></div>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: 700; color: var(--ceremac-chocolate);">{{ stats.partners }}+</div>
+                    <div class="stat-label" style="font-size: 1rem; color: #666; text-transform: uppercase; letter-spacing: 1px;">{% trans "Partenaires" %}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item fade-in">
-                    <div class="stat-number">{{ stats.news }}+</div>
-                    <div class="stat-label">{% trans "Actualités" %}</div>
+                <div class="stat-item fade-in text-center">
+                    <div class="stat-icon mb-3"><i class="bi bi-calendar-event" style="font-size: 2.5rem; color: var(--ceremac-blue);"></i></div>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: 700; color: var(--ceremac-chocolate);">{{ stats.news }}+</div>
+                    <div class="stat-label" style="font-size: 1rem; color: #666; text-transform: uppercase; letter-spacing: 1px;">{% trans "Actualités" %}</div>
                 </div>
             </div>
         </div>
@@ -115,43 +122,51 @@
 </section>
 
 <!-- Valeurs -->
-<section class="py-5">
+<section class="py-5" style="background: #fff;">
     <div class="container">
         <h2 class="section-title">{% trans "Nos Valeurs" %}</h2>
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="bi bi-award display-4 text-primary mb-3"></i>
-                        <h5 class="card-title">{% trans "Excellence" %}</h5>
-                        <p class="card-text">{% trans "Nous visons l'excellence dans toutes nos recherches et publications scientifiques." %}</p>
+                <div class="card text-center h-100 border-0 shadow-sm" style="border-radius: 15px; transition: transform 0.3s ease;">
+                    <div class="card-body p-4">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-award text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title" style="color: var(--ceremac-chocolate); font-weight: 600;">{% trans "Excellence" %}</h5>
+                        <p class="card-text" style="color: #666;">{% trans "Nous visons l'excellence dans toutes nos recherches et publications scientifiques." %}</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="bi bi-people display-4 text-success mb-3"></i>
-                        <h5 class="card-title">{% trans "Collaboration" %}</h5>
-                        <p class="card-text">{% trans "Travail en partenariat avec des institutions nationales et internationales." %}</p>
+                <div class="card text-center h-100 border-0 shadow-sm" style="border-radius: 15px; transition: transform 0.3s ease;">
+                    <div class="card-body p-4">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-people text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title" style="color: var(--ceremac-chocolate); font-weight: 600;">{% trans "Collaboration" %}</h5>
+                        <p class="card-text" style="color: #666;">{% trans "Travail en partenariat avec des institutions nationales et internationales." %}</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="bi bi-shield-check display-4 text-info mb-3"></i>
-                        <h5 class="card-title">{% trans "Durabilité" %}</h5>
-                        <p class="card-text">{% trans "Engagement en faveur du développement durable et de la protection environnementale." %}</p>
+                <div class="card text-center h-100 border-0 shadow-sm" style="border-radius: 15px; transition: transform 0.3s ease;">
+                    <div class="card-body p-4">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-shield-check text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title" style="color: var(--ceremac-chocolate); font-weight: 600;">{% trans "Durabilité" %}</h5>
+                        <p class="card-text" style="color: #666;">{% trans "Engagement en faveur du développement durable et de la protection environnementale." %}</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <i class="bi bi-lightbulb display-4 text-warning mb-3"></i>
-                        <h5 class="card-title">{% trans "Innovation" %}</h5>
-                        <p class="card-text">{% trans "Recherche de solutions innovantes pour les défis environnementaux marins." %}</p>
+                <div class="card text-center h-100 border-0 shadow-sm" style="border-radius: 15px; transition: transform 0.3s ease;">
+                    <div class="card-body p-4">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-lightbulb text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title" style="color: var(--ceremac-chocolate); font-weight: 600;">{% trans "Innovation" %}</h5>
+                        <p class="card-text" style="color: #666;">{% trans "Recherche de solutions innovantes pour les défis environnementaux marins." %}</p>
                     </div>
                 </div>
             </div>
