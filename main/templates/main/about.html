@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-10 mx-auto text-center">
                 <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); color: white;">{% trans "À propos du CEREMAC" %}</h1>
-                <p class="lead" style="font-size: 1.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); color: white;">{% trans "Excellence scientifique au service de l'océanographie et de l'environnement marin" %}</p>
+                <p class="lead" style="font-size: 1.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); color: white;">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
             </div>
         </div>
     </div>
@@ -24,26 +24,71 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="bi bi-clock-history me-2"></i> {% trans "Historique" %}</h3>
+                        <h3><i class="bi bi-clock-history me-2"></i> {% trans "Historique et Origine" %}</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-8">
                                 <p class="lead" style="font-size: 1.2rem; color: #555;">
-                                    {% trans "Le CEREMAC (Centre de Recherche en Océanographie, Environnement Marin et Côtier) a été créé en réponse aux défis environnementaux et scientifiques croissants auxquels fait face la région guinéenne et l'Afrique de l'Ouest." %}
+                                    {% trans "Le CEREMAC (Centre de Recherche Marine et Côtière de Guinée) est un établissement public scientifique guinéen, issu de la transformation du CERESCOR entre 2022 et 2025." %}
                                 </p>
                                 <p style="line-height: 1.9; font-size: 1.05rem;">
-                                    {% trans "Depuis sa création, le centre s'est positionné comme un acteur majeur de la recherche scientifique de pointe dans les domaines de l'océanographie, de l'environnement marin et côtier. Notre mission fondamentale est de contribuer à la compréhension, à la protection et à la gestion durable des écosystèmes marins de la Guinée et de la région ouest-africaine." %}
+                                    {% trans "Cette transformation marque une nouvelle ère pour la recherche marine en Guinée. Le CEREMAC a pour mission de développer la recherche scientifique et technologique dans les domaines de l'océanographie, de l'environnement, et des écosystèmes marins et côtiers, contribuant ainsi au développement scientifique et technologique de la Guinée." %}
                                 </p>
                             </div>
                             <div class="col-lg-4">
                                 <div class="card" style="background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);">
                                     <div class="card-body text-center">
                                         <i class="bi bi-calendar-check display-1 text-primary mb-3"></i>
-                                        <h4>{% trans "Fondé en 2015" %}</h4>
-                                        <p class="text-muted">{% trans "Plus de 8 ans d'excellence scientifique" %}</p>
+                                        <h4>{% trans "2022 - 2025" %}</h4>
+                                        <p class="text-muted">{% trans "Transformation du CERESCOR en CEREMAC" %}</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Domaines de Recherche -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title">{% trans "Domaines de Recherche" %}</h2>
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <i class="bi bi-water display-3 mb-3" style="color: var(--ceremac-blue);"></i>
+                                <h5 class="card-title">{% trans "Océanographie" %}</h5>
+                                <p class="card-text">{% trans "Étude des océans, des courants marins, de la température et de la salinité des eaux guinéennes." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <i class="bi bi-tree display-3 mb-3" style="color: var(--ceremac-chocolate);"></i>
+                                <h5 class="card-title">{% trans "Environnement" %}</h5>
+                                <p class="card-text">{% trans "Protection et préservation de l'environnement marin et côtier de la Guinée." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <i class="bi bi-tsunami display-3 mb-3" style="color: var(--ceremac-blue);"></i>
+                                <h5 class="card-title">{% trans "Écosystèmes Marins" %}</h5>
+                                <p class="card-text">{% trans "Étude et conservation de la biodiversité marine et des habitats côtiers." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <i class="bi bi-gear display-3 mb-3" style="color: var(--ceremac-chocolate);"></i>
+                                <h5 class="card-title">{% trans "Développement Technologique" %}</h5>
+                                <p class="card-text">{% trans "Innovation et développement scientifique et technologique en Guinée." %}</p>
                             </div>
                         </div>
                     </div>

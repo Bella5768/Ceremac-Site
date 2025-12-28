@@ -11,9 +11,9 @@
         <div class="row align-items-center">
             <div class="col-lg-10 mx-auto text-center">
                 <h1 class="fade-in-up">{% trans "CEREMAC Guinée" %}</h1>
-                <p class="lead fade-in-up">{% trans "Centre de Recherche en Océanographie, Environnement Marin et Côtier" %}</p>
+                <p class="lead fade-in-up">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
                 <p class="fade-in-up" style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.95;">
-                    {% trans "Excellence scientifique au service de la protection et de la compréhension des écosystèmes marins et côtiers de la Guinée" %}
+                    {% trans "Établissement public scientifique guinéen dédié à l'océanographie, l'environnement et les écosystèmes marins et côtiers" %}
                 </p>
                 <div class="fade-in-up" style="position: relative; z-index: 1;">
                     <a href="{% url 'main:about' %}" class="btn btn-light btn-lg me-3" style="box-shadow: 0 5px 20px rgba(0,0,0,0.3);">{% trans "À propos" %}</a>
@@ -63,7 +63,7 @@
             <div class="col-lg-8 mx-auto text-center mb-5">
                 <h2 class="section-title">{% trans "Notre Mission" %}</h2>
                 <p class="lead" style="font-size: 1.2rem; color: #555;">
-                    {% trans "Le CEREMAC est un centre d'excellence dédié à la recherche scientifique de pointe dans les domaines de l'océanographie, de l'environnement marin et côtier. Notre mission est de contribuer à la compréhension, à la protection et à la gestion durable des écosystèmes marins de la Guinée et de la région ouest-africaine." %}
+                    {% trans "Le CEREMAC (Centre de Recherche Marine et Côtière de Guinée) est un établissement public scientifique guinéen, issu de la transformation du CERESCOR entre 2022 et 2025. Notre mission est de développer la recherche scientifique et technologique dans les domaines de l'océanographie, de l'environnement, et des écosystèmes marins et côtiers de la Guinée." %}
                 </p>
             </div>
         </div>
@@ -191,7 +191,7 @@
 {% endif %}
 
 <!-- Call to Action avec Image -->
-<section class="py-5" style="background: linear-gradient(135deg, #003366 0%, #0066cc 50%, #00a896 100%); color: white; position: relative; min-height: 400px;">
+<section class="py-5" style="background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 50%, var(--ceremac-blue) 100%); color: white; position: relative; min-height: 400px;">
     <div class="container text-center" style="position: relative; z-index: 1;">
         <h2 style="color: white; margin-bottom: 20px; font-weight: 700; text-shadow: 3px 3px 6px rgba(0,0,0,0.3);">{% trans "Rejoignez-nous dans notre mission" %}</h2>
         <p style="font-size: 1.2rem; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
