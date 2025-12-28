@@ -2,16 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-blue: #0066cc;
-    --secondary-blue: #004d99;
-    --ocean-green: #00a896;
-    --light-blue: #e6f2ff;
-    --dark-blue: #003366;
-    --accent-teal: #17a2b8;
-    --gold: #ffd700;
-    --white: #ffffff;
-    --gray-light: #f8f9fa;
-    --gray-medium: #6c757d;
+    /* Couleurs CEREMAC - Basées sur le logo officiel */
+    --ceremac-blue: #2E86AB;           /* Bleu ciel du logo */
+    --ceremac-dark-blue: #1B5E7D;      /* Bleu foncé */
+    --ceremac-light-blue: #E8F4F8;     /* Bleu très clair pour fonds */
+    --ceremac-chocolate: #8B4513;      /* Chocolat/Marron principal du logo */
+    --ceremac-brown: #A0522D;          /* Marron Sienna */
+    --ceremac-light-brown: #CD853F;    /* Marron clair Peru */
+    --ceremac-dark-brown: #5D3A1A;     /* Marron foncé */
+    --ceremac-white: #ffffff;          /* Blanc */
+    --ceremac-gray: #f8f9fa;           /* Gris très clair */
+    --ceremac-text: #333333;           /* Texte principal */
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-hover: rgba(0, 0, 0, 0.15);
 }
@@ -49,9 +50,16 @@ body > div:not(.container):not(.row):not(.col) {
     flex: 1 0 auto;
 }
 
-/* Navigation Professionnelle */
+/* Navigation CEREMAC */
+.ceremac-navbar {
+    background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
 .navbar {
-    background: linear-gradient(135deg, #003366 0%, #0066cc 50%, #00a896 100%) !important;
+    background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     padding: 15px 0;
     transition: all 0.3s ease;
@@ -66,8 +74,13 @@ body > div:not(.container):not(.row):not(.col) {
     font-weight: 700;
     font-size: 1.8rem;
     letter-spacing: 1px;
-    color: white !important;
+    color: var(--ceremac-white) !important;
     text-transform: uppercase;
+}
+
+.brand-text {
+    color: var(--ceremac-white) !important;
+    font-weight: 700;
 }
 
 .navbar-brand i {
@@ -220,8 +233,8 @@ body > div:not(.container):not(.row):not(.col) {
 }
 
 .card-header {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%);
+    color: var(--ceremac-white);
     border-radius: 15px 15px 0 0 !important;
     padding: 20px 25px;
     font-weight: 600;
@@ -234,7 +247,7 @@ body > div:not(.container):not(.row):not(.col) {
 
 .card-title {
     font-weight: 600;
-    color: var(--dark-blue);
+    color: var(--ceremac-chocolate);
     margin-bottom: 15px;
     font-size: 1.3rem;
 }
@@ -244,27 +257,27 @@ body > div:not(.container):not(.row):not(.col) {
     line-height: 1.8;
 }
 
-/* Buttons Professionnels */
+/* Buttons CEREMAC */
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%);
     border: none;
     padding: 12px 35px;
     border-radius: 50px;
     font-weight: 600;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 4px 15px rgba(46, 134, 171, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
-    background: linear-gradient(135deg, #0052a3 0%, #008a7a 100%);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%);
 }
 
 .btn-outline-primary {
-    border: 2px solid var(--primary-blue);
-    color: var(--primary-blue);
+    border: 2px solid var(--ceremac-blue);
+    color: var(--ceremac-blue);
     padding: 12px 35px;
     border-radius: 50px;
     font-weight: 600;
@@ -273,16 +286,16 @@ body > div:not(.container):not(.row):not(.col) {
 }
 
 .btn-outline-primary:hover {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%);
+    color: var(--ceremac-white);
     border-color: transparent;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 5px 15px rgba(46, 134, 171, 0.3);
 }
 
-/* Sections */
+/* Sections CEREMAC */
 .section-title {
-    color: var(--dark-blue);
+    color: var(--ceremac-chocolate) !important;
     font-weight: 700;
     margin-bottom: 50px;
     text-align: center;
@@ -290,6 +303,27 @@ body > div:not(.container):not(.row):not(.col) {
     padding-bottom: 20px;
     font-size: 2.5rem;
     letter-spacing: 1px;
+}
+
+/* Footer CEREMAC */
+.ceremac-footer {
+    background: linear-gradient(135deg, var(--ceremac-dark-brown) 0%, var(--ceremac-chocolate) 100%) !important;
+    margin-top: auto;
+}
+
+/* Forcer les couleurs CEREMAC */
+.btn-primary {
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%) !important;
+    border: none !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%) !important;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%) !important;
+    color: var(--ceremac-white) !important;
 }
 
 .section-title::after {
@@ -300,7 +334,7 @@ body > div:not(.container):not(.row):not(.col) {
     transform: translateX(-50%);
     width: 100px;
     height: 5px;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-chocolate) 100%);
     border-radius: 3px;
 }
 
@@ -481,7 +515,7 @@ body > div:not(.container):not(.row):not(.col) {
 
 /* Footer Professionnel */
 footer {
-    background: linear-gradient(135deg, #001a33 0%, #003366 50%, #004d99 100%) !important;
+    background: linear-gradient(135deg, var(--ceremac-dark-brown) 0%, var(--ceremac-chocolate) 50%, var(--ceremac-brown) 100%) !important;
     color: white;
     padding: 60px 0 30px;
     margin-top: auto;
