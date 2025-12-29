@@ -575,16 +575,13 @@ footer p {
 .stat-number {
     font-size: 3.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--ocean-green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--ceremac-chocolate) !important;
     margin-bottom: 10px;
 }
 
 .stat-label {
     font-size: 1.1rem;
-    color: var(--gray-medium);
+    color: #555 !important;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
