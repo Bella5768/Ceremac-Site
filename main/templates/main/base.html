@@ -123,12 +123,12 @@
                         <img src="{% static 'main/images/ceremac-logo.png' %}" alt="CEREMAC" style="height: 50px; margin-right: 12px;" onerror="this.style.display='none'">
                         <h5 class="mb-0" style="color: white; font-weight: 700;">CEREMAC</h5>
                     </div>
-                    <p>Centre de Recherche Marine et Côtière de Guinée</p>
-                    <p>Guinée</p>
+                    <p>Centre de Recherche Marine et Côtière de Guinée (CEREMAC)</p>
+                    <p><strong>Pr Alpha Issaga Pallé DIALLO</strong><br>Directeur Général</p>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <h5>{% trans "Actualités" %}</h5>
-                    <p>{% trans "Newsletter" %}</p>
+                    <h5>{% trans "Newsletter" %}</h5>
+                    <p>{% trans "Restez informé de nos actualités" %}</p>
                     <form class="newsletter-form" method="POST" action="{% url 'main:newsletter_subscribe' %}">
                         {% csrf_token %}
                         <div class="input-group mb-3">
@@ -139,8 +139,10 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5>{% trans "Contact" %}</h5>
-                    <p><i class="bi bi-envelope"></i> contact@ceremac.gn</p>
-                    <p><i class="bi bi-telephone"></i> +224 XXX XXX XXX</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> B.P. : 1615, Conakry, Guinée</p>
+                    <p><i class="bi bi-telephone me-2"></i> +224 628 465 410</p>
+                    <p><i class="bi bi-envelope me-2"></i> dgcerescor@yahoo.fr</p>
+                    <p><i class="bi bi-envelope me-2"></i> alfadjogalle@gmail.com</p>
                     <div class="social-links mt-3">
                         <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
                         <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
