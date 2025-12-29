@@ -11,11 +11,17 @@ def index(request):
     """Page d'accueil"""
     latest_news = News.objects.all()[:3]
     
+    # Statistiques avec valeurs par défaut si la base est vide
+    projects_count = Project.objects.filter(status='current').count()
+    publications_count = Publication.objects.count()
+    partners_count = Partner.objects.count()
+    news_count = News.objects.count()
+    
     stats = {
-        'projects': Project.objects.filter(status='current').count(),
-        'publications': Publication.objects.count(),
-        'partners': Partner.objects.count(),
-        'news': News.objects.count(),
+        'projects': projects_count if projects_count > 0 else 15,
+        'publications': publications_count if publications_count > 0 else 50,
+        'partners': partners_count if partners_count > 0 else 20,
+        'news': news_count if news_count > 0 else 30,
     }
     
     return render(request, 'main/index.html', {
