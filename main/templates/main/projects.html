@@ -37,92 +37,47 @@
             </div>
         </div>
 
-        <!-- Départements de Recherche -->
+        <!-- Départements de Recherche CEREMAC -->
         <div class="row mb-5">
             <div class="col-lg-12">
                 <h2 class="section-title mb-4">
                     <i class="bi bi-diagram-3 text-primary me-2"></i>
-                    {% trans "Départements de Recherche" %}
+                    {% trans "Nos 5 Départements de Recherche" %}
                 </h2>
             </div>
         </div>
 
         <div class="row mb-5">
+            {% for department in departments %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm hover-lift" style="border-radius: 15px;">
                     <div class="card-body p-4">
                         <div class="text-center mb-3">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                <i class="bi bi-lightning-charge text-white" style="font-size: 2.5rem;"></i>
-                            </div>
+                            {% if department.image %}
+                                <img src="{{ department.image.url }}" alt="{{ department.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                            {% else %}
+                                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                    <i class="bi bi-building text-white" style="font-size: 2.5rem;"></i>
+                                </div>
+                            {% endif %}
                         </div>
-                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-chocolate);">{% trans "Département Énergie" %}</h4>
+                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-dark-blue);">{{ department.name }}</h4>
                         <p class="card-text" style="line-height: 1.8; color: #555;">
-                            {% trans "Recherche sur les énergies marines renouvelables, l'énergie des vagues, des marées et le potentiel énergétique océanique." %}
+                            {{ department.description|truncatewords:20 }}
                         </p>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'main:department_detail' department.pk %}" class="btn btn-outline-primary btn-sm" style="border-radius: 20px;">
+                                {% trans "En savoir plus" %} <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift" style="border-radius: 15px;">
-                    <div class="card-body p-4">
-                        <div class="text-center mb-3">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                <i class="bi bi-geo-alt text-white" style="font-size: 2.5rem;"></i>
-                            </div>
-                        </div>
-                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-chocolate);">{% trans "Département Géologie Environnement" %}</h4>
-                        <p class="card-text" style="line-height: 1.8; color: #555;">
-                            {% trans "Étude de la géologie marine et côtière, des sédiments, de l'érosion et de la protection de l'environnement." %}
-                        </p>
-                    </div>
-                </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">{% trans "Les départements seront bientôt disponibles." %}</p>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift" style="border-radius: 15px;">
-                    <div class="card-body p-4">
-                        <div class="text-center mb-3">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                <i class="bi bi-droplet text-white" style="font-size: 2.5rem;"></i>
-                            </div>
-                        </div>
-                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-chocolate);">{% trans "Département Hydrologie" %}</h4>
-                        <p class="card-text" style="line-height: 1.8; color: #555;">
-                            {% trans "Étude des ressources en eau, du cycle hydrologique, des bassins versants et de la qualité des eaux." %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift" style="border-radius: 15px;">
-                    <div class="card-body p-4">
-                        <div class="text-center mb-3">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                <i class="bi bi-box-seam text-white" style="font-size: 2.5rem;"></i>
-                            </div>
-                        </div>
-                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-chocolate);">{% trans "Département Matériaux et Produits Finis" %}</h4>
-                        <p class="card-text" style="line-height: 1.8; color: #555;">
-                            {% trans "Recherche sur les matériaux marins, la valorisation des ressources et le développement de produits finis." %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift" style="border-radius: 15px;">
-                    <div class="card-body p-4">
-                        <div class="text-center mb-3">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                <i class="bi bi-water text-white" style="font-size: 2.5rem;"></i>
-                            </div>
-                        </div>
-                        <h4 class="card-title text-center mb-3" style="color: var(--ceremac-chocolate);">{% trans "Département Océanographie" %}</h4>
-                        <p class="card-text" style="line-height: 1.8; color: #555;">
-                            {% trans "Étude des océans, des courants marins, de la température, de la salinité et des écosystèmes océaniques." %}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <!-- Services Section -->

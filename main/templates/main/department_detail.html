@@ -1,0 +1,192 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ department.name }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 80px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); position: relative;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3rem; margin-bottom: 20px; color: white; font-weight: 700;">{{ department.name }}</h1>
+                <p class="lead" style="font-size: 1.3rem; color: rgba(255,255,255,0.9); font-weight: 400;">
+                    {% trans "Excellence en recherche et innovation" %}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Informations du département -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-3 text-center">
+                                {% if department.image %}
+                                    <img src="{{ department.image.url }}" alt="{{ department.name }}" class="img-fluid rounded" style="max-height: 200px;">
+                                {% else %}
+                                    <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                        <i class="bi bi-building text-white" style="font-size: 4rem;"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-9">
+                                <h2 class="mb-3" style="color: var(--ceremac-dark-blue);">{{ department.name }}</h2>
+                                {% if department.head_of_department %}
+                                    <p class="text-muted mb-2">
+                                        <strong>{% trans "Chef de département" %}:</strong> {{ department.head_of_department }}
+                                    </p>
+                                {% endif %}
+                                {% if department.email %}
+                                    <p class="text-muted mb-2">
+                                        <strong>{% trans "Email" %}:</strong> <a href="mailto:{{ department.email }}">{{ department.email }}</a>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 style="color: var(--ceremac-dark-blue); margin-bottom: 15px;">
+                                <i class="bi bi-info-circle me-2"></i>{% trans "Description" %}
+                            </h4>
+                            <p style="line-height: 1.8; color: #555;">{{ department.description }}</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 style="color: var(--ceremac-dark-blue); margin-bottom: 15px;">
+                                <i class="bi bi-bullseye me-2"></i>{% trans "Mission" %}
+                            </h4>
+                            <p style="line-height: 1.8; color: #555;">{{ department.mission }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projets du département -->
+        {% if projects %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-folder me-2"></i>{% trans "Projets du département" %}
+                </h2>
+                <div class="row">
+                    {% for project in projects %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h5 class="card-title" style="color: var(--ceremac-dark-blue);">{{ project.title }}</h5>
+                                <span class="badge bg-primary mb-2">{{ project.get_status_display }}</span>
+                                <p class="card-text">{{ project.description|truncatewords:15 }}</p>
+                                {% if project.date_start and project.date_end %}
+                                    <small class="text-muted">
+                                        {% trans "Du" %} {{ project.date_start }} {% trans "au" %} {{ project.date_end }}
+                                    </small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Publications du département -->
+        {% if publications %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-journal-text me-2"></i>{% trans "Publications du département" %}
+                </h2>
+                <div class="row">
+                    {% for publication in publications %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h5 class="card-title" style="color: var(--ceremac-dark-blue);">{{ publication.title }}</h5>
+                                <p class="text-muted small">{{ publication.authors }}</p>
+                                {% if publication.publication_date %}
+                                    <small class="text-muted">{{ publication.publication_date }}</small>
+                                {% endif %}
+                                {% if publication.description %}
+                                    <p class="card-text">{{ publication.description|truncatewords:10 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Membres du département -->
+        {% if members %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-people me-2"></i>{% trans "Équipe du département" %}
+                </h2>
+                <div class="row">
+                    {% for member in members %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                {% if member.photo %}
+                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                                {% else %}
+                                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                                        <i class="bi bi-person text-white" style="font-size: 3rem;"></i>
+                                    </div>
+                                {% endif %}
+                                <h5 class="card-title" style="color: var(--ceremac-dark-blue);">{{ member.name }}</h5>
+                                <p class="text-muted">{{ member.position }}</p>
+                                {% if member.is_head %}
+                                    <span class="badge bg-warning text-dark">{% trans "Chef de département" %}</span>
+                                {% endif %}
+                                {% if member.email %}
+                                    <small class="text-muted d-block">
+                                        <i class="bi bi-envelope me-1"></i>{{ member.email }}
+                                    </small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Contact -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, var(--ceremac-light-blue) 0%, white 100%);">
+                    <div class="card-body p-5 text-center">
+                        <i class="bi bi-envelope-paper display-1 mb-3" style="color: var(--ceremac-dark-blue);"></i>
+                        <h3 class="mb-3" style="color: var(--ceremac-dark-blue);">{% trans "Contactez le département" %}</h3>
+                        <p class="lead mb-4" style="color: #555;">
+                            {% trans "Pour toute information sur nos activités de recherche ou collaborations" %}
+                        </p>
+                        {% if department.email %}
+                            <a href="mailto:{{ department.email }}" class="btn btn-primary btn-lg me-3">
+                                <i class="bi bi-envelope me-2"></i>{% trans "Envoyer un email" %}
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'main:contact' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-message me-2"></i>{% trans "Formulaire de contact" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -151,3 +151,103 @@ class NewsletterSubscriber(models.Model):
     def __str__(self):
         return self.email
 
+
+class Department(models.Model):
+    """Modèle pour les départements CEREMAC"""
+    DEPARTMENT_CHOICES = [
+        (1, 'Département Océanographie'),
+        (2, 'Département Hydrobiologie'),
+        (3, 'Département Géologie-Environnement'),
+        (4, 'Département des Énergies et de la Transition Énergétique'),
+        (5, 'Département des Matériaux Locaux de Construction et Produits Finis'),
+    ]
+    
+    name = models.CharField(max_length=255, unique=True)
+    order = models.IntegerField(choices=DEPARTMENT_CHOICES, unique=True)
+    description = models.TextField()
+    mission = models.TextField()
+    image = models.ImageField(upload_to='departments/', blank=True, null=True)
+    head_of_department = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _('department')
+        verbose_name_plural = _('departments')
+        ordering = ['order']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('department_detail', kwargs={'pk': self.pk})
+
+
+class DepartmentProject(models.Model):
+    """Projets par département"""
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='projects')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='department_projects/', blank=True, null=True)
+    file_path = models.FileField(upload_to='documents/department_projects/', blank=True, null=True)
+    status = models.CharField(
+        max_length=20,
+        choices=[('current', 'En cours'), ('completed', 'Terminé'), ('planned', 'Planifié')],
+        default='current'
+    )
+    date_start = models.DateField(blank=True, null=True)
+    date_end = models.DateField(blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('department project')
+        verbose_name_plural = _('department projects')
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return f"{self.department.name} - {self.title}"
+
+
+class DepartmentPublication(models.Model):
+    """Publications par département"""
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='publications')
+    title = models.CharField(max_length=255)
+    authors = models.CharField(max_length=500)
+    description = models.TextField(blank=True)
+    file_path = models.FileField(upload_to='documents/department_publications/', blank=True, null=True)
+    publication_date = models.DateField(blank=True, null=True)
+    journal = models.CharField(max_length=255, blank=True)
+    doi = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('department publication')
+        verbose_name_plural = _('department publications')
+        ordering = ['-publication_date', '-date_created']
+
+    def __str__(self):
+        return f"{self.department.name} - {self.title}"
+
+
+class DepartmentMember(models.Model):
+    """Membres du département"""
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='members')
+    name = models.CharField(max_length=255)
+    position = models.CharField(max_length=255)
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    photo = models.ImageField(upload_to='members/', blank=True, null=True)
+    bio = models.TextField(blank=True)
+    is_head = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _('department member')
+        verbose_name_plural = _('department members')
+        ordering = ['-is_head', 'name']
+
+    def __str__(self):
+        return f"{self.name} - {self.department.name}"
+

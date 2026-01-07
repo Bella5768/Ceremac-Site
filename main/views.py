@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.utils.translation import get_language
-from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser
+from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember
 from .forms import ContactForm, NewsletterForm
 
 
@@ -37,12 +37,25 @@ def about(request):
 
 def projects(request):
     """Page Départements et Services"""
-    current_projects = Project.objects.filter(status='current')
-    past_projects = Project.objects.filter(status='past')
+    departments = Department.objects.filter(is_active=True).order_by('order')
     
     return render(request, 'main/projects.html', {
-        'current_projects': current_projects,
-        'past_projects': past_projects,
+        'departments': departments,
+    })
+
+
+def department_detail(request, pk):
+    """Détail d'un département"""
+    department = get_object_or_404(Department, pk=pk, is_active=True)
+    projects = department.projects.all()
+    publications = department.publications.all()
+    members = department.members.filter(is_active=True)
+    
+    return render(request, 'main/department_detail.html', {
+        'department': department,
+        'projects': projects,
+        'publications': publications,
+        'members': members,
     })
 
 
