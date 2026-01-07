@@ -31,8 +31,20 @@
                                 {% if department.image %}
                                     <img src="{{ department.image.url }}" alt="{{ department.name }}" class="img-fluid rounded" style="max-height: 200px;">
                                 {% else %}
-                                    <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                                        <i class="bi bi-building text-white" style="font-size: 4rem;"></i>
+                                    <div class="department-icon-large {% if 'Océanographie' in department.name %}department-oceanography{% elif 'Hydrobiologie' in department.name %}department-hydrobiology{% elif 'Géologie-Environnement' in department.name %}department-geology{% elif 'Énergies' in department.name %}department-energy{% elif 'Matériaux' in department.name %}department-materials{% else %}department-default{% endif %}">
+                                        {% if 'Océanographie' in department.name %}
+                                            <i class="bi bi-water text-white"></i>
+                                        {% elif 'Hydrobiologie' in department.name %}
+                                            <i class="bi bi-droplet text-white"></i>
+                                        {% elif 'Géologie-Environnement' in department.name %}
+                                            <i class="bi bi-geo-alt text-white"></i>
+                                        {% elif 'Énergies' in department.name %}
+                                            <i class="bi bi-lightning-charge text-white"></i>
+                                        {% elif 'Matériaux' in department.name %}
+                                            <i class="bi bi-box-seam text-white"></i>
+                                        {% else %}
+                                            <i class="bi bi-building text-white"></i>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>

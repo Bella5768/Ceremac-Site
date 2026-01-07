@@ -313,17 +313,71 @@ body > div:not(.container):not(.row):not(.col) {
 
 /* Forcer les couleurs CEREMAC */
 .btn-primary {
-    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%) !important;
+    background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%) !important;
     border: none !important;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, var(--ceremac-chocolate) 0%, var(--ceremac-brown) 100%) !important;
+    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-orange) 100%) !important;
 }
 
 .card-header {
-    background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%) !important;
+    background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%) !important;
     color: var(--ceremac-white) !important;
+}
+
+/* Icônes des départements */
+.department-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.department-icon i {
+    font-size: 2.5rem;
+}
+
+.department-icon-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.department-icon-large i {
+    font-size: 4rem;
+}
+
+/* Couleurs spécifiques par département */
+.department-oceanography {
+    background: linear-gradient(135deg, #0066cc 0%, #004d99 100%) !important;
+}
+
+.department-hydrobiology {
+    background: linear-gradient(135deg, #0099cc 0%, #007799 100%) !important;
+}
+
+.department-geology {
+    background: linear-gradient(135deg, #8B4513 0%, #654321 100%) !important;
+}
+
+.department-energy {
+    background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%) !important;
+}
+
+.department-materials {
+    background: linear-gradient(135deg, #D2691E 0%, #A0522D 100%) !important;
+}
+
+.department-default {
+    background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%) !important;
 }
 
 .section-title::after {
