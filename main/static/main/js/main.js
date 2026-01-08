@@ -1,6 +1,17 @@
 // CEREMAC - JavaScript Professionnel avec Animations
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation du carrousel Bootstrap pour le hero
+    const heroCarousel = document.getElementById('heroCarousel');
+    if (heroCarousel) {
+        const carousel = new bootstrap.Carousel(heroCarousel, {
+            interval: 4000,
+            ride: 'carousel',
+            pause: 'hover',
+            wrap: true
+        });
+    }
+
     // Animation au scroll avec Intersection Observer
     const observerOptions = {
         threshold: 0.1,
