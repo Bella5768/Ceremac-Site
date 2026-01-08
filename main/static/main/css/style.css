@@ -693,6 +693,40 @@ footer p {
     }
 }
 
+/* Carrousel CEREMAC */
+#ceremacCarousel {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+#ceremacCarousel .carousel-indicators button {
+    background-color: var(--ceremac-blue);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+#ceremacCarousel .carousel-indicators button.active {
+    background-color: var(--ceremac-orange);
+}
+
+#ceremacCarousel .carousel-control-prev-icon,
+#ceremacCarousel .carousel-control-next-icon {
+    background-color: var(--ceremac-dark-blue);
+    border-radius: 50%;
+    padding: 20px;
+}
+
+#ceremacCarousel .carousel-item img {
+    transition: transform 0.5s ease;
+}
+
+#ceremacCarousel .carousel-item:hover img {
+    transform: scale(1.02);
+}
+
 /* Image Cards */
 .image-card img:hover {
     transform: scale(1.05);
