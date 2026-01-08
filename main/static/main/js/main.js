@@ -1,11 +1,11 @@
 // CEREMAC - JavaScript Professionnel avec Animations
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation du carrousel Bootstrap pour le hero
-    const heroCarousel = document.getElementById('heroCarousel');
-    if (heroCarousel) {
-        const carousel = new bootstrap.Carousel(heroCarousel, {
-            interval: 4000,
+    // Initialisation du carrousel Bootstrap CEREMAC
+    const ceremacCarousel = document.getElementById('ceremacCarousel');
+    if (ceremacCarousel) {
+        const carousel = new bootstrap.Carousel(ceremacCarousel, {
+            interval: 5000,
             pause: 'hover',
             wrap: true,
             touch: true
