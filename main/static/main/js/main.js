@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (heroCarousel) {
         const carousel = new bootstrap.Carousel(heroCarousel, {
             interval: 4000,
-            ride: 'carousel',
             pause: 'hover',
-            wrap: true
+            wrap: true,
+            touch: true
         });
+        // Forcer le démarrage du carrousel
+        carousel.cycle();
     }
 
     // Animation au scroll avec Intersection Observer
