@@ -693,38 +693,74 @@ footer p {
     }
 }
 
-/* Carrousel CEREMAC */
-#ceremacCarousel {
-    border-radius: 15px;
+/* Hero Section Carousel */
+.hero-section-carousel {
+    position: relative;
+    min-height: 600px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-#ceremacCarousel .carousel-indicators button {
-    background-color: var(--ceremac-blue);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin: 0 5px;
+#heroCarousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-#ceremacCarousel .carousel-indicators button.active {
-    background-color: var(--ceremac-orange);
+#heroCarousel .carousel-item {
+    height: 600px;
 }
 
-#ceremacCarousel .carousel-control-prev-icon,
-#ceremacCarousel .carousel-control-next-icon {
-    background-color: var(--ceremac-dark-blue);
-    border-radius: 50%;
-    padding: 20px;
+#heroCarousel .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-#ceremacCarousel .carousel-item img {
-    transition: transform 0.5s ease;
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 51, 102, 0.7) 0%, rgba(0, 102, 204, 0.6) 100%);
+    z-index: 2;
 }
 
-#ceremacCarousel .carousel-item:hover img {
-    transform: scale(1.02);
+.hero-content {
+    position: relative;
+    z-index: 3;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+/* Animation fade pour le carrousel */
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition-duration: 0.6s;
+    transition-property: opacity;
+}
+
+.carousel-fade .carousel-item.active,
+.carousel-fade .carousel-item-next.carousel-item-left,
+.carousel-fade .carousel-item-prev.carousel-item-right {
+    opacity: 1;
+}
+
+.carousel-fade .active.carousel-item-left,
+.carousel-fade .active.carousel-item-right {
+    opacity: 0;
+}
+
+.carousel-fade .carousel-item-next,
+.carousel-fade .carousel-item-prev,
+.carousel-fade .carousel-item.active.carousel-item-left,
+.carousel-fade .carousel-item.active.carousel-item-prev {
+    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Image Cards */
