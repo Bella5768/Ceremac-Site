@@ -60,64 +60,6 @@
     </div>
 </section>
 
-<!-- Carrousel d'Images CEREMAC -->
-<section class="py-5" style="background: #f8f9fa;">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title">{% trans "Notre Centre" %}</h2>
-                <p class="lead" style="font-size: 1.1rem; color: #666;">
-                    {% trans "Découvrez nos installations et nos activités de recherche" %}
-                </p>
-            </div>
-        </div>
-        
-        <!-- Carrousel Bootstrap -->
-        <div id="ceremacCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <!-- Indicateurs -->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="2"></button>
-            </div>
-            
-            <!-- Slides -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/static/images/1.jpg" class="d-block w-100" alt="CEREMAC Recherche Océanographique" style="height: 400px; object-fit: cover; border-radius: 15px;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8); font-weight: 600;">{% trans "Recherche Océanographique" %}</h4>
-                        <p style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">{% trans "Nos installations modernes pour l'étude des écosystèmes marins" %}</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/static/images/2.jpg" class="d-block w-100" alt="CEREMAC Laboratoires" style="height: 400px; object-fit: cover; border-radius: 15px;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8); font-weight: 600;">{% trans "Laboratoires Spécialisés" %}</h4>
-                        <p style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">{% trans "Équipements de pointe pour l'analyse environnementale" %}</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/static/images/3.jpg" class="d-block w-100" alt="CEREMAC Formation" style="height: 400px; object-fit: cover; border-radius: 15px;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8); font-weight: 600;">{% trans "Formation et Recherche" %}</h4>
-                        <p style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">{% trans "Développement des compétences et innovation scientifique" %}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrôles -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#ceremacCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#ceremacCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-</section>
 
 <!-- Mission Section -->
 <section class="py-5 section-alt">
