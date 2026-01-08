@@ -719,15 +719,6 @@ footer p {
     object-fit: cover;
 }
 
-.carousel-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 51, 102, 0.7) 0%, rgba(0, 102, 204, 0.6) 100%);
-    z-index: 2;
-}
 
 .hero-content {
     position: relative;
