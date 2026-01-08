@@ -693,6 +693,20 @@ footer p {
     }
 }
 
+/* Image Cards */
+.image-card img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.image-card {
+    transition: transform 0.3s ease;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+}
+
 /* Loading */
 .loading {
     display: inline-block;
