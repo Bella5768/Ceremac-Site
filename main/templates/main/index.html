@@ -5,14 +5,17 @@
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
 {% block content %}
-<!-- Hero Section Simple -->
-<section class="hero-section" style="background: linear-gradient(135deg, var(--ceremac-blue) 0%, var(--ceremac-dark-blue) 100%); color: white; padding: 120px 0; min-height: 500px; display: flex; align-items: center;">
-    <div class="container">
+<!-- Hero Section avec Image de Fond -->
+<section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'); background-size: cover; background-position: center; color: white; padding: 120px 0; min-height: 500px; display: flex; align-items: center; position: relative;">
+    <!-- Overlay sombre pour lisibilité -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 51, 102, 0.7), rgba(0, 102, 153, 0.6)); z-index: 1;"></div>
+    
+    <div class="container" style="position: relative; z-index: 2;">
         <div class="row align-items-center">
             <div class="col-lg-10 mx-auto text-center">
-                <h1 class="fade-in-up" style="font-size: 3.5rem; font-weight: 800; letter-spacing: 2px; color: white;">{% trans "CEREMAC" %}</h1>
-                <p class="lead fade-in-up" style="font-size: 1.6rem; font-weight: 500; color: white;">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
-                <p class="fade-in-up" style="font-size: 1.15rem; margin-bottom: 35px; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto; color: white;">
+                <h1 class="fade-in-up" style="font-size: 3.5rem; font-weight: 800; letter-spacing: 2px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">{% trans "CEREMAC" %}</h1>
+                <p class="lead fade-in-up" style="font-size: 1.6rem; font-weight: 500; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">{% trans "Centre de Recherche Marine et Côtière de Guinée" %}</p>
+                <p class="fade-in-up" style="font-size: 1.15rem; margin-bottom: 35px; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
                     {% trans "Établissement public scientifique guinéen dédié à l'océanographie, l'environnement et les écosystèmes marins et côtiers" %}
                 </p>
                 <div class="fade-in-up">
