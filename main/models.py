@@ -169,6 +169,7 @@ class Department(models.Model):
     image = models.ImageField(upload_to='departments/', blank=True, null=True)
     head_of_department = models.CharField(max_length=255, blank=True)
     email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=20, blank=True, help_text="Numéro de téléphone du département")
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 

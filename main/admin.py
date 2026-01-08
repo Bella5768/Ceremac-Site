@@ -61,10 +61,10 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order', 'head_of_department', 'email', 'is_active', 'date_created')
+    list_display = ('name', 'order', 'head_of_department', 'email', 'phone', 'is_active', 'date_created')
     list_filter = ('is_active', 'date_created', 'order')
-    search_fields = ('name', 'description', 'head_of_department')
-    list_editable = ('is_active', 'head_of_department')
+    search_fields = ('name', 'description', 'head_of_department', 'phone')
+    list_editable = ('is_active', 'head_of_department', 'phone')
     ordering = ('order',)
     fieldsets = (
         ('Informations générales', {
@@ -74,7 +74,7 @@ class DepartmentAdmin(admin.ModelAdmin):
             'fields': ('description', 'mission')
         }),
         ('Contact', {
-            'fields': ('head_of_department', 'email')
+            'fields': ('head_of_department', 'email', 'phone')
         }),
         ('Média', {
             'fields': ('image',)
