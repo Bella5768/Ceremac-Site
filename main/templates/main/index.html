@@ -10,18 +10,27 @@
     <!-- Carrousel d'images en fond -->
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{% static 'main/images/1.jpg' %}" class="d-block w-100" alt="CEREMAC Recherche Océanographique" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'main/images/2.jpg' %}" class="d-block w-100" alt="CEREMAC Laboratoires" onerror="this.src='https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&h=600&fit=crop'">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'main/images/3.jpg' %}" class="d-block w-100" alt="CEREMAC Formation" onerror="this.src='https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=600&fit=crop'">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'main/images/4.jpg' %}" class="d-block w-100" alt="CEREMAC Partenariats" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=600&fit=crop'">
-            </div>
+            {% if hero_images %}
+                {% for image in hero_images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Images par défaut si aucune image n'est définie dans l'admin -->
+                <div class="carousel-item active">
+                    <img src="{% static 'main/images/1.jpg' %}" class="d-block w-100" alt="CEREMAC Recherche Océanographique" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'main/images/2.jpg' %}" class="d-block w-100" alt="CEREMAC Laboratoires" onerror="this.src='https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&h=600&fit=crop'">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'main/images/3.jpg' %}" class="d-block w-100" alt="CEREMAC Formation" onerror="this.src='https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=600&fit=crop'">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'main/images/4.jpg' %}" class="d-block w-100" alt="CEREMAC Partenariats" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=600&fit=crop'">
+                </div>
+            {% endif %}
         </div>
     </div>
     
@@ -229,7 +238,30 @@
     <div class="container">
         <h2 class="section-title text-center mb-5">{% trans "Galerie CEREMAC" %}</h2>
         <div id="ceremacCarousel" class="carousel slide" data-bs-ride="carousel">
-            <!-- Indicateurs -->
+            {% if hero_images %}
+            <!-- Indicateurs dynamiques -->
+            <div class="carousel-indicators">
+                {% for image in hero_images %}
+                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+            
+            <!-- Images du carrousel depuis la base de données -->
+            <div class="carousel-inner" style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                {% for image in hero_images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
+                    {% if image.description %}
+                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
+                        <h5 style="font-size: 1.8rem; font-weight: 700;">{{ image.title }}</h5>
+                        <p style="font-size: 1.1rem;">{{ image.description }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <!-- Images par défaut si aucune image dans la base de données -->
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -237,37 +269,21 @@
                 <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
             </div>
             
-            <!-- Images du carrousel -->
             <div class="carousel-inner" style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                 <div class="carousel-item active">
-                    <img src="{% static 'main/images/1.jpg' %}" class="d-block w-100" alt="CEREMAC Recherche Océanographique" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
-                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
-                        <h5 style="font-size: 1.8rem; font-weight: 700;">{% trans "Recherche Océanographique" %}</h5>
-                        <p style="font-size: 1.1rem;">{% trans "Exploration des océans et des écosystèmes marins" %}</p>
-                    </div>
+                    <img src="{% static 'main/images/1.jpg' %}" class="d-block w-100" alt="CEREMAC" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'main/images/2.jpg' %}" class="d-block w-100" alt="CEREMAC Laboratoires" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&h=600&fit=crop'">
-                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
-                        <h5 style="font-size: 1.8rem; font-weight: 700;">{% trans "Laboratoires de Recherche" %}</h5>
-                        <p style="font-size: 1.1rem;">{% trans "Équipements modernes pour l'analyse scientifique" %}</p>
-                    </div>
+                    <img src="{% static 'main/images/2.jpg' %}" class="d-block w-100" alt="CEREMAC" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&h=600&fit=crop'">
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'main/images/3.jpg' %}" class="d-block w-100" alt="CEREMAC Formation" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=600&fit=crop'">
-                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
-                        <h5 style="font-size: 1.8rem; font-weight: 700;">{% trans "Formation et Éducation" %}</h5>
-                        <p style="font-size: 1.1rem;">{% trans "Développement des compétences en recherche marine" %}</p>
-                    </div>
+                    <img src="{% static 'main/images/3.jpg' %}" class="d-block w-100" alt="CEREMAC" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=600&fit=crop'">
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'main/images/4.jpg' %}" class="d-block w-100" alt="CEREMAC Partenariats" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=600&fit=crop'">
-                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
-                        <h5 style="font-size: 1.8rem; font-weight: 700;">{% trans "Partenariats Internationaux" %}</h5>
-                        <p style="font-size: 1.1rem;">{% trans "Collaboration avec des institutions de recherche du monde entier" %}</p>
-                    </div>
+                    <img src="{% static 'main/images/4.jpg' %}" class="d-block w-100" alt="CEREMAC" style="height: 500px; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=600&fit=crop'">
                 </div>
             </div>
+            {% endif %}
             
             <!-- Contrôles -->
             <button class="carousel-control-prev" type="button" data-bs-target="#ceremacCarousel" data-bs-slide="prev">

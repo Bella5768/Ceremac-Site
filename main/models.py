@@ -252,3 +252,22 @@ class DepartmentMember(models.Model):
     def __str__(self):
         return f"{self.name} - {self.department.name}"
 
+
+class HeroImage(models.Model):
+    """Modèle pour les images du hero et carrousel"""
+    title = models.CharField(_('title'), max_length=255, help_text="Titre de l'image")
+    description = models.TextField(_('description'), blank=True, help_text="Description affichée sur l'image")
+    image = models.ImageField(_('image'), upload_to='hero/', help_text="Image (recommandé: 1920x600px)")
+    order = models.IntegerField(_('order'), default=0, help_text="Ordre d'affichage (0 = premier)")
+    is_active = models.BooleanField(_('active'), default=True, help_text="Afficher cette image")
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('hero image')
+        verbose_name_plural = _('hero images')
+        ordering = ['order', '-date_created']
+
+    def __str__(self):
+        return self.title
+

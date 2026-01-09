@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser, News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication, DepartmentMember
+from .models import CustomUser, News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
 
 
 @admin.register(CustomUser)
@@ -102,4 +102,29 @@ class DepartmentMemberAdmin(admin.ModelAdmin):
     list_filter = ('department', 'is_head', 'is_active', 'date_created')
     search_fields = ('name', 'position', 'email')
     list_editable = ('is_active', 'is_head')
+
+
+@admin.register(HeroImage)
+class HeroImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'is_active', 'date_created', 'image_preview')
+    list_filter = ('is_active', 'date_created')
+    search_fields = ('title', 'description')
+    list_editable = ('order', 'is_active')
+    ordering = ('order', '-date_created')
+    
+    fieldsets = (
+        ('Informations', {
+            'fields': ('title', 'description', 'order', 'is_active')
+        }),
+        ('Image', {
+            'fields': ('image',)
+        }),
+    )
+    
+    def image_preview(self, obj):
+        if obj.image:
+            return f'<img src="{obj.image.url}" style="max-height: 50px; max-width: 100px; border-radius: 5px;" />'
+        return '-'
+    image_preview.short_description = 'Aperçu'
+    image_preview.allow_tags = True
 
