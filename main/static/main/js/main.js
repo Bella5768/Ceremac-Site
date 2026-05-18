@@ -49,20 +49,39 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // Navbar scroll effect
-    let lastScroll = 0;
+    // Navbar scroll effect + barre de progression + back-to-top
     const navbar = document.querySelector('.navbar');
-    
+
+    // Création de la barre de progression au scroll
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    // Création du bouton back-to-top
+    const backToTop = document.createElement('a');
+    backToTop.className = 'back-to-top';
+    backToTop.href = '#';
+    backToTop.setAttribute('aria-label', 'Retour en haut');
+    backToTop.innerHTML = '<i class="bi bi-arrow-up"></i>';
+    backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(backToTop);
+
     window.addEventListener('scroll', function() {
         const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = docHeight > 0 ? (currentScroll / docHeight) * 100 : 0;
+        progressBar.style.width = scrolled + '%';
+
+        if (navbar) {
+            if (currentScroll > 100) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         }
-        
-        lastScroll = currentScroll;
+
+        if (currentScroll > 400) backToTop.classList.add('visible');
+        else backToTop.classList.remove('visible');
     });
 
     // Smooth scroll pour les ancres
@@ -232,16 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Parallax effect pour hero section
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            if (scrolled < heroSection.offsetHeight) {
-                heroSection.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-    }
+    // Parallax désactivé (effet trop marketing pour un site institutionnel)
 
     // Lazy loading des images avec intersection observer
     if ('IntersectionObserver' in window) {

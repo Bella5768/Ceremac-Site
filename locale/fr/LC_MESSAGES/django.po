@@ -1,0 +1,744 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CEREMAC 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: CEREMAC\n"
+"Language-Team: fr\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Accueil"
+msgstr "Accueil"
+
+msgid ""
+"Accueil de stagiaires, formation continue et ateliers spécialisés en "
+"sciences marines et environnementales."
+msgstr ""
+"Accueil de stagiaires, formation continue et ateliers spécialisés en "
+"sciences marines et environnementales."
+
+msgid "Accéder à l'admin"
+msgstr "Accéder à l'admin"
+
+msgid "Accédez aux documents exclusifs aux membres"
+msgstr "Accédez aux documents exclusifs aux membres"
+
+msgid "Actif"
+msgstr "Actif"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Actions rapides"
+msgstr "Actions rapides"
+
+msgid "Actualités"
+msgstr "Actualités"
+
+msgid "Actualités & Événements"
+msgstr "Actualités & Événements"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Administrateur"
+msgstr "Administrateur"
+
+msgid "Administration"
+msgstr "Administration"
+
+msgid "Adresse"
+msgstr "Adresse"
+
+msgid "Ajouter un partenaire"
+msgstr "Ajouter un partenaire"
+
+msgid "Ajouter un projet"
+msgstr "Ajouter un projet"
+
+msgid "Ajouter un utilisateur"
+msgstr "Ajouter un utilisateur"
+
+msgid "Ajouter une actualité"
+msgstr "Ajouter une actualité"
+
+msgid "Ajouter une publication"
+msgstr "Ajouter une publication"
+
+msgid "Analyses et Laboratoire"
+msgstr "Analyses et Laboratoire"
+
+msgid ""
+"Analyses physico-chimiques et biologiques des eaux, sédiments et organismes "
+"marins dans nos laboratoires équipés."
+msgstr ""
+"Analyses physico-chimiques et biologiques des eaux, sédiments et organismes "
+"marins dans nos laboratoires équipés."
+
+msgid "Aucun abonné pour le moment."
+msgstr "Aucun abonné pour le moment."
+
+msgid "Aucun document disponible."
+msgstr "Aucun document disponible."
+
+msgid "Aucun message pour le moment."
+msgstr "Aucun message pour le moment."
+
+msgid "Aucun partenaire pour le moment."
+msgstr "Aucun partenaire pour le moment."
+
+msgid "Aucun projet disponible."
+msgstr "Aucun projet disponible."
+
+msgid "Aucun projet pour le moment."
+msgstr "Aucun projet pour le moment."
+
+msgid "Aucun utilisateur pour le moment."
+msgstr "Aucun utilisateur pour le moment."
+
+msgid "Aucune actualité pour le moment."
+msgstr "Aucune actualité pour le moment."
+
+msgid "Aucune publication pour le moment."
+msgstr "Aucune publication pour le moment."
+
+msgid "Auteur"
+msgstr "Auteur"
+
+msgid "Bienvenue"
+msgstr "Bienvenue"
+
+msgid "CEREMAC"
+msgstr "CEREMAC"
+
+msgid "Centre de Recherche Marine et Côtière de Guinée"
+msgstr "Centre de Recherche Marine et Côtière de Guinée"
+
+msgid "Chef de département"
+msgstr "Chef de département"
+
+msgid "Collaboration"
+msgstr "Collaboration"
+
+msgid ""
+"Conduire des recherches de haut niveau en océanographie physique, biologie "
+"marine, écologie côtière et changements climatiques."
+msgstr ""
+"Conduire des recherches de haut niveau en océanographie physique, biologie "
+"marine, écologie côtière et changements climatiques."
+
+msgid "Connexion"
+msgstr "Connexion"
+
+msgid ""
+"Conseil aux décideurs, accompagnement de projets et appui technique aux "
+"institutions partenaires."
+msgstr ""
+"Conseil aux décideurs, accompagnement de projets et appui technique aux "
+"institutions partenaires."
+
+msgid "Conseil et Accompagnement"
+msgstr "Conseil et Accompagnement"
+
+msgid "Conseil et Consultation"
+msgstr "Conseil et Consultation"
+
+msgid ""
+"Conseil scientifique et consultation pour les acteurs publics et privés "
+"impliqués dans la gestion des zones côtières."
+msgstr ""
+"Conseil scientifique et consultation pour les acteurs publics et privés "
+"impliqués dans la gestion des zones côtières."
+
+msgid "Consultez les projets internes du centre"
+msgstr "Consultez les projets internes du centre"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Contactez le département"
+msgstr "Contactez le département"
+
+msgid "Contactez-nous"
+msgstr "Contactez-nous"
+
+msgid ""
+"Contactez-nous pour discuter de vos besoins en recherche, expertise ou "
+"formation."
+msgstr ""
+"Contactez-nous pour discuter de vos besoins en recherche, expertise ou "
+"formation."
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Date d'inscription"
+msgstr "Date d'inscription"
+
+msgid "Dernières Actualités"
+msgstr "Dernières Actualités"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Directeur Général"
+msgstr "Directeur Général"
+
+msgid "Direction Générale"
+msgstr "Direction Générale"
+
+msgid "Documents réservés"
+msgstr "Documents réservés"
+
+msgid "Domaines de Recherche"
+msgstr "Domaines de Recherche"
+
+msgid "Du"
+msgstr "Du"
+
+msgid "Durabilité"
+msgstr "Durabilité"
+
+msgid "Déconnexion"
+msgstr "Déconnexion"
+
+msgid "Découvrir le CEREMAC"
+msgstr "Découvrir le CEREMAC"
+
+msgid "Découvrir nos Projets"
+msgstr "Découvrir nos Projets"
+
+msgid "Départements"
+msgstr "Départements"
+
+msgid "Départements et Services"
+msgstr "Départements et Services"
+
+msgid "Développement Technologique"
+msgstr "Développement Technologique"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "En cours"
+msgstr "En cours"
+
+msgid "En savoir plus"
+msgstr "En savoir plus"
+
+msgid ""
+"Engagement en faveur du développement durable et de la protection "
+"environnementale."
+msgstr ""
+"Engagement en faveur du développement durable et de la protection "
+"environnementale."
+
+msgid "Environnement"
+msgstr "Environnement"
+
+msgid "Envoyer"
+msgstr "Envoyer"
+
+msgid "Envoyer le message"
+msgstr "Envoyer le message"
+
+msgid "Envoyer un email"
+msgstr "Envoyer un email"
+
+msgid "Espace Membres"
+msgstr "Espace Membres"
+
+msgid "Excellence"
+msgstr "Excellence"
+
+msgid "Excellence en recherche et innovation"
+msgstr "Excellence en recherche et innovation"
+
+msgid "Formation & Éducation"
+msgstr "Formation & Éducation"
+
+msgid "Formation et Stages"
+msgstr "Formation et Stages"
+
+msgid ""
+"Former la prochaine génération de chercheurs, de spécialistes et de "
+"professionnels en environnement marin."
+msgstr ""
+"Former la prochaine génération de chercheurs, de spécialistes et de "
+"professionnels en environnement marin."
+
+msgid "Formulaire de contact"
+msgstr "Formulaire de contact"
+
+msgid "Galerie CEREMAC"
+msgstr "Galerie CEREMAC"
+
+msgid "Gérer les abonnés"
+msgstr "Gérer les abonnés"
+
+msgid "Gérer les abonnés à la newsletter"
+msgstr "Gérer les abonnés à la newsletter"
+
+msgid "Gérer les actualités"
+msgstr "Gérer les actualités"
+
+msgid "Gérer les messages"
+msgstr "Gérer les messages"
+
+msgid "Gérer les partenaires"
+msgstr "Gérer les partenaires"
+
+msgid "Gérer les projets"
+msgstr "Gérer les projets"
+
+msgid "Gérer les publications"
+msgstr "Gérer les publications"
+
+msgid "Gérer les utilisateurs"
+msgstr "Gérer les utilisateurs"
+
+msgid "Gérez votre profil utilisateur"
+msgstr "Gérez votre profil utilisateur"
+
+msgid "Historique"
+msgstr "Historique"
+
+msgid "Historique et Évolution"
+msgstr "Historique et Évolution"
+
+msgid "Inactif"
+msgstr "Inactif"
+
+msgid "Informations personnelles"
+msgstr "Informations personnelles"
+
+msgid "Innovation"
+msgstr "Innovation"
+
+msgid "Innovation et développement scientifique et technologique en Guinée."
+msgstr "Innovation et développement scientifique et technologique en Guinée."
+
+msgid "International"
+msgstr "International"
+
+msgid "Intéressé par nos services ?"
+msgstr "Intéressé par nos services ?"
+
+msgid "Laboratoires"
+msgstr "Laboratoires"
+
+msgid ""
+"Le CEREMAC (Centre de Recherche Marine et Côtière de Guinée) est un "
+"établissement public scientifique guinéen, issu de la transformation du "
+"CERESCOR entre 2022 et 2025. Notre mission est de développer la recherche "
+"scientifique et technologique dans les domaines de l'océanographie, de "
+"l'environnement, et des écosystèmes marins et côtiers de la Guinée."
+msgstr ""
+"Le CEREMAC (Centre de Recherche Marine et Côtière de Guinée) est un "
+"établissement public scientifique guinéen, issu de la transformation du "
+"CERESCOR entre 2022 et 2025. Notre mission est de développer la recherche "
+"scientifique et technologique dans les domaines de l'océanographie, de "
+"l'environnement, et des écosystèmes marins et côtiers de la Guinée."
+
+msgid ""
+"Le CEREMAC est organisé en Départements de recherche spécialisés et offre "
+"une gamme complète de services scientifiques et techniques pour répondre aux"
+" besoins de la recherche, de l'industrie et des institutions partenaires "
+"dans les domaines de l'océanographie, de l'environnement marin et côtier."
+msgstr ""
+"Le CEREMAC est organisé en Départements de recherche spécialisés et offre "
+"une gamme complète de services scientifiques et techniques pour répondre aux"
+" besoins de la recherche, de l'industrie et des institutions partenaires "
+"dans les domaines de l'océanographie, de l'environnement marin et côtier."
+
+msgid "Les départements seront bientôt disponibles."
+msgstr "Les départements seront bientôt disponibles."
+
+msgid "Lire l'article"
+msgstr "Lire l'article"
+
+msgid "Lire la suite"
+msgstr "Lire la suite"
+
+msgid "Lu"
+msgstr "Lu"
+
+msgid "Membre"
+msgstr "Membre"
+
+msgid "Mentions légales"
+msgstr "Mentions légales"
+
+msgid "Mes documents"
+msgstr "Mes documents"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Mission"
+msgstr "Mission"
+
+msgid "Missions"
+msgstr "Missions"
+
+msgid "Modifier"
+msgstr "Modifier"
+
+msgid "Mon profil"
+msgstr "Mon profil"
+
+msgid "Mot de passe"
+msgstr "Mot de passe"
+
+msgid "Mot de passe oublié ?"
+msgstr "Mot de passe oublié ?"
+
+msgid "Musées"
+msgstr "Musées"
+
+msgid "National"
+msgstr "National"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Nom"
+msgstr "Nom"
+
+msgid "Nom complet"
+msgstr "Nom complet"
+
+msgid "Nom d'utilisateur"
+msgstr "Nom d'utilisateur"
+
+msgid "Non lu"
+msgstr "Non lu"
+
+msgid "Nos 5 Départements de Recherche"
+msgstr "Nos 5 Départements de Recherche"
+
+msgid "Nos Départements"
+msgstr "Nos Départements"
+
+msgid "Nos Partenaires"
+msgstr "Nos Partenaires"
+
+msgid "Nos Services"
+msgstr "Nos Services"
+
+msgid "Nos Valeurs"
+msgstr "Nos Valeurs"
+
+msgid "Nos publications scientifiques"
+msgstr "Nos publications scientifiques"
+
+msgid "Nos valeurs"
+msgstr "Nos valeurs"
+
+msgid "Notre Mission"
+msgstr "Notre Mission"
+
+msgid "Notre mission"
+msgstr "Notre mission"
+
+msgid "Notre vision"
+msgstr "Notre vision"
+
+msgid "Nous Contacter"
+msgstr "Nous Contacter"
+
+msgid "Nous contacter"
+msgstr "Nous contacter"
+
+msgid ""
+"Nous visons l'excellence dans toutes nos recherches et publications "
+"scientifiques."
+msgstr ""
+"Nous visons l'excellence dans toutes nos recherches et publications "
+"scientifiques."
+
+msgid "Océanographie"
+msgstr "Océanographie"
+
+msgid "Organisation Administrative"
+msgstr "Organisation Administrative"
+
+msgid "Organisation Scientifique"
+msgstr "Organisation Scientifique"
+
+msgid "Organisation scientifique et services d'excellence"
+msgstr "Organisation scientifique et services d'excellence"
+
+msgid "Panneau d'administration"
+msgstr "Panneau d'administration"
+
+msgid "Par"
+msgstr "Par"
+
+msgid "Paramètres"
+msgstr "Paramètres"
+
+msgid "Partenaires"
+msgstr "Partenaires"
+
+msgid "Partenaires Internationaux"
+msgstr "Partenaires Internationaux"
+
+msgid "Partenaires Nationaux"
+msgstr "Partenaires Nationaux"
+
+msgid ""
+"Participez à nos projets de recherche ou collaborez avec notre équipe pour "
+"un avenir durable des océans"
+msgstr ""
+"Participez à nos projets de recherche ou collaborez avec notre équipe pour "
+"un avenir durable des océans"
+
+msgid "Politique de confidentialité"
+msgstr "Politique de confidentialité"
+
+msgid ""
+"Pour toute information sur nos activités de recherche ou collaborations"
+msgstr ""
+"Pour toute information sur nos activités de recherche ou collaborations"
+
+msgid "Projets"
+msgstr "Projets"
+
+msgid "Projets Actifs"
+msgstr "Projets Actifs"
+
+msgid "Projets du département"
+msgstr "Projets du département"
+
+msgid "Projets internes"
+msgstr "Projets internes"
+
+msgid ""
+"Protection et préservation de l'environnement marin et côtier de la Guinée."
+msgstr ""
+"Protection et préservation de l'environnement marin et côtier de la Guinée."
+
+msgid ""
+"Protection et préservation de l'environnement marin et côtier. Surveillance "
+"de la qualité des eaux, protection de la biodiversité marine."
+msgstr ""
+"Protection et préservation de l'environnement marin et côtier. Surveillance "
+"de la qualité des eaux, protection de la biodiversité marine."
+
+msgid "Précédent"
+msgstr "Précédent"
+
+msgid "Présentation de l'Institution"
+msgstr "Présentation de l'Institution"
+
+msgid "Publications"
+msgstr "Publications"
+
+msgid "Publications du département"
+msgstr "Publications du département"
+
+msgid ""
+"Publications scientifiques dans des revues internationales, projets de "
+"recherche innovants, formation de la prochaine génération de chercheurs."
+msgstr ""
+"Publications scientifiques dans des revues internationales, projets de "
+"recherche innovants, formation de la prochaine génération de chercheurs."
+
+msgid "Publié le"
+msgstr "Publié le"
+
+msgid "Recherche"
+msgstr "Recherche"
+
+msgid "Recherche Scientifique"
+msgstr "Recherche Scientifique"
+
+msgid ""
+"Recherche approfondie sur les océans, les courants marins, la température, "
+"la salinité et les écosystèmes océaniques."
+msgstr ""
+"Recherche approfondie sur les océans, les courants marins, la température, "
+"la salinité et les écosystèmes océaniques."
+
+msgid ""
+"Recherche de solutions innovantes pour les défis environnementaux marins."
+msgstr ""
+"Recherche de solutions innovantes pour les défis environnementaux marins."
+
+msgid "Rejoignez-nous dans notre mission"
+msgstr "Rejoignez-nous dans notre mission"
+
+msgid "Rester connecté"
+msgstr "Rester connecté"
+
+msgid "Restez informé de nos actualités"
+msgstr "Restez informé de nos actualités"
+
+msgid "Retour"
+msgstr "Retour"
+
+msgid "Retour aux actualités"
+msgstr "Retour aux actualités"
+
+msgid "Retour à l'espace membres"
+msgstr "Retour à l'espace membres"
+
+msgid ""
+"Réalisation d'études d'impact environnemental, expertises marines et "
+"évaluations écologiques pour les projets côtiers."
+msgstr ""
+"Réalisation d'études d'impact environnemental, expertises marines et "
+"évaluations écologiques pour les projets côtiers."
+
+msgid "Rôle"
+msgstr "Rôle"
+
+msgid "S'abonner"
+msgstr "S'abonner"
+
+msgid "S'inscrire"
+msgstr "S'inscrire"
+
+msgid "Se connecter"
+msgstr "Se connecter"
+
+msgid "Services administratifs"
+msgstr "Services administratifs"
+
+msgid "Services d'Appui"
+msgstr "Services d'Appui"
+
+msgid "Services techniques"
+msgstr "Services techniques"
+
+msgid "Site web"
+msgstr "Site web"
+
+msgid "Sous-structures Scientifiques et Techniques"
+msgstr "Sous-structures Scientifiques et Techniques"
+
+msgid "Statistiques"
+msgstr "Statistiques"
+
+msgid "Statut"
+msgstr "Statut"
+
+msgid "Structure Organisationnelle"
+msgstr "Structure Organisationnelle"
+
+msgid "Structure Scientifique"
+msgstr "Structure Scientifique"
+
+msgid "Suivant"
+msgstr "Suivant"
+
+msgid "Sujet"
+msgstr "Sujet"
+
+msgid "Tableau de bord"
+msgstr "Tableau de bord"
+
+msgid "Terminé"
+msgstr "Terminé"
+
+msgid "Titre"
+msgstr "Titre"
+
+msgid "Tous droits réservés"
+msgstr "Tous droits réservés"
+
+msgid "Tous droits réservés."
+msgstr "Tous droits réservés."
+
+msgid ""
+"Travail en partenariat avec des institutions nationales et internationales."
+msgstr ""
+"Travail en partenariat avec des institutions nationales et internationales."
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Télécharger"
+msgstr "Télécharger"
+
+msgid "Télécharger le document"
+msgstr "Télécharger le document"
+
+msgid "Téléphone"
+msgstr "Téléphone"
+
+msgid "Utilisateurs"
+msgstr "Utilisateurs"
+
+msgid "Voir"
+msgstr "Voir"
+
+msgid "Voir l'article"
+msgstr "Voir l'article"
+
+msgid "Voir les documents"
+msgstr "Voir les documents"
+
+msgid "Voir les détails"
+msgstr "Voir les détails"
+
+msgid "Voir les projets"
+msgstr "Voir les projets"
+
+msgid "Voir mon profil"
+msgstr "Voir mon profil"
+
+msgid "Voir tout"
+msgstr "Voir tout"
+
+msgid "Votre email"
+msgstr "Votre email"
+
+msgid "au"
+msgstr "au"
+
+msgid "À propos"
+msgstr "À propos"
+
+msgid "À propos du CEREMAC"
+msgstr "À propos du CEREMAC"
+
+msgid "Écosystèmes Marins"
+msgstr "Écosystèmes Marins"
+
+msgid "Équipe de Direction"
+msgstr "Équipe de Direction"
+
+msgid "Équipe du département"
+msgstr "Équipe du département"
+
+msgid ""
+"Établissement public scientifique guinéen dédié à l'océanographie, "
+"l'environnement et les écosystèmes marins et côtiers"
+msgstr ""
+"Établissement public scientifique guinéen dédié à l'océanographie, "
+"l'environnement et les écosystèmes marins et côtiers"
+
+msgid ""
+"Étude des océans, des courants marins, de la température et de la salinité "
+"des eaux guinéennes."
+msgstr ""
+"Étude des océans, des courants marins, de la température et de la salinité "
+"des eaux guinéennes."
+
+msgid ""
+"Étude et conservation de la biodiversité marine et des habitats côtiers."
+msgstr ""
+"Étude et conservation de la biodiversité marine et des habitats côtiers."
+
+msgid "Études et Expertises"
+msgstr "Études et Expertises"

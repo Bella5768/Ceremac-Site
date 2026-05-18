@@ -8,19 +8,13 @@
     background-attachment: scroll;
 }
 
-/* Overlay très léger noir pour voir mieux les images - SANS COULEURS */
-.hero-section::after {
-    background: rgba(0, 0, 0, 0.1) !important;
-}
-
 /* Améliorer le contraste du texte sur les images */
 .hero-section h1,
 .hero-section .lead,
 .hero-section p {
-    text-shadow: 
-        3px 3px 6px rgba(0, 0, 0, 0.9),
-        0 0 15px rgba(0, 0, 0, 0.6),
-        0 0 30px rgba(0, 0, 0, 0.4);
+    text-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(0, 0, 0, 0.35);
     position: relative;
     z-index: 2;
 }

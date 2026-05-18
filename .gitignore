@@ -84,3 +84,6 @@ dmypy.json
 # Backup files
 *.bak
 *.backup
+
+_untranslated.txt
+
