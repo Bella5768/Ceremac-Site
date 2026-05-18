@@ -37,6 +37,9 @@ msgstr "Actions"
 msgid "Actions rapides"
 msgstr "Quick actions"
 
+msgid "Actualité"
+msgstr "News"
+
 msgid "Actualités"
 msgstr "News"
 
@@ -110,6 +113,9 @@ msgstr "No publication available at this time."
 msgid "Auteur"
 msgstr "Author"
 
+msgid "Axes de recherche"
+msgstr "Research areas"
+
 msgid "Bienvenue"
 msgstr "Welcome"
 
@@ -118,6 +124,9 @@ msgstr "CEREMAC"
 
 msgid "Centre de Recherche Marine et Côtière de Guinée"
 msgstr "Marine and Coastal Research Center of Guinea"
+
+msgid "Centre de Recherche · Conakry, Guinée"
+msgstr "Research Center · Conakry, Guinea"
 
 msgid "Chef de département"
 msgstr "Department Head"
@@ -223,11 +232,17 @@ msgstr "Technological Development"
 msgid "Email"
 msgstr "Email"
 
+msgid "En chiffres"
+msgstr "In figures"
+
 msgid "En cours"
 msgstr "In progress"
 
 msgid "En savoir plus"
 msgstr "Read more"
+
+msgid "Engagement"
+msgstr "Commitment"
 
 msgid ""
 "Engagement en faveur du développement durable et de la protection "
@@ -270,6 +285,9 @@ msgstr ""
 
 msgid "Formulaire de contact"
 msgstr "Contact form"
+
+msgid "Galerie"
+msgstr "Gallery"
 
 msgid "Galerie CEREMAC"
 msgstr "CEREMAC Gallery"
@@ -324,6 +342,18 @@ msgstr "International"
 
 msgid "Intéressé par nos services ?"
 msgstr "Interested in our services?"
+
+msgid "L'activité scientifique du centre"
+msgstr "The center's scientific activity"
+
+msgid ""
+"La science est le langage à travers lequel nous comprenons et préservons les"
+" océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec "
+"rigueur, ouverture et un souci constant du bien commun."
+msgstr ""
+"Science is the language through which we understand and preserve the oceans "
+"that border Guinea. CEREMAC takes on this responsibility with rigor, "
+"openness and a constant concern for the common good."
 
 msgid "Laboratoires"
 msgstr "Laboratories"
@@ -382,6 +412,9 @@ msgstr "Messages"
 msgid "Mission"
 msgstr "Mission"
 
+msgid "Mission scientifique en zone côtière guinéenne."
+msgstr "Scientific mission in the Guinean coastal area."
+
 msgid "Missions"
 msgstr "Missions"
 
@@ -396,6 +429,9 @@ msgstr "Password"
 
 msgid "Mot de passe oublié ?"
 msgstr "Forgot password?"
+
+msgid "Mot du Directeur Général"
+msgstr "Word from the General Director"
 
 msgid "Musées"
 msgstr "Museums"
@@ -504,6 +540,9 @@ msgid ""
 "Pour toute information sur nos activités de recherche ou collaborations"
 msgstr "For any information about our research activities or collaborations"
 
+msgid "Principes"
+msgstr "Principles"
+
 msgid "Projets"
 msgstr "Projects"
 
@@ -530,6 +569,9 @@ msgstr ""
 
 msgid "Précédent"
 msgstr "Previous"
+
+msgid "Présentation"
+msgstr "Overview"
 
 msgid "Présentation de l'Institution"
 msgstr "About the Institution"

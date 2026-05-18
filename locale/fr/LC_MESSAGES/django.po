@@ -37,6 +37,9 @@ msgstr "Actions"
 msgid "Actions rapides"
 msgstr "Actions rapides"
 
+msgid "Actualité"
+msgstr "Actualité"
+
 msgid "Actualités"
 msgstr "Actualités"
 
@@ -110,6 +113,9 @@ msgstr "Aucune publication pour le moment."
 msgid "Auteur"
 msgstr "Auteur"
 
+msgid "Axes de recherche"
+msgstr "Axes de recherche"
+
 msgid "Bienvenue"
 msgstr "Bienvenue"
 
@@ -118,6 +124,9 @@ msgstr "CEREMAC"
 
 msgid "Centre de Recherche Marine et Côtière de Guinée"
 msgstr "Centre de Recherche Marine et Côtière de Guinée"
+
+msgid "Centre de Recherche · Conakry, Guinée"
+msgstr "Centre de Recherche · Conakry, Guinée"
 
 msgid "Chef de département"
 msgstr "Chef de département"
@@ -225,11 +234,17 @@ msgstr "Développement Technologique"
 msgid "Email"
 msgstr "Email"
 
+msgid "En chiffres"
+msgstr "En chiffres"
+
 msgid "En cours"
 msgstr "En cours"
 
 msgid "En savoir plus"
 msgstr "En savoir plus"
+
+msgid "Engagement"
+msgstr "Engagement"
 
 msgid ""
 "Engagement en faveur du développement durable et de la protection "
@@ -274,6 +289,9 @@ msgstr ""
 
 msgid "Formulaire de contact"
 msgstr "Formulaire de contact"
+
+msgid "Galerie"
+msgstr "Galerie"
 
 msgid "Galerie CEREMAC"
 msgstr "Galerie CEREMAC"
@@ -328,6 +346,18 @@ msgstr "International"
 
 msgid "Intéressé par nos services ?"
 msgstr "Intéressé par nos services ?"
+
+msgid "L'activité scientifique du centre"
+msgstr "L'activité scientifique du centre"
+
+msgid ""
+"La science est le langage à travers lequel nous comprenons et préservons les"
+" océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec "
+"rigueur, ouverture et un souci constant du bien commun."
+msgstr ""
+"La science est le langage à travers lequel nous comprenons et préservons les"
+" océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec "
+"rigueur, ouverture et un souci constant du bien commun."
 
 msgid "Laboratoires"
 msgstr "Laboratoires"
@@ -386,6 +416,9 @@ msgstr "Messages"
 msgid "Mission"
 msgstr "Mission"
 
+msgid "Mission scientifique en zone côtière guinéenne."
+msgstr "Mission scientifique en zone côtière guinéenne."
+
 msgid "Missions"
 msgstr "Missions"
 
@@ -400,6 +433,9 @@ msgstr "Mot de passe"
 
 msgid "Mot de passe oublié ?"
 msgstr "Mot de passe oublié ?"
+
+msgid "Mot du Directeur Général"
+msgstr "Mot du Directeur Général"
 
 msgid "Musées"
 msgstr "Musées"
@@ -510,6 +546,9 @@ msgid ""
 msgstr ""
 "Pour toute information sur nos activités de recherche ou collaborations"
 
+msgid "Principes"
+msgstr "Principes"
+
 msgid "Projets"
 msgstr "Projets"
 
@@ -536,6 +575,9 @@ msgstr ""
 
 msgid "Précédent"
 msgstr "Précédent"
+
+msgid "Présentation"
+msgstr "Présentation"
 
 msgid "Présentation de l'Institution"
 msgstr "Présentation de l'Institution"

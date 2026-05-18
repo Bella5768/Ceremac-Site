@@ -1439,6 +1439,321 @@ figure.academic figcaption,
 /* --- 19.16 Sélection (cohérence couleur) -------------------------------- */
 ::selection { background: var(--ceremac-gold); color: var(--ceremac-deep-blue); }
 
+/* --- 19.18 Composants page d'accueil academique --------------------- */
+
+/* Titre academique sans filet auto (utilisable en split-layout) */
+.heading-academic {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    color: var(--ceremac-deep-blue);
+    line-height: 1.2;
+    letter-spacing: 0.005em;
+    margin: 0;
+}
+
+/* Pilier de recherche (axes scientifiques) */
+.research-pillar {
+    background: #fff;
+    border: 1px solid var(--ceremac-gray-200);
+    border-top: 3px solid var(--ceremac-deep-blue);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition);
+    overflow: hidden;
+}
+.research-pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(15, 61, 82, 0.12);
+    border-top-color: var(--ceremac-gold);
+}
+.research-pillar .pillar-image {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transition: transform 0.6s ease;
+}
+.research-pillar:hover .pillar-image { transform: scale(1.04); }
+.research-pillar .pillar-image::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(15, 61, 82, 0.4) 100%);
+}
+.research-pillar .pillar-body {
+    padding: 28px 26px 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.research-pillar .pillar-num {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--ceremac-chocolate);
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--ceremac-gold);
+    margin-bottom: 16px;
+    align-self: flex-start;
+}
+.research-pillar h5 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ceremac-deep-blue);
+    margin-bottom: 12px;
+}
+.research-pillar p {
+    color: var(--ceremac-gray-700);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Pilier de valeur (Excellence, Collaboration, Durabilit\u00e9, Innovation) */
+.value-pillar {
+    position: relative;
+    padding: 36px 24px 28px;
+    background: #fff;
+    border: 1px solid var(--ceremac-gray-200);
+    height: 100%;
+    text-align: center;
+    transition: all var(--transition);
+}
+.value-pillar:hover {
+    border-color: var(--ceremac-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 61, 82, 0.08);
+}
+.value-pillar .value-num {
+    position: absolute;
+    top: 14px; left: 18px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ceremac-gold);
+    letter-spacing: 0.08em;
+}
+.value-pillar .value-icon {
+    display: inline-block;
+    font-size: 2.1rem;
+    color: var(--ceremac-deep-blue);
+    margin-bottom: 18px;
+    transition: color var(--transition);
+}
+.value-pillar:hover .value-icon { color: var(--ceremac-chocolate); }
+.value-pillar h5 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ceremac-deep-blue);
+    margin-bottom: 12px;
+}
+.value-pillar p {
+    color: var(--ceremac-gray-700);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Carte actualit\u00e9 \u00e9ditoriale */
+.news-card-academic {
+    background: #fff;
+    border: 1px solid var(--ceremac-gray-200);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition);
+    overflow: hidden;
+}
+.news-card-academic:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(15, 61, 82, 0.1);
+}
+.news-card-academic .news-image {
+    display: block;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+    border-bottom: 3px solid var(--ceremac-gold);
+}
+.news-card-academic:hover .news-image { transform: scale(1.05); }
+.news-card-academic .news-body {
+    padding: 22px 24px 26px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.news-card-academic .news-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ceremac-chocolate);
+    margin-bottom: 12px;
+}
+.news-card-academic h5 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+.news-card-academic h5 a {
+    color: var(--ceremac-deep-blue);
+    text-decoration: none;
+}
+.news-card-academic h5 a:hover { color: var(--ceremac-chocolate); }
+.news-card-academic p {
+    color: var(--ceremac-gray-700);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    flex: 1;
+}
+.news-card-academic .news-link {
+    align-self: flex-start;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ceremac-deep-blue);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ceremac-gold);
+    padding-bottom: 4px;
+    transition: all var(--transition);
+}
+.news-card-academic .news-link:hover {
+    color: var(--ceremac-chocolate);
+    border-bottom-color: var(--ceremac-chocolate);
+}
+.news-card-academic .news-link i { margin-left: 6px; transition: transform var(--transition); }
+.news-card-academic .news-link:hover i { transform: translateX(4px); }
+
+/* Galerie (carrousel secondaire) - rendu acad\u00e9mique */
+.gallery-carousel {
+    border: 1px solid var(--ceremac-gray-200);
+    background: var(--ceremac-gray-50);
+}
+.gallery-carousel .carousel-inner { border-radius: 0; }
+.gallery-carousel .carousel-item img {
+    height: 520px;
+    object-fit: cover;
+}
+.gallery-carousel .carousel-caption-academic {
+    position: absolute;
+    bottom: 28px; left: 28px; right: auto;
+    max-width: 520px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(6px);
+    padding: 22px 26px;
+    border-left: 3px solid var(--ceremac-gold);
+    text-align: left;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+.gallery-carousel .carousel-caption-academic .label {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ceremac-chocolate);
+    margin-bottom: 6px;
+}
+.gallery-carousel .carousel-caption-academic h5 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ceremac-deep-blue);
+    margin-bottom: 8px;
+}
+.gallery-carousel .carousel-caption-academic p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--ceremac-gray-700);
+    margin: 0;
+}
+.gallery-carousel .carousel-control-prev,
+.gallery-carousel .carousel-control-next {
+    width: 6%;
+}
+.gallery-carousel .carousel-indicators [data-bs-target] {
+    background: var(--ceremac-gold);
+    border-radius: 0;
+    width: 28px;
+    height: 3px;
+}
+
+/* CTA bandeau institutionnel */
+.cta-section-academic {
+    position: relative;
+    padding: 90px 0;
+    background:
+        linear-gradient(135deg, rgba(11, 47, 63, 0.92) 0%, rgba(15, 61, 82, 0.85) 50%, rgba(78, 49, 23, 0.88) 100%),
+        url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=900&fit=crop') center/cover no-repeat;
+    color: #fff;
+    text-align: center;
+    border-top: 3px solid var(--ceremac-gold);
+}
+.cta-section-academic h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #fff;
+    margin-bottom: 0;
+    letter-spacing: 0.01em;
+}
+.cta-section-academic .gold-rule {
+    width: 80px; height: 3px;
+    background: var(--ceremac-gold);
+}
+.cta-section-academic p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 auto;
+    opacity: 0.95;
+}
+.cta-section-academic .eyebrow::before { background: var(--ceremac-gold); }
+.cta-section-academic .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.7);
+    color: #fff;
+}
+.cta-section-academic .btn-outline-light:hover {
+    background: var(--ceremac-gold);
+    border-color: var(--ceremac-gold);
+    color: var(--ceremac-deep-blue);
+}
+
+/* Stats section : alignement des labels */
+.stats-section .stat-icon {
+    display: block;
+    margin-bottom: 14px;
+}
+.stats-section .stat-label {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    color: var(--ceremac-gray-500);
+    margin-top: 4px;
+}
+
+@media (max-width: 991.98px) {
+    .gallery-carousel .carousel-item img { height: 400px; }
+    .gallery-carousel .carousel-caption-academic { max-width: 80%; padding: 16px 20px; bottom: 18px; left: 18px; }
+    .cta-section-academic { padding: 60px 0; }
+}
+
 /* --- 19.17 Refinements responsive ---------------------------------------- */
 @media (max-width: 767.98px) {
     .blockquote-academic, blockquote { padding: 24px 22px; font-size: 1.15rem; }

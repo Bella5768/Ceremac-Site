@@ -262,6 +262,20 @@ TRANSLATIONS = {
         "Study of oceans, marine currents, temperature and salinity of Guinean waters.",
     "Étude et conservation de la biodiversité marine et des habitats côtiers.":
         "Study and conservation of marine biodiversity and coastal habitats.",
+    # --- Compléments page d'accueil (lot 3) ---
+    "Centre de Recherche · Conakry, Guinée": "Research Center · Conakry, Guinea",
+    "En chiffres": "In figures",
+    "L'activité scientifique du centre": "The center's scientific activity",
+    "Présentation": "Overview",
+    "Mission scientifique en zone côtière guinéenne.": "Scientific mission in the Guinean coastal area.",
+    "Mot du Directeur Général": "Word from the General Director",
+    "La science est le langage à travers lequel nous comprenons et préservons les océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec rigueur, ouverture et un souci constant du bien commun.":
+        "Science is the language through which we understand and preserve the oceans that border Guinea. CEREMAC takes on this responsibility with rigor, openness and a constant concern for the common good.",
+    "Axes de recherche": "Research areas",
+    "Principes": "Principles",
+    "Actualité": "News",
+    "Galerie": "Gallery",
+    "Engagement": "Commitment",
 }
 
 # Extraction des chaînes depuis les templates
