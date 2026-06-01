@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-produc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,ceremacsite.pythonanywhere.com,bella5768.pythonanywhere.com,ceremac-g.org,www.ceremac-g.org', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,ceremacsite.pythonanywhere.com,bella5768.pythonanywhere.com,ceremac-g.org,www.ceremac-g.org,ceremac.edu.gn,www.ceremac.edu.gn', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 INSTALLED_APPS = [
@@ -158,8 +158,12 @@ CSRF_TRUSTED_ORIGINS = [
     'https://bella5768.pythonanywhere.com',
     'https://ceremac-g.org',
     'https://www.ceremac-g.org',
+    'https://ceremac.edu.gn',
+    'https://www.ceremac.edu.gn',
     'http://ceremac-g.org',
     'http://www.ceremac-g.org',
+    'http://ceremac.edu.gn',
+    'http://www.ceremac.edu.gn',
     'http://127.0.0.1:8001',
     'http://localhost:8001',
 ]
