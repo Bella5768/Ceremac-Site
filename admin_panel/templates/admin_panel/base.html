@@ -23,20 +23,24 @@
             color: white;
         }
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            padding: 12px 20px;
-            margin: 5px 10px;
+            color: rgba(255,255,255,0.9);
+            padding: 15px 20px;
+            margin: 3px 10px;
             border-radius: 8px;
             transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.25);
             color: white;
+            transform: translateX(5px);
         }
         .sidebar .nav-link i {
-            margin-right: 10px;
+            margin-right: 12px;
             width: 20px;
+            font-size: 1.1rem;
         }
         .main-content {
             padding: 30px;
@@ -84,9 +88,9 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-2 sidebar p-0">
-                <div class="p-4 text-center border-bottom border-light">
-                    <h4><i class="fas fa-cogs"></i> Admin CEREMAC</h4>
-                    <small class="text-white-50">Gestion du site</small>
+                <div class="p-4 text-center border-bottom border-light" style="background: rgba(0,0,0,0.1);">
+                    <h4 class="mb-2" style="font-weight: 700; font-size: 1.3rem;"><i class="fas fa-cogs me-2"></i> Admin CEREMAC</h4>
+                    <small class="text-white-50" style="font-size: 0.85rem;">Gestion du site</small>
                 </div>
                 <nav class="nav flex-column mt-3">
                     <a class="nav-link {% if request.resolver_match.url_name == 'admin_panel:dashboard' %}active{% endif %}" href="{% url 'admin_panel:dashboard' %}">
