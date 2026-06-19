@@ -8,7 +8,7 @@
     <div class="card-body">
         <div class="alert alert-warning">
             <i class="fas fa-exclamation-circle"></i> 
-            Êtes-vous sûr de vouloir supprimer l'actualité <strong>{{ news.title }}</strong> ?
+            Êtes-vous sûr de vouloir supprimer le membre <strong>{{ member.name }}</strong> ?
             <br><small>Cette action est irréversible.</small>
         </div>
         
@@ -18,7 +18,7 @@
                 <button type="submit" class="btn btn-danger">
                     <i class="fas fa-trash"></i> Confirmer la suppression
                 </button>
-                <a href="{% url 'admin_panel:news' %}" class="btn btn-secondary">
+                <a href="{% url 'admin_panel:department_members' member.department.pk %}" class="btn btn-secondary">
                     <i class="fas fa-times"></i> Annuler
                 </a>
             </div>
