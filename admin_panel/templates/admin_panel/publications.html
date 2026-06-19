@@ -1,52 +1,52 @@
-{% extends 'main/base.html' %}
-{% load static %}
-{% load i18n %}
+{% extends "admin_panel/base.html" %}
 
-{% block title %}{% trans "Gérer les publications" %}{% endblock %}
+{% block title %}Gérer les publications - Administration CEREMAC{% endblock %}
 
 {% block content %}
-<section class="py-5 mt-4">
-    <div class="container">
-        <h2><i class="bi bi-journal-text"></i> {% trans "Gérer les publications" %}</h2>
-        <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-primary mb-4">
-            <i class="bi bi-arrow-left"></i> {% trans "Retour" %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-book"></i> Gérer les publications</h4>
+        <a href="{% url 'admin_panel:publication_create' %}" class="btn btn-light">
+            <i class="fas fa-plus"></i> Ajouter une publication
         </a>
-        <div class="card">
-            <div class="card-body">
-                {% if publications %}
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>{% trans "Titre" %}</th>
-                                <th>{% trans "Auteur" %}</th>
-                                <th>{% trans "Actions" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for publication in publications %}
-                            <tr>
-                                <td>{{ publication.title }}</td>
-                                <td>{{ publication.author }}</td>
-                                <td>
-                                    <a href="/admin/main/publication/{{ publication.id }}/change/" class="btn btn-sm btn-warning">
-                                        <i class="bi bi-pencil"></i> {% trans "Modifier" %}
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                <div class="alert alert-info">{% trans "Aucune publication pour le moment." %}</div>
-                {% endif %}
-                <a href="/admin/main/publication/add/" class="btn btn-primary mt-3">
-                    <i class="bi bi-plus-circle"></i> {% trans "Ajouter une publication" %}
-                </a>
-            </div>
-        </div>
     </div>
-</section>
+    <div class="card-body">
+        {% if publications %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Date de publication</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for publication in publications %}
+                    <tr>
+                        <td>{{ publication.title }}</td>
+                        <td>{{ publication.author }}</td>
+                        <td>{{ publication.publication_date|date:"d/m/Y"|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'admin_panel:publication_edit' publication.pk %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{% url 'admin_panel:publication_delete' publication.pk %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Aucune publication pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 

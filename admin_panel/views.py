@@ -12,17 +12,18 @@ def admin_dashboard(request):
     if not request.user.is_admin():
         return redirect('members:index')
     
-    stats = {
-        'users': CustomUser.objects.count(),
-        'news': News.objects.count(),
-        'projects': Project.objects.count(),
-        'publications': Publication.objects.count(),
-        'partners': Partner.objects.count(),
-        'messages': ContactMessage.objects.filter(is_read=False).count(),
-        'subscribers': NewsletterSubscriber.objects.filter(is_active=True).count(),
+    context = {
+        'news_count': News.objects.count(),
+        'projects_count': Project.objects.count(),
+        'publications_count': Publication.objects.count(),
+        'partners_count': Partner.objects.count(),
+        'departments_count': Department.objects.count(),
+        'users_count': CustomUser.objects.count(),
+        'messages_count': ContactMessage.objects.filter(is_read=False).count(),
+        'subscribers_count': NewsletterSubscriber.objects.filter(is_active=True).count(),
     }
     
-    return render(request, 'admin_panel/index.html', {'stats': stats})
+    return render(request, 'admin_panel/dashboard.html', context)
 
 
 @login_required
@@ -111,7 +112,7 @@ def news_create(request):
     else:
         form = NewsForm()
     
-    return render(request, 'admin_panel/news_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/news_form.html', {'form': form, 'action': 'Créer', 'icon': 'newspaper'})
 
 @login_required
 def news_edit(request, pk):
@@ -130,7 +131,7 @@ def news_edit(request, pk):
     else:
         form = NewsForm(instance=news)
     
-    return render(request, 'admin_panel/news_form.html', {'form': form, 'action': 'Modifier', 'news': news})
+    return render(request, 'admin_panel/news_form.html', {'form': form, 'action': 'Modifier', 'icon': 'newspaper'})
 
 @login_required
 def news_delete(request, pk):
@@ -163,7 +164,7 @@ def project_create(request):
     else:
         form = ProjectForm()
     
-    return render(request, 'admin_panel/project_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/project_form.html', {'form': form, 'action': 'Créer', 'icon': 'project-diagram'})
 
 @login_required
 def project_edit(request, pk):
@@ -182,7 +183,7 @@ def project_edit(request, pk):
     else:
         form = ProjectForm(instance=project)
     
-    return render(request, 'admin_panel/project_form.html', {'form': form, 'action': 'Modifier', 'project': project})
+    return render(request, 'admin_panel/project_form.html', {'form': form, 'action': 'Modifier', 'icon': 'project-diagram'})
 
 @login_required
 def project_delete(request, pk):
@@ -215,7 +216,7 @@ def publication_create(request):
     else:
         form = PublicationForm()
     
-    return render(request, 'admin_panel/publication_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/publication_form.html', {'form': form, 'action': 'Créer', 'icon': 'book'})
 
 @login_required
 def publication_edit(request, pk):
@@ -234,7 +235,7 @@ def publication_edit(request, pk):
     else:
         form = PublicationForm(instance=publication)
     
-    return render(request, 'admin_panel/publication_form.html', {'form': form, 'action': 'Modifier', 'publication': publication})
+    return render(request, 'admin_panel/publication_form.html', {'form': form, 'action': 'Modifier', 'icon': 'book'})
 
 @login_required
 def publication_delete(request, pk):
@@ -267,7 +268,7 @@ def partner_create(request):
     else:
         form = PartnerForm()
     
-    return render(request, 'admin_panel/partner_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/partner_form.html', {'form': form, 'action': 'Créer', 'icon': 'handshake'})
 
 @login_required
 def partner_edit(request, pk):
@@ -286,7 +287,7 @@ def partner_edit(request, pk):
     else:
         form = PartnerForm(instance=partner)
     
-    return render(request, 'admin_panel/partner_form.html', {'form': form, 'action': 'Modifier', 'partner': partner})
+    return render(request, 'admin_panel/partner_form.html', {'form': form, 'action': 'Modifier', 'icon': 'handshake'})
 
 @login_required
 def partner_delete(request, pk):
@@ -328,7 +329,7 @@ def department_create(request):
     else:
         form = DepartmentForm()
     
-    return render(request, 'admin_panel/department_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/department_form.html', {'form': form, 'action': 'Créer', 'icon': 'building'})
 
 @login_required
 def department_edit(request, pk):
@@ -347,7 +348,7 @@ def department_edit(request, pk):
     else:
         form = DepartmentForm(instance=department)
     
-    return render(request, 'admin_panel/department_form.html', {'form': form, 'action': 'Modifier', 'department': department})
+    return render(request, 'admin_panel/department_form.html', {'form': form, 'action': 'Modifier', 'icon': 'building'})
 
 @login_required
 def department_delete(request, pk):
@@ -394,7 +395,7 @@ def department_member_create(request, department_pk):
     else:
         form = DepartmentMemberForm(initial={'department': department})
     
-    return render(request, 'admin_panel/department_member_form.html', {'form': form, 'action': 'Créer', 'department': department})
+    return render(request, 'admin_panel/department_member_form.html', {'form': form, 'action': 'Créer', 'icon': 'user', 'department': department})
 
 @login_required
 def department_member_edit(request, pk):
@@ -413,7 +414,7 @@ def department_member_edit(request, pk):
     else:
         form = DepartmentMemberForm(instance=member)
     
-    return render(request, 'admin_panel/department_member_form.html', {'form': form, 'action': 'Modifier', 'member': member, 'department': member.department})
+    return render(request, 'admin_panel/department_member_form.html', {'form': form, 'action': 'Modifier', 'icon': 'user', 'department': member.department})
 
 @login_required
 def department_member_delete(request, pk):
@@ -456,7 +457,7 @@ def hero_image_create(request):
     else:
         form = HeroImageForm()
     
-    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Créer', 'icon': 'images'})
 
 @login_required
 def hero_image_edit(request, pk):
@@ -475,7 +476,7 @@ def hero_image_edit(request, pk):
     else:
         form = HeroImageForm(instance=hero_image)
     
-    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Modifier', 'hero_image': hero_image})
+    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Modifier', 'icon': 'images'})
 
 @login_required
 def hero_image_delete(request, pk):
@@ -513,7 +514,7 @@ def user_create(request):
     else:
         form = UserForm()
     
-    return render(request, 'admin_panel/user_form.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'admin_panel/user_form.html', {'form': form, 'action': 'Créer', 'icon': 'user'})
 
 @login_required
 def user_edit(request, pk):
@@ -536,7 +537,7 @@ def user_edit(request, pk):
     else:
         form = UserForm(instance=user)
     
-    return render(request, 'admin_panel/user_form.html', {'form': form, 'action': 'Modifier', 'user': user})
+    return render(request, 'admin_panel/user_form.html', {'form': form, 'action': 'Modifier', 'icon': 'user'})
 
 @login_required
 def user_delete(request, pk):

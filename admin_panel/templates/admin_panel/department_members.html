@@ -1,0 +1,55 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Membres du département {{ department.name }} - Administration CEREMAC{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-users"></i> Membres du département {{ department.name }}</h4>
+        <a href="{% url 'admin_panel:department_member_create' department.pk %}" class="btn btn-light">
+            <i class="fas fa-plus"></i> Ajouter un membre
+        </a>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'admin_panel:departments' %}" class="btn btn-secondary mb-3">
+            <i class="fas fa-arrow-left"></i> Retour aux départements
+        </a>
+        
+        {% if members %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Rôle</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.role }}</td>
+                        <td>{{ member.email|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'admin_panel:department_member_edit' member.pk %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{% url 'admin_panel:department_member_delete' member.pk %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Aucun membre dans ce département pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

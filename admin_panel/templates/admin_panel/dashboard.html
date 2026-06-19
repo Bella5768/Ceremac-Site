@@ -1,0 +1,92 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Dashboard - Administration CEREMAC{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stats-card bg-primary">
+            <i class="fas fa-newspaper"></i>
+            <h3>{{ news_count }}</h3>
+            <p>Actualités</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-success">
+            <i class="fas fa-project-diagram"></i>
+            <h3>{{ projects_count }}</h3>
+            <p>Projets</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-info">
+            <i class="fas fa-book"></i>
+            <h3>{{ publications_count }}</h3>
+            <p>Publications</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-warning">
+            <i class="fas fa-handshake"></i>
+            <h3>{{ partners_count }}</h3>
+            <p>Partenaires</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stats-card bg-secondary">
+            <i class="fas fa-building"></i>
+            <h3>{{ departments_count }}</h3>
+            <p>Départements</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-danger">
+            <i class="fas fa-users"></i>
+            <h3>{{ users_count }}</h3>
+            <p>Utilisateurs</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-dark">
+            <i class="fas fa-envelope"></i>
+            <h3>{{ messages_count }}</h3>
+            <p>Messages</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card bg-info">
+            <i class="fas fa-bell"></i>
+            <h3>{{ subscribers_count }}</h3>
+            <p>Abonnés</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0"><i class="fas fa-tachometer-alt"></i> Bienvenue sur le panneau d'administration</h4>
+    </div>
+    <div class="card-body">
+        <p>Utilisez le menu de gauche pour gérer le contenu du site CEREMAC.</p>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h5><i class="fas fa-rocket"></i> Actions rapides</h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="{% url 'admin_panel:news_create' %}">Ajouter une actualité</a></li>
+                    <li class="list-group-item"><a href="{% url 'admin_panel:project_create' %}">Ajouter un projet</a></li>
+                    <li class="list-group-item"><a href="{% url 'admin_panel:publication_create' %}">Ajouter une publication</a></li>
+                    <li class="list-group-item"><a href="{% url 'admin_panel:partner_create' %}">Ajouter un partenaire</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h5><i class="fas fa-info-circle"></i> Informations</h5>
+                <p>Vous êtes connecté en tant que <strong>{{ request.user.username }}</strong></p>
+                <p>Dernière connexion: {{ request.user.last_login|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
