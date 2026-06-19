@@ -1,0 +1,3 @@
+{% extends "admin_panel/confirm_delete.html" %}
+{% block title %}Supprimer la publication - Administration CEREMAC{% endblock %}
+{% with object_name=publication.title cancel_url="/fr/admin-panel/publications/" %}{% endwith %}

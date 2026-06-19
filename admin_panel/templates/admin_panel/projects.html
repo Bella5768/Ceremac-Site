@@ -1,56 +1,58 @@
-{% extends 'main/base.html' %}
-{% load static %}
-{% load i18n %}
+{% extends "admin_panel/base.html" %}
 
-{% block title %}{% trans "Gérer les projets" %}{% endblock %}
+{% block title %}Gérer les projets - Administration CEREMAC{% endblock %}
 
 {% block content %}
-<section class="py-5 mt-4">
-    <div class="container">
-        <h2><i class="bi bi-folder"></i> {% trans "Gérer les projets" %}</h2>
-        <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-primary mb-4">
-            <i class="bi bi-arrow-left"></i> {% trans "Retour" %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-project-diagram"></i> Gérer les projets</h4>
+        <a href="{% url 'admin_panel:project_create' %}" class="btn btn-light">
+            <i class="fas fa-plus"></i> Ajouter un projet
         </a>
-        <div class="card">
-            <div class="card-body">
-                {% if projects %}
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>{% trans "Titre" %}</th>
-                                <th>{% trans "Statut" %}</th>
-                                <th>{% trans "Actions" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for project in projects %}
-                            <tr>
-                                <td>{{ project.title }}</td>
-                                <td>
-                                    <span class="badge {% if project.status == 'current' %}badge-custom{% else %}bg-secondary{% endif %}">
-                                        {% if project.status == 'current' %}{% trans "En cours" %}{% else %}{% trans "Terminé" %}{% endif %}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="/admin/main/project/{{ project.id }}/change/" class="btn btn-sm btn-warning">
-                                        <i class="bi bi-pencil"></i> {% trans "Modifier" %}
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                <div class="alert alert-info">{% trans "Aucun projet pour le moment." %}</div>
-                {% endif %}
-                <a href="/admin/main/project/add/" class="btn btn-primary mt-3">
-                    <i class="bi bi-plus-circle"></i> {% trans "Ajouter un projet" %}
-                </a>
-            </div>
-        </div>
     </div>
-</section>
+    <div class="card-body">
+        {% if projects %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Statut</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>{{ project.title }}</td>
+                        <td>
+                            <span class="badge {% if project.status == 'current' %}bg-success{% else %}bg-secondary{% endif %}">
+                                {{ project.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ project.date_start|date:"d/m/Y"|default:"-" }}</td>
+                        <td>{{ project.date_end|date:"d/m/Y"|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'admin_panel:project_edit' project.pk %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{% url 'admin_panel:project_delete' project.pk %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Aucun projet pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 

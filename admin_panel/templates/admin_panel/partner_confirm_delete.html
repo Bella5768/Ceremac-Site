@@ -1,0 +1,3 @@
+{% extends "admin_panel/confirm_delete.html" %}
+{% block title %}Supprimer le partenaire - Administration CEREMAC{% endblock %}
+{% with object_name=partner.name cancel_url="/fr/admin-panel/partners/" %}{% endwith %}

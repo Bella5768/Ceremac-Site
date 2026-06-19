@@ -1,0 +1,6 @@
+{% extends "admin_panel/form_template.html" %}
+
+{% block model_name %}Membre de département{% endblock %}
+{% block model_title %}un membre de département{% endblock %}
+{% block cancel_url %}{% url 'admin_panel:department_members' department.pk %}{% endblock %}
+{% block icon %}user{% endblock %}

@@ -1,0 +1,3 @@
+{% extends "admin_panel/confirm_delete.html" %}
+{% block title %}Supprimer le projet - Administration CEREMAC{% endblock %}
+{% with object_name=project.title cancel_url="/fr/admin-panel/projects/" %}{% endwith %}

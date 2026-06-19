@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
+from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
 
 
 class ContactForm(forms.Form):
@@ -44,4 +45,153 @@ class NewsletterForm(forms.Form):
             'required': True,
         })
     )
+
+
+# Formulaires pour l'administration du site
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['title', 'content', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'actualité'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Contenu de l\'actualité'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'image', 'file_path', 'status', 'date_start', 'date_end']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du projet'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description du projet'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'date_start': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'date_end': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class PublicationForm(forms.ModelForm):
+    class Meta:
+        model = Publication
+        fields = ['title', 'author', 'description', 'file_path', 'publication_date']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de la publication'}),
+            'author': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Auteur(s)'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'publication_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class PartnerForm(forms.ModelForm):
+    class Meta:
+        model = Partner
+        fields = ['name', 'logo', 'website', 'type', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du partenaire'}),
+            'logo': forms.FileInput(attrs={'class': 'form-control'}),
+            'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Site web'}),
+            'type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+        }
+
+
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ['name', 'order', 'description', 'mission', 'image', 'head_of_department', 'email', 'phone', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du département'}),
+            'order': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+            'mission': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Mission'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'head_of_department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Chef de département'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class DepartmentProjectForm(forms.ModelForm):
+    class Meta:
+        model = DepartmentProject
+        fields = ['department', 'title', 'description', 'image', 'file_path', 'status', 'date_start', 'date_end']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du projet'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'date_start': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'date_end': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class DepartmentPublicationForm(forms.ModelForm):
+    class Meta:
+        model = DepartmentPublication
+        fields = ['department', 'title', 'authors', 'description', 'file_path', 'publication_date', 'journal', 'doi']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre'}),
+            'authors': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Auteurs'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'publication_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'journal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Journal'}),
+            'doi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DOI'}),
+        }
+
+
+class DepartmentMemberForm(forms.ModelForm):
+    class Meta:
+        model = DepartmentMember
+        fields = ['department', 'name', 'position', 'email', 'phone', 'photo', 'bio', 'is_head', 'is_active']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom complet'}),
+            'position': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Poste'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Biographie'}),
+            'is_head': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class HeroImageForm(forms.ModelForm):
+    class Meta:
+        model = HeroImage
+        fields = ['title', 'description', 'image', 'order', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Description'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Mot de passe'}), required=False)
+    
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'full_name', 'role', 'can_validate', 'is_active']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom complet'}),
+            'role': forms.Select(attrs={'class': 'form-control'}),
+            'can_validate': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
 

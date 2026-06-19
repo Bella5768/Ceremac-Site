@@ -1,0 +1,3 @@
+{% extends "admin_panel/confirm_delete.html" %}
+{% block title %}Supprimer l'actualité - Administration CEREMAC{% endblock %}
+{% with object_name=news.title cancel_url="/fr/admin-panel/news/" %}{% endwith %}
