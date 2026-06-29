@@ -4,3 +4,99 @@
 {% block model_title %}une actualité{% endblock %}
 {% block cancel_url %}{% url 'admin_panel:news' %}{% endblock %}
 {% block icon %}newspaper{% endblock %}
+
+{% block form_content %}
+<style>
+    .wp-form-container { display: flex; gap: 20px; }
+    .wp-main { flex: 1; }
+    .wp-sidebar { width: 320px; flex-shrink: 0; }
+    .wp-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .wp-card-title { font-weight: 600; margin-bottom: 15px; color: #1a1a1a; }
+    .wp-label { display: block; font-weight: 500; margin-bottom: 8px; color: #333; }
+    .wp-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+    .wp-checkbox-label { display: flex; align-items: center; margin-bottom: 10px; }
+    .wp-checkbox-label input { margin-right: 10px; }
+    .wp-help { font-size: 12px; color: #666; margin-top: 5px; }
+    .wp-btn-group { display: flex; gap: 10px; margin-top: 20px; }
+    .wp-btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; }
+    .wp-btn-primary { background: #007bff; color: white; }
+    .wp-btn-secondary { background: #6c757d; color: white; }
+</style>
+
+<form method="post" enctype="multipart/form-data" class="wp-form-container">
+    {% csrf_token %}
+    
+    <div class="wp-main">
+        <div class="wp-card">
+            <div class="wp-card-title">Contenu de l'article</div>
+            
+            <label class="wp-label">Titre</label>
+            {{ form.title }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Contenu</label>
+            {{ form.content }}
+        </div>
+        
+        <div class="wp-card">
+            <div class="wp-card-title">Image</div>
+            {{ form.image }}
+        </div>
+    </div>
+    
+    <div class="wp-sidebar">
+        <div class="wp-card">
+            <div class="wp-card-title">Publication</div>
+            
+            <label class="wp-label">Statut</label>
+            {{ form.status }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Visibilité</label>
+            {{ form.visibility }}
+        </div>
+        
+        <div class="wp-card">
+            <div class="wp-card-title">Affichage sur le site</div>
+            
+            <label class="wp-checkbox-label">
+                {{ form.show_on_home }}
+                <span>Accueil</span>
+            </label>
+            <label class="wp-checkbox-label">
+                {{ form.show_on_news_page }}
+                <span>Actualités</span>
+            </label>
+            <label class="wp-checkbox-label">
+                {{ form.show_on_about }}
+                <span>À propos</span>
+            </label>
+            <label class="wp-checkbox-label">
+                {{ form.show_on_workshops }}
+                <span>Départements</span>
+            </label>
+            <label class="wp-checkbox-label">
+                {{ form.show_on_events }}
+                <span>Publications</span>
+            </label>
+            <label class="wp-checkbox-label">
+                {{ form.show_on_podcasts }}
+                <span>Partenaires</span>
+            </label>
+        </div>
+        
+        <div class="wp-btn-group">
+            <button type="submit" name="action" value="draft" class="wp-btn wp-btn-secondary">Brouillon</button>
+            <button type="submit" name="action" value="publish" class="wp-btn wp-btn-primary">Publier</button>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        CKEDITOR.replace('id_content', {
+            height: 300,
+            toolbar: 'full'
+        });
+    });
+</script>
+{% endblock %}
