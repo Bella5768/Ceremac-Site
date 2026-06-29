@@ -123,6 +123,9 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'admin_panel:subscribers' %}active{% endif %}" href="{% url 'admin_panel:subscribers' %}">
                         <i class="fas fa-bell"></i> Abonnés
                     </a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'admin_panel:site_settings' %}active{% endif %}" href="{% url 'admin_panel:site_settings' %}">
+                        <i class="fas fa-cog"></i> Paramètres du site
+                    </a>
                     <hr class="border-light mx-3">
                     <a class="nav-link" href="{% url 'main:index' %}">
                         <i class="fas fa-home"></i> Voir le site

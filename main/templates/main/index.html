@@ -130,13 +130,13 @@
                         <img src="{% static 'main/images/director.jpg' %}" alt="{% trans 'Photo du Directeur' %}" class="director-photo" onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'">
                     {% endif %}
                     <h5 class="director-name mt-3">{{ site_settings.director_name|default:"Pr Alpha Issaga Pallé Diallo" }}</h5>
-                    <p class="director-title">{{ site_settings.director_title|default:_"Directeur Général" }}</p>
+                    <p class="director-title">{% if site_settings and site_settings.director_title %}{{ site_settings.director_title }}{% else %}{% trans "Directeur Général" %}{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-8">
                 <span class="eyebrow d-block mb-4">{% trans "Mot du Directeur Général" %}</span>
                 <blockquote class="blockquote-academic">
-                    {{ site_settings.director_quote|default:_"La science est le langage à travers lequel nous comprenons et préservons les océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec rigueur, ouverture et un souci constant du bien commun." }}
+                    {% if site_settings and site_settings.director_quote %}{{ site_settings.director_quote|safe }}{% else %}{% trans "La science est le langage à travers lequel nous comprenons et préservons les océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec rigueur, ouverture et un souci constant du bien commun." %}{% endif %}
                 </blockquote>
             </div>
         </div>

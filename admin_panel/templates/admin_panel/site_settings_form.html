@@ -1,0 +1,41 @@
+{% extends "admin_panel/form_template.html" %}
+
+{% block model_name %}Paramètres du site{% endblock %}
+{% block model_title %}les paramètres du site{% endblock %}
+{% block cancel_url %}{% url 'admin_panel:dashboard' %}{% endblock %}
+{% block icon %}gear{% endblock %}
+
+{% block form_content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Informations du Directeur</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Photo du Directeur</label>
+                    {{ form.director_photo }}
+                    {% if form.instance.director_photo %}
+                    <div class="mt-2">
+                        <img src="{{ form.instance.director_photo.url }}" alt="Photo du Directeur" style="max-height: 200px;">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nom du Directeur</label>
+                    {{ form.director_name }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Titre du Directeur</label>
+                    {{ form.director_title }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Citation du Directeur</label>
+                    {{ form.director_quote }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -55,5 +55,8 @@ urlpatterns = [
     # Messages et abonnés
     path('messages/', views.manage_messages, name='messages'),
     path('subscribers/', views.manage_subscribers, name='subscribers'),
+    
+    # Paramètres du site
+    path('settings/', views.site_settings_edit, name='site_settings'),
 ]
 

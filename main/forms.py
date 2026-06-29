@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
-from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
+from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
 
 
 class ContactForm(forms.Form):
@@ -204,6 +204,18 @@ class HeroImageForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class SiteSettingsForm(forms.ModelForm):
+    class Meta:
+        model = SiteSettings
+        fields = ['director_photo', 'director_name', 'director_title', 'director_quote']
+        widgets = {
+            'director_photo': forms.FileInput(attrs={'class': 'form-control'}),
+            'director_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du Directeur'}),
+            'director_title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du Directeur'}),
+            'director_quote': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Citation du Directeur'}),
         }
 
 

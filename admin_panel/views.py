@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm
 
 
 @login_required
@@ -576,4 +576,24 @@ def user_delete(request, pk):
         return redirect('admin_panel:users')
     
     return render(request, 'admin_panel/user_confirm_delete.html', {'user': user})
+
+
+@login_required
+def site_settings_edit(request):
+    """Modifier les paramètres du site"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    settings_obj, created = SiteSettings.objects.get_or_create(pk=1)
+    
+    if request.method == 'POST':
+        form = SiteSettingsForm(request.POST, request.FILES, instance=settings_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Paramètres du site mis à jour avec succès')
+            return redirect('admin_panel:dashboard')
+    else:
+        form = SiteSettingsForm(instance=settings_obj)
+    
+    return render(request, 'admin_panel/site_settings_form.html', {'form': form, 'action': 'Modifier', 'icon': 'gear'})
 
