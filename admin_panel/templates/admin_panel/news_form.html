@@ -33,6 +33,12 @@
             <label class="wp-label">Titre</label>
             {{ form.title }}
             
+            <label class="wp-label" style="margin-top: 15px;">Sous-titre</label>
+            {{ form.subtitle }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Alignement du sous-titre</label>
+            {{ form.subtitle_alignment }}
+            
             <label class="wp-label" style="margin-top: 15px;">Contenu</label>
             {{ form.content }}
         </div>
@@ -40,6 +46,12 @@
         <div class="wp-card">
             <div class="wp-card-title">Image</div>
             {{ form.image }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Légende</label>
+            {{ form.image_caption }}
+            
+            <label class="wp-label" style="margin-top: 15px;">URL de l'image (alternative)</label>
+            {{ form.image_url }}
         </div>
     </div>
     
@@ -52,6 +64,20 @@
             
             <label class="wp-label" style="margin-top: 15px;">Visibilité</label>
             {{ form.visibility }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Date de publication</label>
+            {{ form.publication_date }}
+            <small class="wp-help">Laisser vide pour publier immédiatement</small>
+            
+            <label class="wp-checkbox-label" style="margin-top: 15px;">
+                {{ form.is_pinned }}
+                <span>Épingler en haut</span>
+            </label>
+            
+            <label class="wp-checkbox-label">
+                {{ form.allow_comments }}
+                <span>Autoriser les commentaires</span>
+            </label>
         </div>
         
         <div class="wp-card">
@@ -81,6 +107,25 @@
                 {{ form.show_on_podcasts }}
                 <span>Partenaires</span>
             </label>
+        </div>
+        
+        <div class="wp-card">
+            <div class="wp-card-title">Catégorie et Tags</div>
+            
+            <label class="wp-label">Rubrique</label>
+            {{ form.category }}
+            
+            <label class="wp-label" style="margin-top: 15px;">Tags</label>
+            {{ form.tags }}
+            <small class="wp-help">Séparés par des virgules</small>
+        </div>
+        
+        <div class="wp-card">
+            <div class="wp-card-title">Auteur</div>
+            
+            <label class="wp-label">Auteur affiché</label>
+            {{ form.displayed_author }}
+            <small class="wp-help">Laisser vide pour utiliser le compte connecté</small>
         </div>
         
         <div class="wp-btn-group">

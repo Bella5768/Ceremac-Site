@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.conf import settings
+from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
@@ -28,23 +30,86 @@ class CustomUser(AbstractUser):
 
 
 class News(models.Model):
-    """Modèle pour les actualités"""
+    """Modèle pour les actualités avec fonctionnalités WordPress-like"""
+    STATUS_CHOICES = [
+        ('draft', 'Brouillon'),
+        ('published', 'Publié'),
+        ('archived', 'Archivé'),
+    ]
+    
+    VISIBILITY_CHOICES = [
+        ('public', 'Public'),
+        ('private', 'Privé'),
+        ('members', 'Membres uniquement'),
+    ]
+    
+    SUBTITLE_ALIGNMENT_CHOICES = [
+        ('left', 'Gauche'),
+        ('center', 'Centre'),
+        ('right', 'Droite'),
+    ]
+    
     title = models.CharField(max_length=255)
+    subtitle = models.TextField(blank=True, null=True)
+    subtitle_alignment = models.CharField(max_length=10, choices=SUBTITLE_ALIGNMENT_CHOICES, default='left')
     content = models.TextField()
     image = models.ImageField(upload_to='news/', blank=True, null=True)
+    image_caption = models.CharField(max_length=255, blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    visibility = models.CharField(max_length=20, choices=VISIBILITY_CHOICES, default='public')
+    publication_date = models.DateTimeField(blank=True, null=True)
+    is_pinned = models.BooleanField(default=False)
+    allow_comments = models.BooleanField(default=True)
+    show_on_home = models.BooleanField(default=False)
+    show_on_news_page = models.BooleanField(default=True)
+    show_on_workshops = models.BooleanField(default=False)
+    show_on_events = models.BooleanField(default=False)
+    show_on_podcasts = models.BooleanField(default=False)
+    show_on_deliverables = models.BooleanField(default=False)
+    show_on_about = models.BooleanField(default=False)
+    category = models.CharField(max_length=100, blank=True, null=True)
+    tags = models.CharField(max_length=255, blank=True, null=True, help_text="Tags séparés par des virgules")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='news_articles')
+    displayed_author = models.CharField(max_length=100, blank=True, null=True)
+    views_count = models.PositiveIntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('news')
         verbose_name_plural = _('news')
-        ordering = ['-date_created']
+        ordering = ['-is_pinned', '-publication_date', '-date_created']
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('news_detail', kwargs={'pk': self.pk})
+
+    @property
+    def is_published(self):
+        return self.status == 'published'
+
+    @property
+    def is_scheduled(self):
+        if self.publication_date:
+            return self.publication_date > timezone.now()
+        return False
+
+    @property
+    def author_display(self):
+        if self.displayed_author:
+            return self.displayed_author
+        elif self.author:
+            return f"{self.author.first_name} {self.author.last_name}".strip() or self.author.username
+        return "Anonyme"
+
+    @property
+    def tags_list(self):
+        if self.tags:
+            return [tag.strip() for tag in self.tags.split(',')]
+        return []
 
 
 class Project(models.Model):

@@ -52,11 +52,38 @@ class NewsletterForm(forms.Form):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ['title', 'content', 'image']
+        fields = [
+            'title', 'subtitle', 'subtitle_alignment', 'content', 
+            'image', 'image_caption', 'image_url',
+            'status', 'visibility', 'publication_date',
+            'is_pinned', 'allow_comments',
+            'show_on_home', 'show_on_news_page', 'show_on_workshops', 
+            'show_on_events', 'show_on_podcasts', 'show_on_deliverables', 'show_on_about',
+            'category', 'tags', 'displayed_author',
+        ]
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'actualité'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Contenu de l\'actualité'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'article'}),
+            'subtitle': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Sous-titre...'}),
+            'subtitle_alignment': forms.RadioSelect(),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 15, 'placeholder': 'Contenu de l\'article...'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'image_caption': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Légende de l\'image...'}),
+            'image_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://...'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'visibility': forms.Select(attrs={'class': 'form-control'}),
+            'publication_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'is_pinned': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'allow_comments': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_home': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_news_page': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_workshops': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_events': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_podcasts': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_deliverables': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'show_on_about': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'category': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Rubrique...'}),
+            'tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tags séparés par virgules...'}),
+            'displayed_author': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Auteur affiché...'}),
         }
 
 

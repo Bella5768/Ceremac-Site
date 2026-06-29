@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
+from django.utils import timezone
 from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
 from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm
 
@@ -106,7 +107,19 @@ def news_create(request):
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            news = form.save(commit=False)
+            news.author = request.user
+            
+            # Gérer le statut selon le bouton cliqué
+            action = request.POST.get('action', 'draft')
+            if action == 'publish':
+                news.status = 'published'
+                if not news.publication_date:
+                    news.publication_date = timezone.now()
+            else:
+                news.status = 'draft'
+            
+            news.save()
             messages.success(request, 'Actualité créée avec succès')
             return redirect('admin_panel:news')
     else:
@@ -125,7 +138,18 @@ def news_edit(request, pk):
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES, instance=news)
         if form.is_valid():
-            form.save()
+            updated_news = form.save(commit=False)
+            
+            # Gérer le statut selon le bouton cliqué
+            action = request.POST.get('action', 'draft')
+            if action == 'publish':
+                updated_news.status = 'published'
+                if not updated_news.publication_date:
+                    updated_news.publication_date = timezone.now()
+            else:
+                updated_news.status = 'draft'
+            
+            updated_news.save()
             messages.success(request, 'Actualité modifiée avec succès')
             return redirect('admin_panel:news')
     else:
