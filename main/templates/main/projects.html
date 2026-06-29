@@ -78,20 +78,16 @@
                             {{ department.description|truncatewords:20 }}
                         </p>
                         {% if department.head_of_department %}
-                        <div class="mt-3 mb-3 p-2" style="background: linear-gradient(135deg, var(--ceremac-gray-50) 0%, #fff 100%); border-radius: 8px;">
-                            <div class="d-flex align-items-center">
-                                {% if department.head_photo %}
-                                    <img src="{{ department.head_photo.url }}" alt="{{ department.head_of_department }}" class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover; flex-shrink: 0;">
-                                {% else %}
-                                    <div class="rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 25px; height: 25px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); flex-shrink: 0;">
-                                        <i class="bi bi-person text-white" style="font-size: 0.75rem;"></i>
-                                    </div>
-                                {% endif %}
-                                <div style="min-width: 0;">
-                                    <p class="mb-0" style="font-size: 0.7rem; font-weight: 600; color: var(--ceremac-deep-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ department.head_of_department }}</p>
-                                    <p class="mb-0" style="font-size: 0.6rem; color: var(--ceremac-chocolate); text-transform: uppercase;">{% trans "Chef" %}</p>
+                        <div class="mt-3 mb-3 p-2 text-center" style="background: linear-gradient(135deg, var(--ceremac-gray-50) 0%, #fff 100%); border-radius: 8px;">
+                            {% if department.head_photo %}
+                                <img src="{{ department.head_photo.url }}" alt="{{ department.head_of_department }}" class="rounded-circle mb-1" style="width: 35px; height: 35px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle mb-1 d-flex align-items-center justify-content-center mx-auto" style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%);">
+                                    <i class="bi bi-person text-white" style="font-size: 1rem;"></i>
                                 </div>
-                            </div>
+                            {% endif %}
+                            <p class="mb-0" style="font-size: 0.75rem; font-weight: 600; color: var(--ceremac-deep-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ department.head_of_department }}</p>
+                            <p class="mb-0" style="font-size: 0.65rem; color: var(--ceremac-chocolate); text-transform: uppercase;">{% trans "Chef" %}</p>
                         </div>
                         {% endif %}
                         <div class="text-center mt-3">
