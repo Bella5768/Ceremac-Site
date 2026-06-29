@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
+    'tinymce',
     'main',
     'admin_panel',
     'members',
@@ -167,4 +168,26 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8001',
     'http://localhost:8001',
 ]
+
+# TinyMCE configuration for rich text editor (WordPress-like)
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'width': 1000,
+    'menubar': True,
+    'plugins': 'advlist,autolink,lists,link,image,charmap,preview,anchor,searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,help,wordcount',
+    'toolbar': 'undo redo | blocks | ' +
+               'bold italic underline strikethrough | ' +
+               'alignleft aligncenter alignright alignjustify | ' +
+               'bullist numlist outdent indent | ' +
+               'forecolor backcolor removeformat | ' +
+               'link image media table | ' +
+               'code preview fullscreen | ' +
+               'help',
+    'content_style': 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; }',
+    'image_caption': True,
+    'image_advtab': True,
+    'automatic_uploads': True,
+    'images_upload_url': '/tinymce/upload/',
+    'images_reuse_filename': True,
+}
 

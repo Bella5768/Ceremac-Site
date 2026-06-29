@@ -15,6 +15,7 @@ def redirect_to_language(request):
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('', redirect_to_language, name='root'),  # Redirection explicite vers /fr/
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 urlpatterns += i18n_patterns(

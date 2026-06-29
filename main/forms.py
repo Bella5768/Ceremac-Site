@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
+from tinymce.widgets import TinyMCE
 from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
 
 
@@ -53,11 +54,11 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = [
-            'title', 'subtitle', 'subtitle_alignment', 'content', 
+            'title', 'subtitle', 'subtitle_alignment', 'content',
             'image', 'image_caption', 'image_url',
             'status', 'visibility', 'publication_date',
             'is_pinned', 'allow_comments',
-            'show_on_home', 'show_on_news_page', 'show_on_workshops', 
+            'show_on_home', 'show_on_news_page', 'show_on_workshops',
             'show_on_events', 'show_on_podcasts', 'show_on_deliverables', 'show_on_about',
             'category', 'tags', 'displayed_author',
         ]
@@ -65,7 +66,7 @@ class NewsForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'article'}),
             'subtitle': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Sous-titre...'}),
             'subtitle_alignment': forms.RadioSelect(),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 15, 'placeholder': 'Contenu de l\'article...'}),
+            'content': TinyMCE(attrs={'cols': 80, 'rows': 30}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'image_caption': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Légende de l\'image...'}),
             'image_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://...'}),
