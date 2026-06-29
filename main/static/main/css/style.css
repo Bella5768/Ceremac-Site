@@ -1236,6 +1236,77 @@ blockquote footer {
     color: var(--ceremac-chocolate);
 }
 
+/* --- Photo du Directeur Général ---------------------------------------- */
+.director-photo-wrapper {
+    padding: 20px;
+}
+.director-photo {
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 12px 40px rgba(15, 61, 82, 0.2);
+    border: 3px solid #fff;
+    outline: 2px solid var(--ceremac-gold);
+    outline-offset: 4px;
+    transition: all var(--transition);
+}
+.director-photo:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(15, 61, 82, 0.28);
+}
+.director-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--ceremac-deep-blue);
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+.director-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ceremac-chocolate);
+    margin: 0;
+}
+
+/* --- Photo du Chef de Département -------------------------------------- */
+.department-head-photo {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(15, 61, 82, 0.15);
+    border: 2px solid #fff;
+    outline: 2px solid var(--ceremac-gold);
+    outline-offset: 2px;
+    transition: all var(--transition);
+}
+.department-head-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(15, 61, 82, 0.25);
+}
+.department-head-photo-placeholder {
+    width: 70px;
+    height: 90px;
+    background: linear-gradient(135deg, var(--ceremac-gray-200) 0%, var(--ceremac-gray-300) 100%);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(15, 61, 82, 0.1);
+    border: 2px solid #fff;
+    outline: 2px solid var(--ceremac-gray-300);
+    outline-offset: 2px;
+}
+.department-head-photo-placeholder i {
+    font-size: 2rem;
+    color: var(--ceremac-gray-500);
+}
+
 /* --- 19.6 Figure / Légende d'image --------------------------------------- */
 figure.academic,
 .figure-academic {
@@ -1761,4 +1832,6 @@ figure.academic figcaption,
     .prose > p:first-of-type::first-letter { font-size: 3.2em; }
     .back-to-top { width: 42px; height: 42px; bottom: 20px; right: 20px; }
     .scroll-progress { height: 2px; }
+    .director-photo { width: 180px; height: 230px; }
+    .director-photo-wrapper { padding: 10px; }
 }

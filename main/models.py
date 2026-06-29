@@ -168,6 +168,7 @@ class Department(models.Model):
     mission = models.TextField()
     image = models.ImageField(upload_to='departments/', blank=True, null=True)
     head_of_department = models.CharField(max_length=255, blank=True)
+    head_photo = models.ImageField(upload_to='departments/heads/', blank=True, null=True, help_text="Photo du chef de département (recommandé: portrait)")
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True, help_text="Numéro de téléphone du département")
     date_created = models.DateTimeField(auto_now_add=True)
@@ -270,4 +271,48 @@ class HeroImage(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SiteSettings(models.Model):
+    """Paramètres du site CEREMAC"""
+    director_photo = models.ImageField(
+        _('Photo du Directeur'),
+        upload_to='site/',
+        blank=True,
+        null=True,
+        help_text="Photo du Directeur Général (recommandé: 220x280px ou portrait)"
+    )
+    director_name = models.CharField(
+        _('Nom du Directeur'),
+        max_length=255,
+        default="Pr Alpha Issaga Pallé Diallo",
+        blank=True
+    )
+    director_title = models.CharField(
+        _('Titre du Directeur'),
+        max_length=255,
+        default="Directeur Général",
+        blank=True
+    )
+    director_quote = models.TextField(
+        _('Citation du Directeur'),
+        default="La science est le langage à travers lequel nous comprenons et préservons les océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec rigueur, ouverture et un souci constant du bien commun.",
+        blank=True
+    )
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Paramètre du site')
+        verbose_name_plural = _('Paramètres du site')
+
+    def __str__(self):
+        return "Paramètres du site CEREMAC"
+
+    def save(self, *args, **kwargs):
+        """Empêche la création de plusieurs instances"""
+        if not self.pk and SiteSettings.objects.exists():
+            # Si une instance existe déjà, on met à jour celle-ci au lieu d'en créer une nouvelle
+            existing = SiteSettings.objects.first()
+            self.pk = existing.pk
+        super().save(*args, **kwargs)
 

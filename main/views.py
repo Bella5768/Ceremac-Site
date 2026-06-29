@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.utils.translation import get_language
-from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
+from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
 from .forms import ContactForm, NewsletterForm
 
 
@@ -11,6 +11,9 @@ def index(request):
     """Page d'accueil"""
     latest_news = News.objects.all()[:3]
     hero_images = HeroImage.objects.filter(is_active=True).order_by('order')
+    
+    # Paramètres du site (photo du directeur, citation, etc.)
+    site_settings = SiteSettings.objects.first()
     
     # Statistiques avec valeurs par défaut si la base est vide
     projects_count = Project.objects.filter(status='current').count()
@@ -29,6 +32,7 @@ def index(request):
         'latest_news': latest_news,
         'hero_images': hero_images,
         'stats': stats,
+        'site_settings': site_settings,
     })
 
 

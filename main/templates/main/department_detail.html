@@ -50,14 +50,40 @@
                             </div>
                             <div class="col-md-9">
                                 <h2 class="mb-3" style="color: var(--ceremac-dark-blue);">{{ department.name }}</h2>
-                                {% if department.head_of_department %}
-                                    <p class="text-muted mb-2">
-                                        <strong>{% trans "Chef de département" %}:</strong> {{ department.head_of_department }}
-                                    </p>
+                                
+                                <!-- Photo et infos du chef de département -->
+                                {% if department.head_of_department or department.head_photo %}
+                                <div class="d-flex align-items-center mb-4 p-3" style="background: linear-gradient(135deg, var(--ceremac-gray-50) 0%, #fff 100%); border-radius: 8px; border-left: 4px solid var(--ceremac-gold);">
+                                    {% if department.head_photo %}
+                                        <img src="{{ department.head_photo.url }}" alt="{{ department.head_of_department }}" class="department-head-photo me-3">
+                                    {% else %}
+                                        <div class="department-head-photo-placeholder me-3">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        {% if department.head_of_department %}
+                                            <p class="mb-1" style="font-weight: 600; color: var(--ceremac-deep-blue); font-size: 1.1rem;">
+                                                {{ department.head_of_department }}
+                                            </p>
+                                            <p class="mb-0" style="font-size: 0.85rem; color: var(--ceremac-chocolate); text-transform: uppercase; letter-spacing: 0.1em;">
+                                                {% trans "Chef de département" %}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
                                 {% endif %}
+                                
                                 {% if department.email %}
                                     <p class="text-muted mb-2">
+                                        <i class="bi bi-envelope me-2 text-primary"></i>
                                         <strong>{% trans "Email" %}:</strong> <a href="mailto:{{ department.email }}">{{ department.email }}</a>
+                                    </p>
+                                {% endif %}
+                                {% if department.phone %}
+                                    <p class="text-muted mb-2">
+                                        <i class="bi bi-telephone me-2 text-primary"></i>
+                                        <strong>{% trans "Téléphone" %}:</strong> {{ department.phone }}
                                     </p>
                                 {% endif %}
                             </div>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser, News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage
+from .models import CustomUser, News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
 
 
 @admin.register(CustomUser)
@@ -61,7 +61,7 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order', 'head_of_department', 'email', 'phone', 'is_active', 'date_created')
+    list_display = ('name', 'order', 'head_of_department', 'email', 'phone', 'is_active', 'date_created', 'head_photo_preview')
     list_filter = ('is_active', 'date_created', 'order')
     search_fields = ('name', 'description', 'head_of_department', 'phone')
     list_editable = ('is_active', 'head_of_department', 'phone')
@@ -73,13 +73,23 @@ class DepartmentAdmin(admin.ModelAdmin):
         ('Description', {
             'fields': ('description', 'mission')
         }),
+        ('Chef de département', {
+            'fields': ('head_of_department', 'head_photo')
+        }),
         ('Contact', {
-            'fields': ('head_of_department', 'email', 'phone')
+            'fields': ('email', 'phone')
         }),
         ('Média', {
             'fields': ('image',)
         })
     )
+    
+    def head_photo_preview(self, obj):
+        if obj.head_photo:
+            return f'<img src="{obj.head_photo.url}" style="max-height: 60px; border-radius: 4px;" />'
+        return '-'
+    head_photo_preview.short_description = 'Photo chef'
+    head_photo_preview.allow_tags = True
 
 
 @admin.register(DepartmentProject)
@@ -127,4 +137,25 @@ class HeroImageAdmin(admin.ModelAdmin):
         return '-'
     image_preview.short_description = 'Aperçu'
     image_preview.allow_tags = True
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'director_name', 'date_updated', 'director_photo_preview')
+    
+    fieldsets = (
+        ('Directeur Général', {
+            'fields': ('director_photo', 'director_name', 'director_title')
+        }),
+        ('Citation', {
+            'fields': ('director_quote',)
+        }),
+    )
+    
+    def director_photo_preview(self, obj):
+        if obj.director_photo:
+            return f'<img src="{obj.director_photo.url}" style="max-height: 80px; border-radius: 4px;" />'
+        return '-'
+    director_photo_preview.short_description = 'Aperçu photo'
+    director_photo_preview.allow_tags = True
 
