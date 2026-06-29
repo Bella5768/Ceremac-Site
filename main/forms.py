@@ -131,7 +131,7 @@ class PartnerForm(forms.ModelForm):
 class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ['name', 'order', 'description', 'mission', 'image', 'head_of_department', 'email', 'phone', 'is_active']
+        fields = ['name', 'order', 'description', 'mission', 'image', 'head_of_department', 'head_photo', 'email', 'phone', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du département'}),
             'order': forms.Select(attrs={'class': 'form-control'}),
@@ -139,6 +139,7 @@ class DepartmentForm(forms.ModelForm):
             'mission': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Mission'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'head_of_department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Chef de département'}),
+            'head_photo': forms.FileInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
