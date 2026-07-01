@@ -8,19 +8,28 @@
 {% block form_content %}
 <style>
     .wp-form-container { display: flex; gap: 20px; }
-    .wp-main { flex: 1; }
+    .wp-main { flex: 1; min-width: 0; }
     .wp-sidebar { width: 320px; flex-shrink: 0; }
-    .wp-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-    .wp-card-title { font-weight: 600; margin-bottom: 15px; color: #1a1a1a; }
-    .wp-label { display: block; font-weight: 500; margin-bottom: 8px; color: #333; }
-    .wp-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-    .wp-checkbox-label { display: flex; align-items: center; margin-bottom: 10px; }
-    .wp-checkbox-label input { margin-right: 10px; }
+    .wp-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .wp-card-title { font-weight: 600; margin-bottom: 15px; color: #1a1a1a; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+    .wp-label { display: block; font-weight: 500; margin-bottom: 8px; color: #333; font-size: 13px; }
+    .wp-input, .wp-form-container input[type="text"], .wp-form-container input[type="url"], .wp-form-container input[type="datetime-local"], .wp-form-container textarea, .wp-form-container select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
+    .wp-form-container input:focus, .wp-form-container textarea:focus, .wp-form-container select:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+    .wp-form-container input[name="title"] { font-size: 22px; font-weight: 600; padding: 15px; }
+    .wp-checkbox-label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+    .wp-checkbox-label input { margin-right: 10px; width: auto; }
     .wp-help { font-size: 12px; color: #666; margin-top: 5px; }
     .wp-btn-group { display: flex; gap: 10px; margin-top: 20px; }
-    .wp-btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; }
+    .wp-btn { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; flex: 1; }
     .wp-btn-primary { background: #007bff; color: white; }
+    .wp-btn-primary:hover { background: #0056b3; }
     .wp-btn-secondary { background: #6c757d; color: white; }
+    .wp-btn-secondary:hover { background: #545b62; }
+    .tox-tinymce { border-radius: 4px !important; border: 1px solid #ddd !important; }
+    @media (max-width: 992px) {
+        .wp-form-container { flex-direction: column; }
+        .wp-sidebar { width: 100%; }
+    }
 </style>
 
 <form method="post" enctype="multipart/form-data" class="wp-form-container">
@@ -39,15 +48,15 @@
             <label class="wp-label" style="margin-top: 15px;">Alignement du sous-titre</label>
             {{ form.subtitle_alignment }}
             
-            <label class="wp-label" style="margin-top: 15px;">Contenu</label>
+            <label class="wp-label" style="margin-top: 15px;">Contenu de l'article</label>
             {{ form.content }}
         </div>
         
         <div class="wp-card">
-            <div class="wp-card-title">Image</div>
+            <div class="wp-card-title">Image mise en avant</div>
             {{ form.image }}
             
-            <label class="wp-label" style="margin-top: 15px;">Légende</label>
+            <label class="wp-label" style="margin-top: 15px;">Légende de l'image</label>
             {{ form.image_caption }}
             
             <label class="wp-label" style="margin-top: 15px;">URL de l'image (alternative)</label>
@@ -134,4 +143,111 @@
         </div>
     </div>
 </form>
+
+<!-- TinyMCE 6 via CDN - Editeur WordPress-like complet -->
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tinymce.init({
+            selector: '#id_content',
+            height: 600,
+            width: '100%',
+            menubar: 'file edit view insert format tools table help',
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                'preview', 'anchor', 'searchreplace', 'visualblocks', 'visualchars',
+                'code', 'fullscreen', 'insertdatetime', 'media', 'table',
+                'help', 'wordcount', 'emoticons', 'pagebreak', 'nonbreaking',
+                'quickbars', 'directionality'
+            ],
+            toolbar1: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | superscript subscript | forecolor backcolor',
+            toolbar2: 'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | hr pagebreak blockquote',
+            toolbar3: 'searchreplace visualblocks visualchars code | preview fullscreen | emoticons charmap | ltr rtl | removeformat | help',
+            font_family_formats: 
+                'Arial=arial,helvetica,sans-serif;' +
+                'Arial Black=arial black,avant garde;' +
+                'Book Antiqua=book antiqua,palatino;' +
+                'Comic Sans MS=comic sans ms,sans-serif;' +
+                'Courier New=courier new,courier;' +
+                'Georgia=georgia,palatino;' +
+                'Helvetica=helvetica;' +
+                'Impact=impact,chicago;' +
+                'Symbol=symbol;' +
+                'Tahoma=tahoma,arial,helvetica,sans-serif;' +
+                'Terminal=terminal,monaco;' +
+                'Times New Roman=times new roman,times;' +
+                'Trebuchet MS=trebuchet ms,geneva;' +
+                'Verdana=verdana,geneva;' +
+                'Roboto=roboto,sans-serif;' +
+                'Open Sans=open sans,sans-serif;' +
+                'Lato=lato,sans-serif;' +
+                'Montserrat=montserrat,sans-serif;' +
+                'Poppins=poppins,sans-serif;' +
+                'Playfair Display=playfair display,serif;' +
+                'Merriweather=merriweather,serif',
+            font_size_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 28pt 32pt 36pt 42pt 48pt 60pt 72pt 96pt',
+            block_formats: 
+                'Paragraphe=p;' +
+                'Titre 1=h1;' +
+                'Titre 2=h2;' +
+                'Titre 3=h3;' +
+                'Titre 4=h4;' +
+                'Titre 5=h5;' +
+                'Titre 6=h6;' +
+                'Pré-formaté=pre;' +
+                'Citation=blockquote;' +
+                'Division=div',
+            content_style: 
+                'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; padding: 20px; }' +
+                'h1, h2, h3, h4, h5, h6 { font-family: Georgia, serif; color: #1a1a1a; }' +
+                'blockquote { border-left: 4px solid #007bff; padding-left: 20px; color: #555; font-style: italic; }' +
+                'img { max-width: 100%; height: auto; }',
+            image_caption: true,
+            image_advtab: true,
+            image_title: true,
+            automatic_uploads: true,
+            file_picker_types: 'image media',
+            paste_data_images: true,
+            branding: false,
+            promotion: false,
+            statusbar: true,
+            resize: true,
+            quickbars_selection_toolbar: 'bold italic underline | quicklink h2 h3 blockquote',
+            quickbars_insert_toolbar: 'quickimage quicktable',
+            contextmenu: 'link image table',
+            image_uploadtab: true,
+            file_picker_callback: function(callback, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                if (meta.filetype === 'image') {
+                    input.setAttribute('accept', 'image/*');
+                } else if (meta.filetype === 'media') {
+                    input.setAttribute('accept', 'video/*,audio/*');
+                }
+                input.onchange = function() {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        callback(reader.result, { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            },
+            setup: function(editor) {
+                editor.on('init', function() {
+                    editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+                });
+                editor.on('focus', function() {
+                    editor.getContainer().style.boxShadow = "0 0 0 3px rgba(0,123,255,0.1)";
+                    editor.getContainer().style.borderColor = "#007bff";
+                });
+                editor.on('blur', function() {
+                    editor.getContainer().style.boxShadow = "";
+                    editor.getContainer().style.borderColor = "#ddd";
+                });
+            }
+        });
+    });
+</script>
 {% endblock %}

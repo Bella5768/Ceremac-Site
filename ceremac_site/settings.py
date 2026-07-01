@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
-    'tinymce',
     'main',
     'admin_panel',
     'members',
@@ -168,57 +167,4 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8001',
     'http://localhost:8001',
 ]
-
-# TinyMCE configuration for rich text editor (WordPress-like)
-TINYMCE_DEFAULT_CONFIG = {
-    'height': 600,
-    'width': '100%',
-    'menubar': 'file edit view insert format tools table help',
-    'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks visualchars code fullscreen insertdatetime media table help wordcount emoticons hr pagebreak nonbreaking template',
-    'toolbar1': 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | superscript subscript | forecolor backcolor',
-    'toolbar2': 'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | hr pagebreak',
-    'toolbar3': 'searchreplace visualblocks visualchars code | preview fullscreen | emoticons charmap | removeformat | help',
-    'font_family_formats': 'Arial=arial,helvetica,sans-serif; '
-                           'Arial Black=arial black,avant garde; '
-                           'Book Antiqua=book antiqua,palatino; '
-                           'Comic Sans MS=comic sans ms,sans-serif; '
-                           'Courier New=courier new,courier; '
-                           'Georgia=georgia,palatino; '
-                           'Helvetica=helvetica; '
-                           'Impact=impact,chicago; '
-                           'Symbol=symbol; '
-                           'Tahoma=tahoma,arial,helvetica,sans-serif; '
-                           'Terminal=terminal,monaco; '
-                           'Times New Roman=times new roman,times; '
-                           'Trebuchet MS=trebuchet ms,geneva; '
-                           'Verdana=verdana,geneva; '
-                           'Roboto=roboto,sans-serif; '
-                           'Open Sans=open sans,sans-serif; '
-                           'Lato=lato,sans-serif; '
-                           'Montserrat=montserrat,sans-serif; '
-                           'Poppins=poppins,sans-serif',
-    'font_size_formats': '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 24pt 28pt 32pt 36pt 48pt 60pt 72pt',
-    'block_formats': 'Paragraphe=p; '
-                     'Titre 1=h1; '
-                     'Titre 2=h2; '
-                     'Titre 3=h3; '
-                     'Titre 4=h4; '
-                     'Titre 5=h5; '
-                     'Titre 6=h6; '
-                     'Pré-formaté=pre; '
-                     'Citation=blockquote; '
-                     'Division=div',
-    'content_style': 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; }',
-    'image_caption': True,
-    'image_advtab': True,
-    'image_title': True,
-    'automatic_uploads': True,
-    'file_picker_types': 'image media',
-    'paste_data_images': True,
-    'branding': False,
-    'promotion': False,
-    'statusbar': True,
-    'resize': True,
-    'language': 'fr_FR',
-}
 

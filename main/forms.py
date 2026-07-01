@@ -1,6 +1,5 @@
 from django import forms
 from django.core.validators import EmailValidator
-from tinymce.widgets import TinyMCE
 from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
 
 
@@ -66,7 +65,7 @@ class NewsForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'article'}),
             'subtitle': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Sous-titre...'}),
             'subtitle_alignment': forms.RadioSelect(),
-            'content': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'id': 'id_content', 'rows': 20, 'placeholder': 'Contenu de l\'article...'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'image_caption': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Légende de l\'image...'}),
             'image_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://...'}),
