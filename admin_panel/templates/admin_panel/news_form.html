@@ -1,36 +1,41 @@
-{% extends "admin_panel/form_template.html" %}
+{% extends "admin_panel/base.html" %}
 
-{% block model_name %}Actualité{% endblock %}
-{% block model_title %}une actualité{% endblock %}
-{% block cancel_url %}{% url 'admin_panel:news' %}{% endblock %}
-{% block icon %}newspaper{% endblock %}
+{% block title %}{{ action }} une actualité - Administration CEREMAC{% endblock %}
 
-{% block form_content %}
+{% block content %}
 <style>
+    .wp-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 20px; margin: -20px -20px 20px -20px; }
+    .wp-header h1 { margin: 0; font-size: 24px; color: #1a1a1a; }
     .wp-form-container { display: flex; gap: 20px; }
     .wp-main { flex: 1; min-width: 0; }
     .wp-sidebar { width: 320px; flex-shrink: 0; }
     .wp-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .wp-card-title { font-weight: 600; margin-bottom: 15px; color: #1a1a1a; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
     .wp-label { display: block; font-weight: 500; margin-bottom: 8px; color: #333; font-size: 13px; }
-    .wp-input, .wp-form-container input[type="text"], .wp-form-container input[type="url"], .wp-form-container input[type="datetime-local"], .wp-form-container textarea, .wp-form-container select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
+    .wp-form-container input[type="text"], .wp-form-container input[type="url"], .wp-form-container input[type="datetime-local"], .wp-form-container input[type="file"], .wp-form-container textarea, .wp-form-container select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; box-sizing: border-box; }
     .wp-form-container input:focus, .wp-form-container textarea:focus, .wp-form-container select:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
     .wp-form-container input[name="title"] { font-size: 22px; font-weight: 600; padding: 15px; }
     .wp-checkbox-label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
     .wp-checkbox-label input { margin-right: 10px; width: auto; }
-    .wp-help { font-size: 12px; color: #666; margin-top: 5px; }
+    .wp-help { font-size: 12px; color: #666; margin-top: 5px; display: block; }
     .wp-btn-group { display: flex; gap: 10px; margin-top: 20px; }
-    .wp-btn { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; flex: 1; }
+    .wp-btn { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; flex: 1; text-decoration: none; text-align: center; display: inline-block; }
     .wp-btn-primary { background: #007bff; color: white; }
-    .wp-btn-primary:hover { background: #0056b3; }
+    .wp-btn-primary:hover { background: #0056b3; color: white; }
     .wp-btn-secondary { background: #6c757d; color: white; }
-    .wp-btn-secondary:hover { background: #545b62; }
+    .wp-btn-secondary:hover { background: #545b62; color: white; }
+    .wp-btn-cancel { background: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px; font-size: 13px; text-align: center; width: 100%; box-sizing: border-box; }
+    .wp-btn-cancel:hover { background: #c82333; color: white; }
     .tox-tinymce { border-radius: 4px !important; border: 1px solid #ddd !important; }
     @media (max-width: 992px) {
         .wp-form-container { flex-direction: column; }
         .wp-sidebar { width: 100%; }
     }
 </style>
+
+<div class="wp-header">
+    <h1><i class="fas fa-newspaper"></i> {{ action }} une actualité</h1>
+</div>
 
 <form method="post" enctype="multipart/form-data" class="wp-form-container">
     {% csrf_token %}
@@ -141,6 +146,10 @@
             <button type="submit" name="action" value="draft" class="wp-btn wp-btn-secondary">Brouillon</button>
             <button type="submit" name="action" value="publish" class="wp-btn wp-btn-primary">Publier</button>
         </div>
+        
+        <a href="{% url 'admin_panel:news' %}" class="wp-btn-cancel">
+            <i class="fas fa-times"></i> Annuler
+        </a>
     </div>
 </form>
 
@@ -163,7 +172,7 @@
             toolbar1: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | superscript subscript | forecolor backcolor',
             toolbar2: 'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | hr pagebreak blockquote',
             toolbar3: 'searchreplace visualblocks visualchars code | preview fullscreen | emoticons charmap | ltr rtl | removeformat | help',
-            font_family_formats: 
+            font_family_formats:
                 'Arial=arial,helvetica,sans-serif;' +
                 'Arial Black=arial black,avant garde;' +
                 'Book Antiqua=book antiqua,palatino;' +
@@ -186,7 +195,7 @@
                 'Playfair Display=playfair display,serif;' +
                 'Merriweather=merriweather,serif',
             font_size_formats: '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 28pt 32pt 36pt 42pt 48pt 60pt 72pt 96pt',
-            block_formats: 
+            block_formats:
                 'Paragraphe=p;' +
                 'Titre 1=h1;' +
                 'Titre 2=h2;' +
@@ -197,7 +206,7 @@
                 'Pré-formaté=pre;' +
                 'Citation=blockquote;' +
                 'Division=div',
-            content_style: 
+            content_style:
                 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; padding: 20px; }' +
                 'h1, h2, h3, h4, h5, h6 { font-family: Georgia, serif; color: #1a1a1a; }' +
                 'blockquote { border-left: 4px solid #007bff; padding-left: 20px; color: #555; font-style: italic; }' +
@@ -233,19 +242,6 @@
                     reader.readAsDataURL(file);
                 };
                 input.click();
-            },
-            setup: function(editor) {
-                editor.on('init', function() {
-                    editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
-                });
-                editor.on('focus', function() {
-                    editor.getContainer().style.boxShadow = "0 0 0 3px rgba(0,123,255,0.1)";
-                    editor.getContainer().style.borderColor = "#007bff";
-                });
-                editor.on('blur', function() {
-                    editor.getContainer().style.boxShadow = "";
-                    editor.getContainer().style.borderColor = "#ddd";
-                });
             }
         });
     });
