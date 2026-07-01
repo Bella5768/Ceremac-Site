@@ -37,7 +37,20 @@
     <h1><i class="fas fa-newspaper"></i> {{ action }} une actualité</h1>
 </div>
 
-<form method="post" enctype="multipart/form-data" class="wp-form-container">
+{% if form.errors %}
+<div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+    <strong><i class="fas fa-exclamation-triangle"></i> Veuillez corriger les erreurs suivantes :</strong>
+    <ul style="margin: 10px 0 0 20px;">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <li><strong>{{ field }}:</strong> {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="wp-form-container" id="newsForm">
     {% csrf_token %}
     
     <div class="wp-main">
@@ -244,6 +257,16 @@
                 input.click();
             }
         });
+        
+        // Synchronise le contenu TinyMCE avec le textarea avant soumission
+        var form = document.getElementById('newsForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
+                }
+            });
+        }
     });
 </script>
 {% endblock %}
