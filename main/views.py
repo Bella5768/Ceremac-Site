@@ -38,7 +38,8 @@ def index(request):
 
 def about(request):
     """Page À propos"""
-    return render(request, 'main/about.html')
+    site_settings = SiteSettings.objects.first()
+    return render(request, 'main/about.html', {'site_settings': site_settings})
 
 
 def projects(request):

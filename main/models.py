@@ -364,6 +364,12 @@ class SiteSettings(models.Model):
         default="La science est le langage à travers lequel nous comprenons et préservons les océans qui bordent la Guinée. Le CEREMAC engage cette responsabilité avec rigueur, ouverture et un souci constant du bien commun.",
         blank=True
     )
+    about_content = models.TextField(
+        _('Contenu de la page À propos'),
+        default="",
+        blank=True,
+        help_text="Contenu principal de la page À propos (supporte HTML)"
+    )
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
