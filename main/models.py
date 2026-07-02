@@ -370,6 +370,36 @@ class SiteSettings(models.Model):
         blank=True,
         help_text="Contenu principal de la page À propos (supporte HTML)"
     )
+    about_history = models.TextField(
+        _('Historique et Évolution'),
+        default="",
+        blank=True,
+        help_text="Section Historique de la page À propos (supporte HTML)"
+    )
+    about_administration = models.TextField(
+        _('Organisation Administrative'),
+        default="",
+        blank=True,
+        help_text="Section Organisation Administrative (supporte HTML)"
+    )
+    about_scientific = models.TextField(
+        _('Organisation Scientifique'),
+        default="",
+        blank=True,
+        help_text="Section Organisation Scientifique (supporte HTML)"
+    )
+    about_research = models.TextField(
+        _('Domaines de Recherche'),
+        default="",
+        blank=True,
+        help_text="Section Domaines de Recherche (supporte HTML)"
+    )
+    about_missions = models.TextField(
+        _('Missions'),
+        default="",
+        blank=True,
+        help_text="Section Missions (supporte HTML)"
+    )
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:

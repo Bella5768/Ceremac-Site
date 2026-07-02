@@ -19,17 +19,6 @@
 
 <section class="py-5">
     <div class="container">
-        {% if site_settings.about_content %}
-            <div class="row mb-5">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            {{ site_settings.about_content|safe }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% else %}
         <!-- Historique Complet -->
         <div class="row mb-5">
             <div class="col-lg-12">
@@ -38,6 +27,9 @@
                         <h3><i class="bi bi-clock-history me-2"></i> {% trans "Présentation de l'Institution" %}</h3>
                     </div>
                     <div class="card-body">
+                        {% if site_settings.about_history %}
+                            {{ site_settings.about_history|safe }}
+                        {% else %}
                         <div class="row">
                             <div class="col-lg-12">
                                 <h4 class="mb-4" style="color: var(--ceremac-dark-blue);">{% trans "Historique et Évolution" %}</h4>
@@ -133,6 +125,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -146,6 +139,9 @@
                         <h3><i class="bi bi-building me-2"></i> {% trans "Organisation Administrative" %}</h3>
                     </div>
                     <div class="card-body">
+                        {% if site_settings.about_administration %}
+                            {{ site_settings.about_administration|safe }}
+                        {% else %}
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, var(--ceremac-light-blue) 0%, white 100%);">
@@ -197,6 +193,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -210,6 +207,9 @@
                         <h3><i class="bi bi-diagram-3 me-2"></i> {% trans "Organisation Scientifique" %}</h3>
                     </div>
                     <div class="card-body">
+                        {% if site_settings.about_scientific %}
+                            {{ site_settings.about_scientific|safe }}
+                        {% else %}
                         <div class="row">
                             <div class="col-lg-8">
                                 <p class="lead" style="font-size: 1.2rem; color: #555;">
@@ -271,6 +271,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -280,6 +281,9 @@
         <div class="row mb-5">
             <div class="col-lg-12">
                 <h2 class="section-title">{% trans "Domaines de Recherche" %}</h2>
+                {% if site_settings.about_research %}
+                    {{ site_settings.about_research|safe }}
+                {% else %}
                 <div class="row">
                     <div class="col-md-3 mb-4">
                         <div class="card h-100 text-center">
@@ -318,6 +322,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
 
@@ -325,6 +330,9 @@
         <div class="row mb-5">
             <div class="col-lg-12">
                 <h2 class="section-title">{% trans "Missions" %}</h2>
+                {% if site_settings.about_missions %}
+                    {{ site_settings.about_missions|safe }}
+                {% else %}
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="card h-100">
@@ -361,9 +369,9 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
 </section>
 {% endblock %}

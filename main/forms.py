@@ -211,13 +211,18 @@ class HeroImageForm(forms.ModelForm):
 class SiteSettingsForm(forms.ModelForm):
     class Meta:
         model = SiteSettings
-        fields = ['director_photo', 'director_name', 'director_title', 'director_quote', 'about_content']
+        fields = ['director_photo', 'director_name', 'director_title', 'director_quote', 'about_content', 'about_history', 'about_administration', 'about_scientific', 'about_research', 'about_missions']
         widgets = {
             'director_photo': forms.FileInput(attrs={'class': 'form-control'}),
             'director_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du Directeur'}),
             'director_title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du Directeur'}),
             'director_quote': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Citation du Directeur'}),
-            'about_content': forms.Textarea(attrs={'class': 'form-control', 'rows': 15, 'placeholder': 'Contenu de la page À propos (HTML autorisé)'}),
+            'about_content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Contenu principal de la page À propos (HTML autorisé)'}),
+            'about_history': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Historique (HTML autorisé)'}),
+            'about_administration': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Organisation Administrative (HTML autorisé)'}),
+            'about_scientific': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Organisation Scientifique (HTML autorisé)'}),
+            'about_research': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Domaines de Recherche (HTML autorisé)'}),
+            'about_missions': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Missions (HTML autorisé)'}),
         }
 
 
