@@ -91,14 +91,14 @@
                             <h4 style="color: var(--ceremac-dark-blue); margin-bottom: 15px;">
                                 <i class="bi bi-info-circle me-2"></i>{% trans "Description" %}
                             </h4>
-                            <p style="line-height: 1.8; color: #555;">{{ department.description }}</p>
+                            <p style="line-height: 1.8; color: #555;">{{ department.description|linebreaks }}</p>
                         </div>
                         
                         <div class="mb-4">
                             <h4 style="color: var(--ceremac-dark-blue); margin-bottom: 15px;">
                                 <i class="bi bi-bullseye me-2"></i>{% trans "Mission" %}
                             </h4>
-                            <p style="line-height: 1.8; color: #555;">{{ department.mission }}</p>
+                            <p style="line-height: 1.8; color: #555;">{{ department.mission|linebreaks }}</p>
                         </div>
                     </div>
                 </div>
