@@ -111,8 +111,12 @@ def news_list(request):
 
 def news_detail(request, pk):
     """Détail d'une actualité"""
-    news = get_object_or_404(News, pk=pk)
-    return render(request, 'main/news_detail.html', {'news': news})
+    try:
+        news = News.objects.get(pk=pk)
+        return render(request, 'main/news_detail.html', {'news': news})
+    except News.DoesNotExist:
+        messages.error(request, "Cet article n'existe pas ou a été supprimé.")
+        return redirect('main:news_list')
 
 
 def contact(request):
