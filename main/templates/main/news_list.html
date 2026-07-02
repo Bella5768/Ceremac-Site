@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load content_filters %}
 
 {% block title %}{% trans "Actualités" %}{% endblock %}
 
@@ -31,7 +32,7 @@
                     <div class="card-body">
                         <span class="badge badge-custom">{{ news.date_created|date:"d/m/Y" }}</span>
                         <h5 class="card-title mt-3">{{ news.title }}</h5>
-                        <p class="card-text">{{ news.content|truncatewords:30|striptags }}</p>
+                        <p class="card-text">{{ news.content|clean_html_excerpt|truncatewords:30 }}</p>
                         <a href="{% url 'main:news_detail' news.pk %}" class="btn btn-primary btn-sm">{% trans "Lire la suite" %} <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>

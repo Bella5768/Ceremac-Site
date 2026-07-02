@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load content_filters %}
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
@@ -258,7 +259,7 @@
                     <div class="news-body">
                         <span class="news-date">{{ news.date_created|date:"d M Y" }}</span>
                         <h5><a href="{% url 'main:news_detail' news.pk %}">{{ news.title }}</a></h5>
-                        <p>{{ news.content|striptags|truncatewords:20 }}</p>
+                        <p>{{ news.content|clean_html_excerpt|truncatewords:20 }}</p>
                         <a href="{% url 'main:news_detail' news.pk %}" class="news-link">{% trans "Lire la suite" %} <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </article>
