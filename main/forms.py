@@ -135,8 +135,8 @@ class DepartmentForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du département'}),
             'order': forms.Select(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
-            'mission': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Mission'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Description'}),
+            'mission': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Mission'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'head_of_department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Chef de département'}),
             'head_photo': forms.FileInput(attrs={'class': 'form-control'}),
