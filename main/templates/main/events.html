@@ -1,0 +1,90 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Événements" %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+{% if hero_images %}
+<section class="hero-section-carousel">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+        <div class="carousel-inner">
+            {% for image in hero_images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+                <div class="carousel-caption">
+                    <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Événements" %}</h1>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+{% else %}
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Événements" %}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-5">
+    <div class="container">
+        {% if events_list %}
+        <div class="row">
+            {% for event in events_list %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if event.image %}
+                    <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="{{ event.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge 
+                            {% if event.status == 'upcoming' %}bg-info
+                            {% elif event.status == 'ongoing' %}bg-success
+                            {% elif event.status == 'completed' %}bg-secondary
+                            {% elif event.status == 'cancelled' %}bg-danger
+                            {% endif %} mb-2">
+                            {{ event.get_status_display }}
+                        </span>
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text"><small class="text-muted">
+                            <i class="bi bi-calendar"></i> {{ event.start_date|date:"d/m/Y H:i" }}
+                            {% if event.end_date %}
+                            - {{ event.end_date|date:"d/m/Y H:i" }}
+                            {% endif %}
+                        </small></p>
+                        {% if event.location %}
+                        <p class="card-text"><small class="text-muted">
+                            <i class="bi bi-geo-alt"></i> {{ event.location }}
+                        </small></p>
+                        {% endif %}
+                        <p class="card-text">{{ event.description|truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle"></i> {% trans "Aucun événement pour le moment." %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

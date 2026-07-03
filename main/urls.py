@@ -15,5 +15,9 @@ urlpatterns = [
     path('news/<int:pk>/', views.news_detail, name='news_detail'),
     path('contact/', views.contact, name='contact'),
     path('newsletter/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    path('events/', views.events, name='events'),
+    path('services/', views.services, name='services'),
+    path('testimonials/', views.testimonials, name='testimonials'),
+    path('faqs/', views.faqs, name='faqs'),
 ]
 

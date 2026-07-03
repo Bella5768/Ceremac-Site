@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.utils.translation import get_language
-from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
+from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
 from .forms import ContactForm, NewsletterForm
 
 
@@ -158,14 +158,54 @@ def newsletter_subscribe(request):
                 email=email,
                 defaults={'is_active': True}
             )
-            if not created:
-                subscriber.is_active = True
-                subscriber.save()
-            
-            messages.success(request, 'Inscription réussie!')
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            if created:
+                messages.success(request, 'Merci pour votre inscription à la newsletter!')
+            else:
+                messages.info(request, 'Vous êtes déjà inscrit à la newsletter.')
+            return redirect('main:index')
     else:
         form = NewsletterForm()
     
-    return render(request, 'main/newsletter.html', {'form': form})
+    return render(request, 'main/index.html', {'form': form})
+
+
+def events(request):
+    """Page Événements"""
+    events_list = Event.objects.filter(is_active=True).order_by('-start_date')
+    hero_images = HeroImage.objects.filter(is_active=True, page='events').order_by('order')
+    
+    return render(request, 'main/events.html', {
+        'events_list': events_list,
+        'hero_images': hero_images,
+    })
+
+
+def services(request):
+    """Page Services"""
+    services_list = Service.objects.filter(is_active=True).order_by('order')
+    hero_images = HeroImage.objects.filter(is_active=True, page='services').order_by('order')
+    
+    return render(request, 'main/services.html', {
+        'services_list': services_list,
+        'hero_images': hero_images,
+    })
+
+
+def testimonials(request):
+    """Page Témoignages"""
+    testimonials_list = Testimonial.objects.filter(is_active=True).order_by('-is_featured', '-date_created')
+    
+    return render(request, 'main/testimonials.html', {
+        'testimonials_list': testimonials_list,
+    })
+
+
+def faqs(request):
+    """Page FAQ"""
+    faqs_list = FAQ.objects.filter(is_active=True).order_by('category', 'order')
+    
+    return render(request, 'main/faqs.html', {
+        'faqs_list': faqs_list,
+    })
+
 

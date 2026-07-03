@@ -53,6 +53,18 @@
                         <a class="nav-link" href="{% url 'main:news_list' %}"><i class="bi bi-newspaper"></i> {% trans "Actualités" %}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:events' %}"><i class="bi bi-calendar-event"></i> {% trans "Événements" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:services' %}"><i class="bi bi-gear"></i> {% trans "Services" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:testimonials' %}"><i class="bi bi-quote"></i> {% trans "Témoignages" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:faqs' %}"><i class="bi bi-question-circle"></i> {% trans "FAQ" %}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'main:contact' %}"><i class="bi bi-envelope"></i> {% trans "Contact" %}</a>
                     </li>
                 </ul>
@@ -143,17 +155,18 @@
                     </form>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <h5>{% trans "Contact" %}</h5>
-                    <p><i class="bi bi-geo-alt me-2"></i> B.P. : 1615, Conakry, Guinée</p>
-                    <p><i class="bi bi-telephone me-2"></i> +224 628 465 410</p>
-                    <p><i class="bi bi-envelope me-2"></i> dgcerescor@yahoo.fr</p>
-                    <p><i class="bi bi-envelope me-2"></i> alfadjogalle@gmail.com</p>
-                    <div class="social-links mt-3">
-                        <a href="https://www.facebook.com/share/186NXLLimx/" target="_blank" class="text-light me-3"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="text-light me-3"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
-                    </div>
+                    <h5>{% trans "Liens Rapides" %}</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'main:about' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "À propos" %}</a></li>
+                        <li><a href="{% url 'main:projects' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Départements" %}</a></li>
+                        <li><a href="{% url 'main:publications' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Publications" %}</a></li>
+                        <li><a href="{% url 'main:news_list' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Actualités" %}</a></li>
+                        <li><a href="{% url 'main:events' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Événements" %}</a></li>
+                        <li><a href="{% url 'main:services' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Services" %}</a></li>
+                        <li><a href="{% url 'main:testimonials' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Témoignages" %}</a></li>
+                        <li><a href="{% url 'main:faqs' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "FAQ" %}</a></li>
+                        <li><a href="{% url 'main:contact' %}" class="text-light text-decoration-none mb-2 d-block">{% trans "Contact" %}</a></li>
+                    </ul>
                 </div>
             </div>
             <hr class="my-4">
