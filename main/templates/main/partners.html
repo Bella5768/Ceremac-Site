@@ -29,6 +29,9 @@
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ partner.name }}</h5>
+                        {% if partner.description %}
+                        <p class="card-text" style="text-align: justify;">{{ partner.description|truncatewords:20 }}</p>
+                        {% endif %}
                         {% if partner.website %}
                         <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-link-45deg"></i> {% trans "Site web" %}
@@ -52,6 +55,9 @@
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ partner.name }}</h5>
+                        {% if partner.description %}
+                        <p class="card-text" style="text-align: justify;">{{ partner.description|truncatewords:20 }}</p>
+                        {% endif %}
                         {% if partner.website %}
                         <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-link-45deg"></i> {% trans "Site web" %}

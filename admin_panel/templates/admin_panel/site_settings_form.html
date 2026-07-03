@@ -36,6 +36,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Page À propos - Sections Modifiables</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Historique et Évolution</label>
+                    {{ form.about_history }}
+                    <small class="form-text text-muted">Contenu de la section Historique (HTML autorisé)</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Organisation Administrative</label>
+                    {{ form.about_administration }}
+                    <small class="form-text text-muted">Contenu de la section Organisation Administrative (HTML autorisé)</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Organisation Scientifique</label>
+                    {{ form.about_scientific }}
+                    <small class="form-text text-muted">Contenu de la section Organisation Scientifique (HTML autorisé)</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Domaines de Recherche</label>
+                    {{ form.about_research }}
+                    <small class="form-text text-muted">Contenu de la section Domaines de Recherche (HTML autorisé)</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Missions</label>
+                    {{ form.about_missions }}
+                    <small class="form-text text-muted">Contenu de la section Missions (HTML autorisé)</small>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

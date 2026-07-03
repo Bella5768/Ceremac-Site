@@ -31,7 +31,7 @@
                         <p class="text-muted"><i class="bi bi-calendar"></i> {{ publication.publication_date|date:"Y" }}</p>
                         {% endif %}
                         {% if publication.description %}
-                        <p class="card-text">{{ publication.description|truncatewords:30 }}</p>
+                        <p class="card-text" style="text-align: justify;">{{ publication.description|truncatewords:30 }}</p>
                         {% endif %}
                         {% if publication.file_path %}
                         <a href="{{ publication.file_path.url }}" class="btn btn-primary btn-sm" download>
