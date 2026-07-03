@@ -400,6 +400,48 @@ class SiteSettings(models.Model):
         blank=True,
         help_text="Section Missions (supporte HTML)"
     )
+    contact_address = models.TextField(
+        _('Adresse de contact'),
+        default="",
+        blank=True,
+        help_text="Adresse physique du CEREMAC"
+    )
+    contact_phone = models.CharField(
+        _('Téléphone de contact'),
+        max_length=50,
+        default="",
+        blank=True
+    )
+    contact_email = models.EmailField(
+        _('Email de contact'),
+        default="",
+        blank=True
+    )
+    facebook_url = models.URLField(
+        _('Facebook'),
+        default="",
+        blank=True
+    )
+    twitter_url = models.URLField(
+        _('Twitter/X'),
+        default="",
+        blank=True
+    )
+    linkedin_url = models.URLField(
+        _('LinkedIn'),
+        default="",
+        blank=True
+    )
+    instagram_url = models.URLField(
+        _('Instagram'),
+        default="",
+        blank=True
+    )
+    youtube_url = models.URLField(
+        _('YouTube'),
+        default="",
+        blank=True
+    )
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -416,4 +458,101 @@ class SiteSettings(models.Model):
             existing = SiteSettings.objects.first()
             self.pk = existing.pk
         super().save(*args, **kwargs)
+
+
+class Event(models.Model):
+    """Modèle pour les événements"""
+    STATUS_CHOICES = [
+        ('upcoming', 'À venir'),
+        ('ongoing', 'En cours'),
+        ('completed', 'Terminé'),
+        ('cancelled', 'Annulé'),
+    ]
+    
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='events/', blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')
+    is_featured = models.BooleanField(default=False)
+    registration_required = models.BooleanField(default=False)
+    max_participants = models.IntegerField(blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('event')
+        verbose_name_plural = _('events')
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return self.title
+
+
+class Service(models.Model):
+    """Modèle pour les services"""
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    icon = models.CharField(max_length=50, blank=True, help_text="Classe d'icône Bootstrap (ex: bi-clipboard-data)")
+    image = models.ImageField(upload_to='services/', blank=True, null=True)
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('service')
+        verbose_name_plural = _('services')
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+
+class Testimonial(models.Model):
+    """Modèle pour les témoignages"""
+    name = models.CharField(max_length=255)
+    position = models.CharField(max_length=255, blank=True)
+    organization = models.CharField(max_length=255, blank=True)
+    content = models.TextField()
+    photo = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    rating = models.IntegerField(default=5, help_text="Note sur 5")
+    is_featured = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('testimonial')
+        verbose_name_plural = _('testimonials')
+        ordering = ['-is_featured', '-date_created']
+
+    def __str__(self):
+        return f"{self.name} - {self.organization}"
+
+
+class FAQ(models.Model):
+    """Modèle pour les FAQ"""
+    CATEGORY_CHOICES = [
+        ('general', 'Général'),
+        ('research', 'Recherche'),
+        ('education', 'Formation'),
+        ('partnership', 'Partenariat'),
+        ('contact', 'Contact'),
+    ]
+    
+    question = models.CharField(max_length=500)
+    answer = models.TextField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='general')
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('FAQ')
+        verbose_name_plural = _('FAQs')
+        ordering = ['category', 'order']
+
+    def __str__(self):
+        return self.question
 

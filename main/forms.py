@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
-from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
+from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
 
 
 class ContactForm(forms.Form):
@@ -211,7 +211,7 @@ class HeroImageForm(forms.ModelForm):
 class SiteSettingsForm(forms.ModelForm):
     class Meta:
         model = SiteSettings
-        fields = ['director_photo', 'director_name', 'director_title', 'director_quote', 'about_content', 'about_history', 'about_administration', 'about_scientific', 'about_research', 'about_missions']
+        fields = ['director_photo', 'director_name', 'director_title', 'director_quote', 'about_content', 'about_history', 'about_administration', 'about_scientific', 'about_research', 'about_missions', 'contact_address', 'contact_phone', 'contact_email', 'facebook_url', 'twitter_url', 'linkedin_url', 'instagram_url', 'youtube_url']
         widgets = {
             'director_photo': forms.FileInput(attrs={'class': 'form-control'}),
             'director_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du Directeur'}),
@@ -223,6 +223,14 @@ class SiteSettingsForm(forms.ModelForm):
             'about_scientific': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Organisation Scientifique (HTML autorisé)'}),
             'about_research': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Domaines de Recherche (HTML autorisé)'}),
             'about_missions': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Section Missions (HTML autorisé)'}),
+            'contact_address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Adresse physique'}),
+            'contact_phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone'}),
+            'contact_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'facebook_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://facebook.com/...'}),
+            'twitter_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://twitter.com/...'}),
+            'linkedin_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://linkedin.com/...'}),
+            'instagram_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://instagram.com/...'}),
+            'youtube_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://youtube.com/...'}),
         }
 
 
@@ -238,6 +246,67 @@ class UserForm(forms.ModelForm):
             'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom complet'}),
             'role': forms.Select(attrs={'class': 'form-control'}),
             'can_validate': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'description', 'start_date', 'end_date', 'location', 'image', 'status', 'is_featured', 'registration_required', 'max_participants']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'événement'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'start_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lieu'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'registration_required': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'max_participants': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Nombre maximum de participants'}),
+        }
+
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['title', 'description', 'icon', 'image', 'order', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du service'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'icon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Icône Bootstrap (ex: bi-clipboard-data)'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['name', 'position', 'organization', 'content', 'photo', 'rating', 'is_featured', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom'}),
+            'position': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Poste'}),
+            'organization': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Organisation'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Témoignage'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control'}),
+            'rating': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Note sur 5'}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class FAQForm(forms.ModelForm):
+    class Meta:
+        model = FAQ
+        fields = ['question', 'answer', 'category', 'order', 'is_active']
+        widgets = {
+            'question': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Question'}),
+            'answer': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Réponse'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
