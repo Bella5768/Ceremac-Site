@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.utils.translation import get_language
-from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
+from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
 from .forms import ContactForm, NewsletterForm
 
 
@@ -207,5 +207,11 @@ def faqs(request):
     return render(request, 'main/faqs.html', {
         'faqs_list': faqs_list,
     })
+
+
+def static_page(request, slug):
+    """Afficher une page statique par slug"""
+    page = get_object_or_404(StaticPage, slug=slug, is_active=True)
+    return render(request, 'main/static_page.html', {'page': page})
 
 

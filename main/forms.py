@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
-from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
+from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
 
 
 class ContactForm(forms.Form):
@@ -308,6 +308,18 @@ class FAQForm(forms.ModelForm):
             'answer': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Réponse'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
             'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class StaticPageForm(forms.ModelForm):
+    class Meta:
+        model = StaticPage
+        fields = ['title', 'slug', 'content', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de la page'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'slug-de-la-page'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Contenu de la page (HTML autorisé)'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

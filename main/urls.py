@@ -19,5 +19,6 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     path('testimonials/', views.testimonials, name='testimonials'),
     path('faqs/', views.faqs, name='faqs'),
+    path('page/<slug:slug>/', views.static_page, name='static_page'),
 ]
 

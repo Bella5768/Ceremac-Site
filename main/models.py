@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
+from django.utils.text import slugify
 
 
 class CustomUser(AbstractUser):
@@ -575,4 +576,27 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class StaticPage(models.Model):
+    """Modèle pour les pages statiques personnalisées"""
+    title = models.CharField(max_length=200, verbose_name=_('Titre'))
+    slug = models.SlugField(max_length=200, unique=True, verbose_name=_('Slug'))
+    content = models.TextField(verbose_name=_('Contenu'))
+    is_active = models.BooleanField(default=True, verbose_name=_('Actif'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Date de création'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Date de mise à jour'))
+
+    class Meta:
+        verbose_name = _('Page statique')
+        verbose_name_plural = _('Pages statiques')
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 

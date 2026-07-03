@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, TestimonialForm, FAQForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, TestimonialForm, FAQForm, StaticPageForm
 
 
 @login_required
@@ -856,4 +856,66 @@ def faq_delete(request, pk):
         return redirect('admin_panel:faqs')
     
     return render(request, 'admin_panel/faq_confirm_delete.html', {'faq': faq})
+
+
+@login_required
+def static_pages(request):
+    """Liste des pages statiques"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    static_pages_list = StaticPage.objects.all()
+    return render(request, 'admin_panel/static_pages.html', {'static_pages': static_pages_list})
+
+
+@login_required
+def static_page_create(request):
+    """Créer une page statique"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = StaticPageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Page statique créée avec succès')
+            return redirect('admin_panel:static_pages')
+    else:
+        form = StaticPageForm()
+    
+    return render(request, 'admin_panel/static_page_form.html', {'form': form, 'action': 'Créer', 'icon': 'file-alt'})
+
+
+@login_required
+def static_page_edit(request, pk):
+    """Modifier une page statique"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    static_page = get_object_or_404(StaticPage, pk=pk)
+    if request.method == 'POST':
+        form = StaticPageForm(request.POST, instance=static_page)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Page statique modifiée avec succès')
+            return redirect('admin_panel:static_pages')
+    else:
+        form = StaticPageForm(instance=static_page)
+    
+    return render(request, 'admin_panel/static_page_form.html', {'form': form, 'action': 'Modifier', 'icon': 'file-alt'})
+
+
+@login_required
+def static_page_delete(request, pk):
+    """Supprimer une page statique"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    static_page = get_object_or_404(StaticPage, pk=pk)
+    if request.method == 'POST':
+        static_page.delete()
+        messages.success(request, 'Page statique supprimée avec succès')
+        return redirect('admin_panel:static_pages')
+    
+    return render(request, 'admin_panel/static_page_confirm_delete.html', {'static_page': static_page})
 

@@ -54,6 +54,12 @@ urlpatterns = [
     path('faqs/<int:pk>/edit/', views.faq_edit, name='faq_edit'),
     path('faqs/<int:pk>/delete/', views.faq_delete, name='faq_delete'),
     
+    # Pages statiques
+    path('static-pages/', views.static_pages, name='static_pages'),
+    path('static-pages/create/', views.static_page_create, name='static_page_create'),
+    path('static-pages/<int:pk>/edit/', views.static_page_edit, name='static_page_edit'),
+    path('static-pages/<int:pk>/delete/', views.static_page_delete, name='static_page_delete'),
+    
     # Départements
     path('departments/', views.departments, name='departments'),
     path('departments/create/', views.department_create, name='department_create'),
