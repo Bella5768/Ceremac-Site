@@ -1,0 +1,58 @@
+{% extends "admin_panel/base.html" %}
+{% load static %}
+
+{% block title %}Événements - Admin CEREMAC{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-calendar-alt me-2"></i> Événements</h2>
+    <a href="{% url 'admin_panel:event_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i> Nouvel événement
+    </a>
+</div>
+
+{% if events %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de début</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.start_date|date:"d/m/Y H:i" }}</td>
+                <td>{{ event.location|default:"-" }}</td>
+                <td>
+                    <span class="badge 
+                        {% if event.status == 'upcoming' %}bg-info
+                        {% elif event.status == 'ongoing' %}bg-success
+                        {% elif event.status == 'completed' %}bg-secondary
+                        {% elif event.status == 'cancelled' %}bg-danger
+                        {% endif %}">
+                        {{ event.get_status_display }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'admin_panel:event_edit' event.pk %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'admin_panel:event_delete' event.pk %}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">Aucun événement pour le moment.</div>
+{% endif %}
+{% endblock %}

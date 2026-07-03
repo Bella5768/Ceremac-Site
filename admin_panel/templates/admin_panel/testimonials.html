@@ -1,0 +1,63 @@
+{% extends "admin_panel/base.html" %}
+{% load static %}
+
+{% block title %}Témoignages - Admin CEREMAC{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-quote-left me-2"></i> Témoignages</h2>
+    <a href="{% url 'admin_panel:testimonial_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i> Nouveau témoignage
+    </a>
+</div>
+
+{% if testimonials %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Organisation</th>
+                <th>Note</th>
+                <th>À la une</th>
+                <th>Actif</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for testimonial in testimonials %}
+            <tr>
+                <td>{{ testimonial.name }}</td>
+                <td>{{ testimonial.organization|default:"-" }}</td>
+                <td>{{ testimonial.rating }}/5</td>
+                <td>
+                    {% if testimonial.is_featured %}
+                        <span class="badge bg-warning">Oui</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Non</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if testimonial.is_active %}
+                        <span class="badge bg-success">Oui</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Non</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'admin_panel:testimonial_edit' testimonial.pk %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'admin_panel:testimonial_delete' testimonial.pk %}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">Aucun témoignage pour le moment.</div>
+{% endif %}
+{% endblock %}

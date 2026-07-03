@@ -108,6 +108,18 @@
                     <a class="nav-link {% if 'partner' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:partners' %}">
                         <i class="fas fa-handshake"></i> Partenaires
                     </a>
+                    <a class="nav-link {% if 'event' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:events' %}">
+                        <i class="fas fa-calendar-alt"></i> Événements
+                    </a>
+                    <a class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:services' %}">
+                        <i class="fas fa-cogs"></i> Services
+                    </a>
+                    <a class="nav-link {% if 'testimonial' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:testimonials' %}">
+                        <i class="fas fa-quote-left"></i> Témoignages
+                    </a>
+                    <a class="nav-link {% if 'faq' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:faqs' %}">
+                        <i class="fas fa-question-circle"></i> FAQ
+                    </a>
                     <a class="nav-link {% if 'department' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:departments' %}">
                         <i class="fas fa-building"></i> Départements
                     </a>

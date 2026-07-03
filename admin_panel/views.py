@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, TestimonialForm, FAQForm
 
 
 @login_required
@@ -22,6 +22,10 @@ def admin_dashboard(request):
         'users_count': CustomUser.objects.count(),
         'messages_count': ContactMessage.objects.filter(is_read=False).count(),
         'subscribers_count': NewsletterSubscriber.objects.filter(is_active=True).count(),
+        'events_count': Event.objects.count(),
+        'services_count': Service.objects.count(),
+        'testimonials_count': Testimonial.objects.count(),
+        'faqs_count': FAQ.objects.count(),
     }
     
     return render(request, 'admin_panel/dashboard.html', context)
@@ -596,4 +600,260 @@ def site_settings_edit(request):
         form = SiteSettingsForm(instance=settings_obj)
     
     return render(request, 'admin_panel/site_settings_form.html', {'form': form, 'action': 'Modifier', 'icon': 'gear'})
+
+
+# ============ GESTION DES ÉVÉNEMENTS ============
+
+@login_required
+def manage_events(request):
+    """Gestion des événements"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    events = Event.objects.all()
+    return render(request, 'admin_panel/events.html', {'events': events})
+
+
+@login_required
+def event_create(request):
+    """Créer un événement"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Événement créé avec succès')
+            return redirect('admin_panel:events')
+    else:
+        form = EventForm()
+    
+    return render(request, 'admin_panel/event_form.html', {'form': form, 'action': 'Créer', 'icon': 'calendar-alt'})
+
+
+@login_required
+def event_edit(request, pk):
+    """Modifier un événement"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    event = get_object_or_404(Event, pk=pk)
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Événement modifié avec succès')
+            return redirect('admin_panel:events')
+    else:
+        form = EventForm(instance=event)
+    
+    return render(request, 'admin_panel/event_form.html', {'form': form, 'action': 'Modifier', 'icon': 'calendar-alt'})
+
+
+@login_required
+def event_delete(request, pk):
+    """Supprimer un événement"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    event = get_object_or_404(Event, pk=pk)
+    if request.method == 'POST':
+        event.delete()
+        messages.success(request, 'Événement supprimé avec succès')
+        return redirect('admin_panel:events')
+    
+    return render(request, 'admin_panel/event_confirm_delete.html', {'event': event})
+
+
+# ============ GESTION DES SERVICES ============
+
+@login_required
+def manage_services(request):
+    """Gestion des services"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    services = Service.objects.all()
+    return render(request, 'admin_panel/services.html', {'services': services})
+
+
+@login_required
+def service_create(request):
+    """Créer un service"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Service créé avec succès')
+            return redirect('admin_panel:services')
+    else:
+        form = ServiceForm()
+    
+    return render(request, 'admin_panel/service_form.html', {'form': form, 'action': 'Créer', 'icon': 'cogs'})
+
+
+@login_required
+def service_edit(request, pk):
+    """Modifier un service"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES, instance=service)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Service modifié avec succès')
+            return redirect('admin_panel:services')
+    else:
+        form = ServiceForm(instance=service)
+    
+    return render(request, 'admin_panel/service_form.html', {'form': form, 'action': 'Modifier', 'icon': 'cogs'})
+
+
+@login_required
+def service_delete(request, pk):
+    """Supprimer un service"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        service.delete()
+        messages.success(request, 'Service supprimé avec succès')
+        return redirect('admin_panel:services')
+    
+    return render(request, 'admin_panel/service_confirm_delete.html', {'service': service})
+
+
+# ============ GESTION DES TÉMOIGNAGES ============
+
+@login_required
+def manage_testimonials(request):
+    """Gestion des témoignages"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    testimonials = Testimonial.objects.all()
+    return render(request, 'admin_panel/testimonials.html', {'testimonials': testimonials})
+
+
+@login_required
+def testimonial_create(request):
+    """Créer un témoignage"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Témoignage créé avec succès')
+            return redirect('admin_panel:testimonials')
+    else:
+        form = TestimonialForm()
+    
+    return render(request, 'admin_panel/testimonial_form.html', {'form': form, 'action': 'Créer', 'icon': 'quote-left'})
+
+
+@login_required
+def testimonial_edit(request, pk):
+    """Modifier un témoignage"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    testimonial = get_object_or_404(Testimonial, pk=pk)
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST, request.FILES, instance=testimonial)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Témoignage modifié avec succès')
+            return redirect('admin_panel:testimonials')
+    else:
+        form = TestimonialForm(instance=testimonial)
+    
+    return render(request, 'admin_panel/testimonial_form.html', {'form': form, 'action': 'Modifier', 'icon': 'quote-left'})
+
+
+@login_required
+def testimonial_delete(request, pk):
+    """Supprimer un témoignage"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    testimonial = get_object_or_404(Testimonial, pk=pk)
+    if request.method == 'POST':
+        testimonial.delete()
+        messages.success(request, 'Témoignage supprimé avec succès')
+        return redirect('admin_panel:testimonials')
+    
+    return render(request, 'admin_panel/testimonial_confirm_delete.html', {'testimonial': testimonial})
+
+
+# ============ GESTION DES FAQ ============
+
+@login_required
+def manage_faqs(request):
+    """Gestion des FAQ"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    faqs = FAQ.objects.all()
+    return render(request, 'admin_panel/faqs.html', {'faqs': faqs})
+
+
+@login_required
+def faq_create(request):
+    """Créer une FAQ"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = FAQForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'FAQ créée avec succès')
+            return redirect('admin_panel:faqs')
+    else:
+        form = FAQForm()
+    
+    return render(request, 'admin_panel/faq_form.html', {'form': form, 'action': 'Créer', 'icon': 'question-circle'})
+
+
+@login_required
+def faq_edit(request, pk):
+    """Modifier une FAQ"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'POST':
+        form = FAQForm(request.POST, instance=faq)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'FAQ modifiée avec succès')
+            return redirect('admin_panel:faqs')
+    else:
+        form = FAQForm(instance=faq)
+    
+    return render(request, 'admin_panel/faq_form.html', {'form': form, 'action': 'Modifier', 'icon': 'question-circle'})
+
+
+@login_required
+def faq_delete(request, pk):
+    """Supprimer une FAQ"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'POST':
+        faq.delete()
+        messages.success(request, 'FAQ supprimée avec succès')
+        return redirect('admin_panel:faqs')
+    
+    return render(request, 'admin_panel/faq_confirm_delete.html', {'faq': faq})
 

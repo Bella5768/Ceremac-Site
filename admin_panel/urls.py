@@ -30,6 +30,30 @@ urlpatterns = [
     path('partners/<int:pk>/edit/', views.partner_edit, name='partner_edit'),
     path('partners/<int:pk>/delete/', views.partner_delete, name='partner_delete'),
     
+    # Événements
+    path('events/', views.manage_events, name='events'),
+    path('events/create/', views.event_create, name='event_create'),
+    path('events/<int:pk>/edit/', views.event_edit, name='event_edit'),
+    path('events/<int:pk>/delete/', views.event_delete, name='event_delete'),
+    
+    # Services
+    path('services/', views.manage_services, name='services'),
+    path('services/create/', views.service_create, name='service_create'),
+    path('services/<int:pk>/edit/', views.service_edit, name='service_edit'),
+    path('services/<int:pk>/delete/', views.service_delete, name='service_delete'),
+    
+    # Témoignages
+    path('testimonials/', views.manage_testimonials, name='testimonials'),
+    path('testimonials/create/', views.testimonial_create, name='testimonial_create'),
+    path('testimonials/<int:pk>/edit/', views.testimonial_edit, name='testimonial_edit'),
+    path('testimonials/<int:pk>/delete/', views.testimonial_delete, name='testimonial_delete'),
+    
+    # FAQ
+    path('faqs/', views.manage_faqs, name='faqs'),
+    path('faqs/create/', views.faq_create, name='faq_create'),
+    path('faqs/<int:pk>/edit/', views.faq_edit, name='faq_edit'),
+    path('faqs/<int:pk>/delete/', views.faq_delete, name='faq_delete'),
+    
     # Départements
     path('departments/', views.departments, name='departments'),
     path('departments/create/', views.department_create, name='department_create'),
