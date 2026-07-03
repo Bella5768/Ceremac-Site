@@ -16,15 +16,18 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>Page</th>
                         <th>Titre</th>
                         <th>Image</th>
                         <th>Ordre</th>
+                        <th>Actif</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for hero_image in hero_images %}
                     <tr>
+                        <td>{{ hero_image.get_page_display }}</td>
                         <td>{{ hero_image.title }}</td>
                         <td>
                             {% if hero_image.image %}
@@ -34,6 +37,13 @@
                             {% endif %}
                         </td>
                         <td>{{ hero_image.order }}</td>
+                        <td>
+                            {% if hero_image.is_active %}
+                                <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Non</span>
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{% url 'admin_panel:hero_image_edit' hero_image.pk %}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Modifier

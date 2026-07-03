@@ -321,6 +321,26 @@ class DepartmentMember(models.Model):
 
 class HeroImage(models.Model):
     """Modèle pour les images du hero et carrousel"""
+    PAGE_CHOICES = [
+        ('home', 'Accueil'),
+        ('news', 'Actualités'),
+        ('projects', 'Projets'),
+        ('publications', 'Publications'),
+        ('partners', 'Partenaires'),
+        ('departments', 'Départements'),
+        ('about', 'À propos'),
+        ('contact', 'Contact'),
+        ('events', 'Événements'),
+        ('services', 'Services'),
+    ]
+    
+    page = models.CharField(
+        _('page'),
+        max_length=20,
+        choices=PAGE_CHOICES,
+        default='home',
+        help_text="Page sur laquelle afficher cette image"
+    )
     title = models.CharField(_('title'), max_length=255, help_text="Titre de l'image")
     description = models.TextField(_('description'), blank=True, help_text="Description affichée sur l'image")
     image = models.ImageField(_('image'), upload_to='hero/', help_text="Image (recommandé: 1920x600px)")
@@ -332,10 +352,10 @@ class HeroImage(models.Model):
     class Meta:
         verbose_name = _('hero image')
         verbose_name_plural = _('hero images')
-        ordering = ['order', '-date_created']
+        ordering = ['page', 'order', '-date_created']
 
     def __str__(self):
-        return self.title
+        return f"{self.get_page_display()} - {self.title}"
 
 
 class SiteSettings(models.Model):

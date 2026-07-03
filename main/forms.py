@@ -198,8 +198,9 @@ class DepartmentMemberForm(forms.ModelForm):
 class HeroImageForm(forms.ModelForm):
     class Meta:
         model = HeroImage
-        fields = ['title', 'description', 'image', 'order', 'is_active']
+        fields = ['page', 'title', 'description', 'image', 'order', 'is_active']
         widgets = {
+            'page': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Description'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),

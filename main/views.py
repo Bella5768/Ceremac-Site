@@ -10,7 +10,7 @@ from .forms import ContactForm, NewsletterForm
 def index(request):
     """Page d'accueil"""
     latest_news = News.objects.all()[:3]
-    hero_images = HeroImage.objects.filter(is_active=True).order_by('order')
+    hero_images = HeroImage.objects.filter(is_active=True, page='home').order_by('order')
     
     # Paramètres du site (photo du directeur, citation, etc.)
     site_settings = SiteSettings.objects.first()
@@ -39,15 +39,18 @@ def index(request):
 def about(request):
     """Page À propos"""
     site_settings = SiteSettings.objects.first()
-    return render(request, 'main/about.html', {'site_settings': site_settings})
+    hero_images = HeroImage.objects.filter(is_active=True, page='about').order_by('order')
+    return render(request, 'main/about.html', {'site_settings': site_settings, 'hero_images': hero_images})
 
 
 def projects(request):
     """Page Départements et Services"""
     departments = Department.objects.filter(is_active=True).order_by('order')
+    hero_images = HeroImage.objects.filter(is_active=True, page='projects').order_by('order')
     
     return render(request, 'main/projects.html', {
         'departments': departments,
+        'hero_images': hero_images,
     })
 
 
@@ -75,6 +78,7 @@ def project_detail(request, pk):
 def publications(request):
     """Page Publications"""
     publications_list = Publication.objects.all()
+    hero_images = HeroImage.objects.filter(is_active=True, page='publications').order_by('order')
     
     # Filtrage par année si demandé
     year = request.GET.get('year')
@@ -90,6 +94,7 @@ def publications(request):
         'publications': publications_list,
         'years': years,
         'selected_year': year,
+        'hero_images': hero_images,
     })
 
 
@@ -97,17 +102,20 @@ def partners(request):
     """Page Partenaires"""
     national_partners = Partner.objects.filter(type='national')
     international_partners = Partner.objects.filter(type='international')
+    hero_images = HeroImage.objects.filter(is_active=True, page='partners').order_by('order')
     
     return render(request, 'main/partners.html', {
         'national_partners': national_partners,
         'international_partners': international_partners,
+        'hero_images': hero_images,
     })
 
 
 def news_list(request):
     """Liste des actualités"""
     news_list = News.objects.all()
-    return render(request, 'main/news_list.html', {'news_list': news_list})
+    hero_images = HeroImage.objects.filter(is_active=True, page='news').order_by('order')
+    return render(request, 'main/news_list.html', {'news_list': news_list, 'hero_images': hero_images})
 
 
 def news_detail(request, pk):
@@ -136,7 +144,8 @@ def contact(request):
     else:
         form = ContactForm()
     
-    return render(request, 'main/contact.html', {'form': form})
+    hero_images = HeroImage.objects.filter(is_active=True, page='contact').order_by('order')
+    return render(request, 'main/contact.html', {'form': form, 'hero_images': hero_images})
 
 
 def newsletter_subscribe(request):
