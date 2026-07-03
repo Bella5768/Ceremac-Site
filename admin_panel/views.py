@@ -500,11 +500,17 @@ def hero_image_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Image hero modifiée avec succès')
-            return redirect('admin_panel:hero_images')
+            page_param = request.POST.get('page') or request.GET.get('page') or hero_image.page
+            return redirect('admin_panel:hero_images_by_page', page=page_param)
     else:
         form = HeroImageForm(instance=hero_image)
     
-    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Modifier', 'icon': 'images'})
+    return render(request, 'admin_panel/hero_image_form.html', {
+        'form': form, 
+        'action': 'Modifier', 
+        'icon': 'images',
+        'page': request.GET.get('page') or hero_image.page
+    })
 
 @login_required
 def hero_image_delete(request, pk):
@@ -513,12 +519,50 @@ def hero_image_delete(request, pk):
         return redirect('members:index')
     
     hero_image = get_object_or_404(HeroImage, pk=pk)
+    page = hero_image.page
     if request.method == 'POST':
         hero_image.delete()
         messages.success(request, 'Image hero supprimée avec succès')
-        return redirect('admin_panel:hero_images')
+        page_param = request.POST.get('page') or request.GET.get('page')
+        if page_param:
+            return redirect('admin_panel:hero_images_by_page', page=page_param)
+        return redirect('admin_panel:hero_images_by_page', page=page)
     
     return render(request, 'admin_panel/hero_image_confirm_delete.html', {'hero_image': hero_image})
+
+
+@login_required
+def hero_images_by_page(request, page):
+    """Liste des images hero par page"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    hero_images = HeroImage.objects.filter(page=page).order_by('order')
+    page_name = dict(HeroImage.PAGE_CHOICES).get(page, page)
+    return render(request, 'admin_panel/hero_images.html', {
+        'hero_images': hero_images,
+        'page_name': page_name,
+        'current_page': page
+    })
+
+
+@login_required
+def hero_image_create_by_page(request, page):
+    """Créer une image hero pour une page spécifique"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = HeroImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.page = page
+            form.save()
+            messages.success(request, 'Image hero créée avec succès')
+            return redirect('admin_panel:hero_images_by_page', page=page)
+    else:
+        form = HeroImageForm(initial={'page': page})
+    
+    return render(request, 'admin_panel/hero_image_form.html', {'form': form, 'action': 'Créer', 'icon': 'images'})
 
 
 # CRUD pour les utilisateurs

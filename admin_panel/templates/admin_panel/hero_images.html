@@ -1,14 +1,20 @@
 {% extends "admin_panel/base.html" %}
 
-{% block title %}Gérer les images hero - Administration CEREMAC{% endblock %}
+{% block title %}{% if page_name %}Images Hero - {{ page_name }}{% else %}Gérer les images hero{% endif %} - Administration CEREMAC{% endblock %}
 
 {% block content %}
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0"><i class="fas fa-images"></i> Gérer les images hero</h4>
+        <h4 class="mb-0"><i class="fas fa-images"></i> {% if page_name %}Images Hero - {{ page_name }}{% else %}Gérer les images hero{% endif %}</h4>
+        {% if current_page %}
+        <a href="{% url 'admin_panel:hero_image_create_by_page' page=current_page %}" class="btn btn-light">
+            <i class="fas fa-plus"></i> Ajouter une image
+        </a>
+        {% else %}
         <a href="{% url 'admin_panel:hero_image_create' %}" class="btn btn-light">
             <i class="fas fa-plus"></i> Ajouter une image
         </a>
+        {% endif %}
     </div>
     <div class="card-body">
         {% if hero_images %}
@@ -16,7 +22,9 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        {% if not current_page %}
                         <th>Page</th>
+                        {% endif %}
                         <th>Titre</th>
                         <th>Image</th>
                         <th>Ordre</th>
@@ -27,7 +35,9 @@
                 <tbody>
                     {% for hero_image in hero_images %}
                     <tr>
+                        {% if not current_page %}
                         <td>{{ hero_image.get_page_display }}</td>
+                        {% endif %}
                         <td>{{ hero_image.title }}</td>
                         <td>
                             {% if hero_image.image %}
@@ -45,10 +55,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'admin_panel:hero_image_edit' hero_image.pk %}" class="btn btn-sm btn-warning">
+                            <a href="{% url 'admin_panel:hero_image_edit' hero_image.pk %}{% if current_page %}?page={{ current_page }}{% endif %}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Modifier
                             </a>
-                            <a href="{% url 'admin_panel:hero_image_delete' hero_image.pk %}" class="btn btn-sm btn-danger">
+                            <a href="{% url 'admin_panel:hero_image_delete' hero_image.pk %}{% if current_page %}?page={{ current_page }}{% endif %}" class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i> Supprimer
                             </a>
                         </td>
@@ -59,7 +69,7 @@
         </div>
         {% else %}
         <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> Aucune image hero pour le moment.
+            <i class="fas fa-info-circle"></i> {% if page_name %}Aucune image hero pour la page {{ page_name }}.{% else %}Aucune image hero pour le moment.{% endif %}
         </div>
         {% endif %}
     </div>

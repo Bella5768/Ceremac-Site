@@ -75,6 +75,8 @@ urlpatterns = [
     path('hero-images/create/', views.hero_image_create, name='hero_image_create'),
     path('hero-images/<int:pk>/edit/', views.hero_image_edit, name='hero_image_edit'),
     path('hero-images/<int:pk>/delete/', views.hero_image_delete, name='hero_image_delete'),
+    path('hero-images/page/<str:page>/', views.hero_images_by_page, name='hero_images_by_page'),
+    path('hero-images/page/<str:page>/create/', views.hero_image_create_by_page, name='hero_image_create_by_page'),
     
     # Utilisateurs
     path('users/', views.manage_users, name='users'),

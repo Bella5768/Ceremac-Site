@@ -14,11 +14,12 @@
         
         <form method="post">
             {% csrf_token %}
+            <input type="hidden" name="page" value="{{ hero_image.page }}">
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-danger">
                     <i class="fas fa-trash"></i> Confirmer la suppression
                 </button>
-                <a href="{% url 'admin_panel:hero_images' %}" class="btn btn-secondary">
+                <a href="{% url 'admin_panel:hero_images_by_page' page=hero_image.page %}" class="btn btn-secondary">
                     <i class="fas fa-times"></i> Annuler
                 </a>
             </div>

@@ -2,5 +2,9 @@
 
 {% block model_name %}Image Hero{% endblock %}
 {% block model_title %}une image hero{% endblock %}
-{% block cancel_url %}{% url 'admin_panel:hero_images' %}{% endblock %}
+{% block cancel_url %}{% if page %}{% url 'admin_panel:hero_images_by_page' page=page %}{% else %}{% url 'admin_panel:hero_images' %}{% endif %}{% endblock %}
 {% block icon %}images{% endblock %}
+
+{% block extra_content %}
+<input type="hidden" name="page" value="{{ page }}">
+{% endblock %}
