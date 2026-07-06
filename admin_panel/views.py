@@ -24,8 +24,6 @@ def admin_dashboard(request):
         'subscribers_count': NewsletterSubscriber.objects.filter(is_active=True).count(),
         'events_count': Event.objects.count(),
         'services_count': Service.objects.count(),
-        'testimonials_count': Testimonial.objects.count(),
-        'faqs_count': FAQ.objects.count(),
     }
     
     return render(request, 'admin_panel/dashboard.html', context)
