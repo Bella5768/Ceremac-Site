@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load content_filters %}
 
 {% block title %}{% trans "Témoignages" %}{% endblock %}
 
@@ -29,10 +30,10 @@
                         <span class="badge bg-warning mb-2"><i class="bi bi-star-fill"></i> {% trans "À la une" %}</span>
                         {% endif %}
                         <div class="mb-3">
-                            {% for i in testimonial.rating|range %}
+                            {% for i in testimonial.rating|range_filter %}
                             <i class="bi bi-star-fill text-warning"></i>
                             {% endfor %}
-                            {% for i in testimonial.rating|range:5 %}
+                            {% for i in 5|range_from:testimonial.rating %}
                             <i class="bi bi-star text-muted"></i>
                             {% endfor %}
                         </div>
