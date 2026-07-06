@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.utils.translation import get_language
-from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
+from .models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage
 from .forms import ContactForm, NewsletterForm
 
 
@@ -188,24 +188,6 @@ def services(request):
     return render(request, 'main/services.html', {
         'services_list': services_list,
         'hero_images': hero_images,
-    })
-
-
-def testimonials(request):
-    """Page Témoignages"""
-    testimonials_list = Testimonial.objects.filter(is_active=True).order_by('-is_featured', '-date_created')
-    
-    return render(request, 'main/testimonials.html', {
-        'testimonials_list': testimonials_list,
-    })
-
-
-def faqs(request):
-    """Page FAQ"""
-    faqs_list = FAQ.objects.filter(is_active=True).order_by('category', 'order')
-    
-    return render(request, 'main/faqs.html', {
-        'faqs_list': faqs_list,
     })
 
 

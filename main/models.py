@@ -531,53 +531,6 @@ class Service(models.Model):
         return self.title
 
 
-class Testimonial(models.Model):
-    """Modèle pour les témoignages"""
-    name = models.CharField(max_length=255)
-    position = models.CharField(max_length=255, blank=True)
-    organization = models.CharField(max_length=255, blank=True)
-    content = models.TextField()
-    photo = models.ImageField(upload_to='testimonials/', blank=True, null=True)
-    rating = models.IntegerField(default=5, help_text="Note sur 5")
-    is_featured = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = _('testimonial')
-        verbose_name_plural = _('testimonials')
-        ordering = ['-is_featured', '-date_created']
-
-    def __str__(self):
-        return f"{self.name} - {self.organization}"
-
-
-class FAQ(models.Model):
-    """Modèle pour les FAQ"""
-    CATEGORY_CHOICES = [
-        ('general', 'Général'),
-        ('research', 'Recherche'),
-        ('education', 'Formation'),
-        ('partnership', 'Partenariat'),
-        ('contact', 'Contact'),
-    ]
-    
-    question = models.CharField(max_length=500)
-    answer = models.TextField()
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='general')
-    order = models.IntegerField(default=0)
-    is_active = models.BooleanField(default=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = _('FAQ')
-        verbose_name_plural = _('FAQs')
-        ordering = ['category', 'order']
-
-    def __str__(self):
-        return self.question
-
-
 class StaticPage(models.Model):
     """Modèle pour les pages statiques personnalisées"""
     title = models.CharField(max_length=200, verbose_name=_('Titre'))

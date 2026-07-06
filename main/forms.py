@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator
-from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
+from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage
 
 
 class ContactForm(forms.Form):
@@ -278,35 +278,6 @@ class ServiceForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
             'icon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Icône Bootstrap (ex: bi-clipboard-data)'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
-            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
-
-
-class TestimonialForm(forms.ModelForm):
-    class Meta:
-        model = Testimonial
-        fields = ['name', 'position', 'organization', 'content', 'photo', 'rating', 'is_featured', 'is_active']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom'}),
-            'position': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Poste'}),
-            'organization': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Organisation'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Témoignage'}),
-            'photo': forms.FileInput(attrs={'class': 'form-control'}),
-            'rating': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Note sur 5'}),
-            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
-
-
-class FAQForm(forms.ModelForm):
-    class Meta:
-        model = FAQ
-        fields = ['question', 'answer', 'category', 'order', 'is_active']
-        widgets = {
-            'question': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Question'}),
-            'answer': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Réponse'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
             'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }

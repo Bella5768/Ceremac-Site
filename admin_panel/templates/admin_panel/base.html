@@ -129,12 +129,6 @@
                     <a class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:services' %}">
                         <i class="fas fa-cogs"></i> Services
                     </a>
-                    <a class="nav-link {% if 'testimonial' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:testimonials' %}">
-                        <i class="fas fa-quote-left"></i> Témoignages
-                    </a>
-                    <a class="nav-link {% if 'faq' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:faqs' %}">
-                        <i class="fas fa-question-circle"></i> FAQ
-                    </a>
                     <a class="nav-link {% if 'static' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:static_pages' %}">
                         <i class="fas fa-file-alt"></i> Pages statiques
                     </a>

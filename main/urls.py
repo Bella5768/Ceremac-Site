@@ -17,8 +17,6 @@ urlpatterns = [
     path('newsletter/', views.newsletter_subscribe, name='newsletter_subscribe'),
     path('events/', views.events, name='events'),
     path('services/', views.services, name='services'),
-    path('testimonials/', views.testimonials, name='testimonials'),
-    path('faqs/', views.faqs, name='faqs'),
     path('page/<slug:slug>/', views.static_page, name='static_page'),
 ]
 

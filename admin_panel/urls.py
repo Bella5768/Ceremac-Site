@@ -42,18 +42,6 @@ urlpatterns = [
     path('services/<int:pk>/edit/', views.service_edit, name='service_edit'),
     path('services/<int:pk>/delete/', views.service_delete, name='service_delete'),
     
-    # Témoignages
-    path('testimonials/', views.manage_testimonials, name='testimonials'),
-    path('testimonials/create/', views.testimonial_create, name='testimonial_create'),
-    path('testimonials/<int:pk>/edit/', views.testimonial_edit, name='testimonial_edit'),
-    path('testimonials/<int:pk>/delete/', views.testimonial_delete, name='testimonial_delete'),
-    
-    # FAQ
-    path('faqs/', views.manage_faqs, name='faqs'),
-    path('faqs/create/', views.faq_create, name='faq_create'),
-    path('faqs/<int:pk>/edit/', views.faq_edit, name='faq_edit'),
-    path('faqs/<int:pk>/delete/', views.faq_delete, name='faq_delete'),
-    
     # Pages statiques
     path('static-pages/', views.static_pages, name='static_pages'),
     path('static-pages/create/', views.static_page_create, name='static_page_create'),

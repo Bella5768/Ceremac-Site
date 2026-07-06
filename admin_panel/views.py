@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, Testimonial, FAQ, StaticPage
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, TestimonialForm, FAQForm, StaticPageForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, StaticPageForm
 
 
 @login_required
@@ -772,134 +772,6 @@ def service_delete(request, pk):
         return redirect('admin_panel:services')
     
     return render(request, 'admin_panel/service_confirm_delete.html', {'service': service})
-
-
-# ============ GESTION DES TÉMOIGNAGES ============
-
-@login_required
-def manage_testimonials(request):
-    """Gestion des témoignages"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    testimonials = Testimonial.objects.all()
-    return render(request, 'admin_panel/testimonials.html', {'testimonials': testimonials})
-
-
-@login_required
-def testimonial_create(request):
-    """Créer un témoignage"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    if request.method == 'POST':
-        form = TestimonialForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Témoignage créé avec succès')
-            return redirect('admin_panel:testimonials')
-    else:
-        form = TestimonialForm()
-    
-    return render(request, 'admin_panel/testimonial_form.html', {'form': form, 'action': 'Créer', 'icon': 'quote-left'})
-
-
-@login_required
-def testimonial_edit(request, pk):
-    """Modifier un témoignage"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    testimonial = get_object_or_404(Testimonial, pk=pk)
-    if request.method == 'POST':
-        form = TestimonialForm(request.POST, request.FILES, instance=testimonial)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Témoignage modifié avec succès')
-            return redirect('admin_panel:testimonials')
-    else:
-        form = TestimonialForm(instance=testimonial)
-    
-    return render(request, 'admin_panel/testimonial_form.html', {'form': form, 'action': 'Modifier', 'icon': 'quote-left'})
-
-
-@login_required
-def testimonial_delete(request, pk):
-    """Supprimer un témoignage"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    testimonial = get_object_or_404(Testimonial, pk=pk)
-    if request.method == 'POST':
-        testimonial.delete()
-        messages.success(request, 'Témoignage supprimé avec succès')
-        return redirect('admin_panel:testimonials')
-    
-    return render(request, 'admin_panel/testimonial_confirm_delete.html', {'testimonial': testimonial})
-
-
-# ============ GESTION DES FAQ ============
-
-@login_required
-def manage_faqs(request):
-    """Gestion des FAQ"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    faqs = FAQ.objects.all()
-    return render(request, 'admin_panel/faqs.html', {'faqs': faqs})
-
-
-@login_required
-def faq_create(request):
-    """Créer une FAQ"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    if request.method == 'POST':
-        form = FAQForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'FAQ créée avec succès')
-            return redirect('admin_panel:faqs')
-    else:
-        form = FAQForm()
-    
-    return render(request, 'admin_panel/faq_form.html', {'form': form, 'action': 'Créer', 'icon': 'question-circle'})
-
-
-@login_required
-def faq_edit(request, pk):
-    """Modifier une FAQ"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    faq = get_object_or_404(FAQ, pk=pk)
-    if request.method == 'POST':
-        form = FAQForm(request.POST, instance=faq)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'FAQ modifiée avec succès')
-            return redirect('admin_panel:faqs')
-    else:
-        form = FAQForm(instance=faq)
-    
-    return render(request, 'admin_panel/faq_form.html', {'form': form, 'action': 'Modifier', 'icon': 'question-circle'})
-
-
-@login_required
-def faq_delete(request, pk):
-    """Supprimer une FAQ"""
-    if not request.user.is_admin():
-        return redirect('members:index')
-    
-    faq = get_object_or_404(FAQ, pk=pk)
-    if request.method == 'POST':
-        faq.delete()
-        messages.success(request, 'FAQ supprimée avec succès')
-        return redirect('admin_panel:faqs')
-    
-    return render(request, 'admin_panel/faq_confirm_delete.html', {'faq': faq})
 
 
 @login_required
