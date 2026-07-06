@@ -171,7 +171,7 @@ def newsletter_subscribe(request):
 
 def events(request):
     """Page Événements"""
-    events_list = Event.objects.filter(is_active=True).order_by('-start_date')
+    events_list = Event.objects.filter(status__in=['upcoming', 'ongoing']).order_by('-start_date')
     hero_images = HeroImage.objects.filter(is_active=True, page='events').order_by('order')
     
     return render(request, 'main/events.html', {
