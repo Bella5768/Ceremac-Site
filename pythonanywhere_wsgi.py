@@ -6,7 +6,8 @@ import os
 import sys
 
 # Ajouter le chemin du projet au sys.path
-path = '/home/ceremacsite/Ceremac-Site'
+# Le chemin s'adapte automatiquement à l'utilisateur PythonAnywhere
+path = os.path.expanduser('~/Ceremac-Site')
 if path not in sys.path:
     sys.path.insert(0, path)
 
