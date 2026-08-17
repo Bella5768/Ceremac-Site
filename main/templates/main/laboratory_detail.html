@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ laboratory.name }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('{% if laboratory.image %}{{ laboratory.image.url }}{% else %}https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=2000&fit=crop{% endif %}');">
+    <div class="container">
+        <div class="col-lg-10 mx-auto text-center">
+            <h1 style="font-size: 3rem; margin-bottom: 15px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{{ laboratory.name }}</h1>
+            <p class="lead text-white">{{ laboratory.department.name }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'main:index' %}">{% trans "Accueil" %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'main:projects' %}">{% trans "Départements" %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'main:department_detail' laboratory.department.pk %}">{{ laboratory.department.name }}</a></li>
+                <li class="breadcrumb-item active">{{ laboratory.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="row g-5">
+            <!-- Contenu principal -->
+            <div class="col-lg-8">
+                <!-- Description scientifique -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-3"><i class="bi bi-info-circle me-2"></i>{% trans "Description scientifique" %}</h3>
+                        <div class="content-text">
+                            {% if laboratory.scientific_description %}
+                                {{ laboratory.scientific_description|safe }}
+                            {% else %}
+                                {{ laboratory.description|safe }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Équipements -->
+                {% if laboratory.equipment %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-3"><i class="bi bi-tools me-2"></i>{% trans "Équipements" %}</h3>
+                        <div class="content-text">{{ laboratory.equipment|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Résultats marquants -->
+                {% if laboratory.results %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-3"><i class="bi bi-trophy me-2"></i>{% trans "Résultats marquants" %}</h3>
+                        <div class="content-text">{{ laboratory.results|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Barre latérale -->
+            <div class="col-lg-4">
+                <!-- Responsable -->
+                {% if laboratory.head_name %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center p-4">
+                        {% if laboratory.head_photo %}
+                        <img src="{{ laboratory.head_photo.url }}" alt="{{ laboratory.head_name }}" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                        {% else %}
+                        <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+                            <i class="bi bi-person" style="font-size: 3rem; color: var(--ceremac-deep-blue);"></i>
+                        </div>
+                        {% endif %}
+                        <h5>{{ laboratory.head_name }}</h5>
+                        <p class="text-muted">{% trans "Responsable du laboratoire" %}</p>
+                        {% if laboratory.email %}
+                        <p class="small"><i class="bi bi-envelope me-1"></i> <a href="mailto:{{ laboratory.email }}">{{ laboratory.email }}</a></p>
+                        {% endif %}
+                        {% if laboratory.phone %}
+                        <p class="small"><i class="bi bi-telephone me-1"></i> {{ laboratory.phone }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Département -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="text-muted mb-3">{% trans "Département" %}</h6>
+                        <a href="{% url 'main:department_detail' laboratory.department.pk %}" class="text-decoration-none">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-building me-2" style="font-size: 1.5rem; color: var(--ceremac-deep-blue);"></i>
+                                <span>{{ laboratory.department.name }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Retour -->
+                <a href="{% url 'main:department_detail' laboratory.department.pk %}" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-arrow-left me-2"></i>{% trans "Retour au département" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

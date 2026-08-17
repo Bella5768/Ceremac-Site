@@ -1,0 +1,251 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Bibliothèque Numérique" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.lib-search-box {
+    background: linear-gradient(135deg, #fffbf7 0%, #fff 100%);
+    border: 1px solid #f5e6d3;
+    border-radius: 16px;
+    padding: 32px;
+}
+.lib-search-box .form-select, .lib-search-box .form-control {
+    border-radius: 10px;
+    border: 1px solid #e8d5c0;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.lib-search-box .form-select:focus, .lib-search-box .form-control:focus {
+    border-color: var(--ceremac-deep-blue);
+    box-shadow: 0 0 0 3px rgba(93, 58, 26, 0.1);
+}
+.lib-search-box label {
+    font-weight: 600; color: #344054; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+}
+.doc-card {
+    border: 1px solid #eef2f7;
+    border-radius: 16px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    background: #fff;
+}
+.doc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1) !important;
+    border-color: transparent;
+}
+.doc-card .file-icon-wrapper {
+    width: 60px; height: 60px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.doc-card .file-icon-wrapper.pdf   { background: linear-gradient(135deg, #fef2f2, #fecaca); }
+.doc-card .file-icon-wrapper.docx  { background: linear-gradient(135deg, #f5e6d3, #e8d5c0); }
+.doc-card .file-icon-wrapper.xlsx  { background: linear-gradient(135deg, #f0fdf4, #bbf7d0); }
+.doc-card .file-icon-wrapper.ppt   { background: linear-gradient(135deg, #fff7ed, #fed7aa); }
+.doc-card .file-icon-wrapper.zip   { background: linear-gradient(135deg, #f8fafc, #e2e8f0); }
+.doc-card .file-icon-wrapper.other { background: linear-gradient(135deg, #f8fafc, #e2e8f0); }
+.format-pill {
+    display: inline-flex; align-items: center;
+    padding: 4px 10px; border-radius: 6px; font-size: 0.72rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.format-pill.pdf   { background: #fef2f2; color: #991b1b; }
+.format-pill.docx  { background: #f5e6d3; color: #8B4513; }
+.format-pill.xlsx  { background: #f0fdf4; color: #166534; }
+.format-pill.ppt   { background: #fff7ed; color: #9a3412; }
+.format-pill.zip   { background: #f8fafc; color: #475569; }
+.format-pill.other { background: #f8fafc; color: #475569; }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section style="padding: 140px 0 100px; position: relative; background: linear-gradient(135deg, #2C1810 0%, #5D3A1A 40%, #8B4513 100%); overflow: hidden;">
+    <div style="position: absolute; inset: 0; opacity: 0.06; background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=2000&fit=crop'); background-size: cover; background-position: center;"></div>
+    <div style="position: absolute; top: -40%; right: -15%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 mb-3" style="backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;">
+                    <i class="bi bi-collection me-1"></i> {% trans "Ressources documentaires" %}
+                </span>
+                <h1 style="font-size: 3.2rem; font-weight: 800; color: white; line-height: 1.15; margin-bottom: 20px;">
+                    {% trans "Bibliothèque" %} <span style="color: #d4af37;">{% trans "Numérique" %}</span>
+                </h1>
+                <p style="font-size: 1.15rem; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 540px;">
+                    {% trans "Accédez à l'ensemble de nos documents scientifiques, rapports techniques, thèses et publications. Téléchargez en PDF, DOCX, XLSX, PPT ou ZIP." %}
+                </p>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block text-center">
+                <div style="width: 260px; height: 260px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <i class="bi bi-archive" style="font-size: 3.5rem; color: rgba(212,175,55,0.8);"></i>
+                        <div class="mt-3">
+                            <div style="font-size: 2rem; font-weight: 800; color: white;">{{ documents.count|default:"0" }}</div>
+                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">{% trans "Documents" %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formats supportés -->
+<section style="background: #fff; border-bottom: 1px solid #eef2f7; padding: 20px 0;">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-center gap-4 align-items-center">
+            <span class="text-muted small text-uppercase" style="letter-spacing: 1px; font-weight: 600;">{% trans "Formats :" %}</span>
+            <span class="format-pill pdf"><i class="bi bi-file-earmark-pdf me-1"></i> PDF</span>
+            <span class="format-pill docx"><i class="bi bi-file-earmark-word me-1"></i> DOCX</span>
+            <span class="format-pill xlsx"><i class="bi bi-file-earmark-excel me-1"></i> XLSX</span>
+            <span class="format-pill ppt"><i class="bi bi-file-earmark-ppt me-1"></i> PPT</span>
+            <span class="format-pill zip"><i class="bi bi-file-earmark-zip me-1"></i> ZIP</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Recherche avancée -->
+        <div class="lib-search-box mb-5">
+            <div class="d-flex align-items-center mb-4">
+                <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--ceremac-deep-blue), var(--ceremac-accent-blue)); display: flex; align-items: center; justify-content: center;" class="me-3">
+                    <i class="bi bi-search text-white" style="font-size: 1.1rem;"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0" style="font-weight: 700; color: #1e293b;">{% trans "Recherche avancée" %}</h5>
+                    <small class="text-muted">{% trans "Filtrez par titre, auteur, mots-clés, catégorie, format ou année" %}</small>
+                </div>
+            </div>
+            <form method="GET" class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label">{% trans "Mots-clés" %}</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white" style="border-radius: 10px 0 0 10px; border-right: 0; border-color: #dde4f0;"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" class="form-control" value="{{ search_query|default:'' }}" placeholder="{% trans 'Titre, auteur, mots-clés...' %}" style="border-left: 0; border-radius: 0 10px 10px 0;">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">{% trans "Catégorie" %}</label>
+                    <select name="category" class="form-select">
+                        <option value="">{% trans "Toutes" %}</option>
+                        <option value="report" {% if selected_category == "report" %}selected{% endif %}>{% trans "Rapport" %}</option>
+                        <option value="thesis" {% if selected_category == "thesis" %}selected{% endif %}>{% trans "Thèse" %}</option>
+                        <option value="article" {% if selected_category == "article" %}selected{% endif %}>{% trans "Article" %}</option>
+                        <option value="conference" {% if selected_category == "conference" %}selected{% endif %}>{% trans "Conférence" %}</option>
+                        <option value="technical" {% if selected_category == "technical" %}selected{% endif %}>{% trans "Doc. technique" %}</option>
+                        <option value="institutional" {% if selected_category == "institutional" %}selected{% endif %}>{% trans "Institutionnel" %}</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label">{% trans "Format" %}</label>
+                    <select name="file_type" class="form-select">
+                        <option value="">{% trans "Tous" %}</option>
+                        <option value="pdf" {% if selected_file_type == "pdf" %}selected{% endif %}>PDF</option>
+                        <option value="docx" {% if selected_file_type == "docx" %}selected{% endif %}>DOCX</option>
+                        <option value="xlsx" {% if selected_file_type == "xlsx" %}selected{% endif %}>XLSX</option>
+                        <option value="ppt" {% if selected_file_type == "ppt" %}selected{% endif %}>PPT</option>
+                        <option value="zip" {% if selected_file_type == "zip" %}selected{% endif %}>ZIP</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <label class="form-label">{% trans "Année" %}</label>
+                    <select name="year" class="form-select">
+                        <option value="">{% trans "Toutes" %}</option>
+                        {% for y in years %}
+                        <option value="{{ y }}" {% if selected_year == y|stringformat:"d" %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="border-radius: 10px; font-weight: 600;">
+                            <i class="bi bi-search me-1"></i> {% trans "Chercher" %}
+                        </button>
+                        <a href="{% url 'main:library' %}" class="btn btn-outline-secondary" style="border-radius: 10px;" title="{% trans 'Réinitialiser' %}">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Résultats count -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <span style="font-size: 0.85rem; color: #6b7280; padding: 8px 16px; background: #f1f5f9; border-radius: 20px;">
+                <i class="bi bi-archive me-1"></i> {{ documents|length }} {% trans "document(s) trouvé(s)" %}
+            </span>
+        </div>
+
+        <!-- Grille des documents -->
+        <div class="row g-4">
+            {% for doc in documents %}
+            <div class="col-md-6 col-lg-4">
+                <div class="doc-card shadow-sm h-100">
+                    <div class="p-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="file-icon-wrapper {{ doc.file_type }} me-3">
+                                {% if doc.file_type == 'pdf' %}
+                                <i class="bi bi-file-earmark-pdf-fill" style="font-size: 1.6rem; color: #dc2626;"></i>
+                                {% elif doc.file_type == 'docx' %}
+                                <i class="bi bi-file-earmark-word-fill" style="font-size: 1.6rem; color: #8B4513;"></i>
+                                {% elif doc.file_type == 'xlsx' %}
+                                <i class="bi bi-file-earmark-excel-fill" style="font-size: 1.6rem; color: #16a34a;"></i>
+                                {% elif doc.file_type == 'ppt' %}
+                                <i class="bi bi-file-earmark-ppt-fill" style="font-size: 1.6rem; color: #ea580c;"></i>
+                                {% elif doc.file_type == 'zip' %}
+                                <i class="bi bi-file-earmark-zip-fill" style="font-size: 1.6rem; color: #64748b;"></i>
+                                {% else %}
+                                <i class="bi bi-file-earmark-fill" style="font-size: 1.6rem; color: #64748b;"></i>
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1 min-width-0">
+                                <h6 style="font-weight: 700; color: #1e293b; line-height: 1.4; margin-bottom: 4px;">{{ doc.title }}</h6>
+                                {% if doc.author %}
+                                <p class="text-muted mb-0" style="font-size: 0.82rem;"><i class="bi bi-person me-1"></i> {{ doc.author }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if doc.description %}
+                        <p style="font-size: 0.88rem; color: #64748b; line-height: 1.5; margin-bottom: 12px;">{{ doc.description|truncatewords:18 }}</p>
+                        {% endif %}
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge" style="background: #f5e6d3; color: #8B4513; font-weight: 500; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem;">{{ doc.get_category_display }}</span>
+                            {% if doc.year %}
+                            <span class="badge" style="background: #f1f5f9; color: #475569; font-weight: 500; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem;">{{ doc.year }}</span>
+                            {% endif %}
+                            <span class="format-pill {{ doc.file_type }}">{{ doc.file_type|upper }}</span>
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="text-muted" style="font-size: 0.78rem;">
+                            <i class="bi bi-download me-1"></i> {{ doc.download_count }} {% trans "téléchargements" %}
+                        </span>
+                        <a href="{{ doc.file_path.url }}" class="btn btn-primary btn-sm px-3" style="border-radius: 10px; font-weight: 600;" download>
+                            <i class="bi bi-download me-1"></i> {% trans "Télécharger" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-archive" style="font-size: 4rem; color: #d1d5db;"></i>
+                    <h5 class="mt-3 text-muted">{% trans "Aucun document trouvé" %}</h5>
+                    <p class="text-muted">{% trans "Essayez de modifier vos critères de recherche ou réinitialisez les filtres." %}</p>
+                    <a href="{% url 'main:library' %}" class="btn btn-outline-primary mt-2" style="border-radius: 10px;">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> {% trans "Réinitialiser" %}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

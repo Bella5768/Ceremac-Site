@@ -125,6 +125,10 @@ class Project(models.Model):
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
     file_path = models.FileField(upload_to='documents/projects/', blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='current')
+    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True, blank=True, related_name='global_projects')
+    latitude = models.FloatField(blank=True, null=True, help_text="Latitude pour la carte interactive")
+    longitude = models.FloatField(blank=True, null=True, help_text="Longitude pour la carte interactive")
+    is_featured = models.BooleanField(default=False, help_text="Mettre en avant sur la page d'accueil")
     date_start = models.DateField(blank=True, null=True)
     date_end = models.DateField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -143,11 +147,24 @@ class Project(models.Model):
 
 class Publication(models.Model):
     """Modèle pour les publications"""
+    TYPE_CHOICES = [
+        ('article', 'Article scientifique'),
+        ('report', 'Rapport'),
+        ('conference', 'Acte de conférence'),
+        ('book', 'Ouvrage'),
+        ('thesis', 'Thèse'),
+        ('other', 'Autre'),
+    ]
+
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    publication_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='article')
+    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True, blank=True, related_name='global_publications')
     file_path = models.FileField(upload_to='documents/publications/', blank=True, null=True)
     publication_date = models.DateField(blank=True, null=True)
+    journal = models.CharField(max_length=255, blank=True)
+    doi = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -318,6 +335,26 @@ class DepartmentMember(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.department.name}"
+
+
+class DepartmentService(models.Model):
+    """Services par département"""
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='services')
+    title = models.CharField(max_length=255, verbose_name=_('Titre'))
+    description = models.TextField(verbose_name=_('Description'))
+    icon = models.CharField(max_length=50, blank=True, help_text="Classe d'icône Bootstrap (ex: bi-clipboard-data)")
+    image = models.ImageField(upload_to='department_services/', blank=True, null=True)
+    order = models.IntegerField(default=0, verbose_name=_('Ordre'))
+    is_active = models.BooleanField(default=True, verbose_name=_('Actif'))
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('service de département')
+        verbose_name_plural = _('services de département')
+        ordering = ['department', 'order', 'title']
+
+    def __str__(self):
+        return f"{self.department.name} - {self.title}"
 
 
 class HeroImage(models.Model):
@@ -552,4 +589,216 @@ class StaticPage(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class Laboratory(models.Model):
+    """Modèle pour les laboratoires"""
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='laboratories')
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    description = models.TextField()
+    scientific_description = models.TextField(blank=True, help_text="Description scientifique détaillée")
+    equipment = models.TextField(blank=True, help_text="Équipements disponibles")
+    results = models.TextField(blank=True, help_text="Résultats marquants")
+    image = models.ImageField(upload_to='laboratories/', blank=True, null=True)
+    head_name = models.CharField(max_length=255, blank=True)
+    head_photo = models.ImageField(upload_to='laboratories/heads/', blank=True, null=True)
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    is_active = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('laboratoire')
+        verbose_name_plural = _('laboratoires')
+        ordering = ['department', 'name']
+
+    def __str__(self):
+        return f"{self.name} ({self.department.name})"
+
+    def get_absolute_url(self):
+        return reverse('main:laboratory_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+class CallForProjects(models.Model):
+    """Modèle pour les appels à projets"""
+    STATUS_CHOICES = [
+        ('open', 'Ouvert'),
+        ('closed', 'Fermé'),
+        ('upcoming', 'À venir'),
+    ]
+
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    deadline = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
+    file_path = models.FileField(upload_to='documents/calls/', blank=True, null=True, help_text="Document de l'appel à projets")
+    external_link = models.URLField(blank=True, help_text="Lien externe pour postuler")
+    image = models.ImageField(upload_to='calls/', blank=True, null=True)
+    is_featured = models.BooleanField(default=False, help_text="Afficher sur la page d'accueil")
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('appel à projets')
+        verbose_name_plural = _('appels à projets')
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def is_open(self):
+        if self.deadline:
+            return self.status == 'open' and self.deadline > timezone.now()
+        return self.status == 'open'
+
+
+class LibraryDocument(models.Model):
+    """Modèle pour la bibliothèque numérique"""
+    CATEGORY_CHOICES = [
+        ('report', 'Rapport'),
+        ('thesis', 'Thèse'),
+        ('article', 'Article'),
+        ('conference', 'Acte de conférence'),
+        ('technical', 'Document technique'),
+        ('institutional', 'Document institutionnel'),
+        ('other', 'Autre'),
+    ]
+
+    TYPE_CHOICES = [
+        ('pdf', 'PDF'),
+        ('docx', 'DOCX'),
+        ('xlsx', 'XLSX'),
+        ('ppt', 'PPT/PPTX'),
+        ('zip', 'ZIP'),
+        ('other', 'Autre'),
+    ]
+
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
+    file_type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='pdf')
+    file_path = models.FileField(upload_to='library/')
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='library_documents')
+    year = models.IntegerField(blank=True, null=True)
+    keywords = models.CharField(max_length=500, blank=True, help_text="Mots-clés séparés par des virgules")
+    download_count = models.PositiveIntegerField(default=0)
+    is_public = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('document bibliothèque')
+        verbose_name_plural = _('documents bibliothèque')
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def keywords_list(self):
+        if self.keywords:
+            return [k.strip() for k in self.keywords.split(',')]
+        return []
+
+
+class PartnershipRequest(models.Model):
+    """Modèle pour les demandes de partenariat"""
+    STATUS_CHOICES = [
+        ('pending', 'En attente'),
+        ('reviewing', 'En cours d\'examen'),
+        ('accepted', 'Acceptée'),
+        ('rejected', 'Refusée'),
+    ]
+
+    organization_name = models.CharField(max_length=255, verbose_name=_("Nom de l'organisation"))
+    organization_type = models.CharField(max_length=100, verbose_name=_("Type d'organisation"))
+    country = models.CharField(max_length=100, verbose_name=_("Pays"))
+    contact_name = models.CharField(max_length=255, verbose_name=_("Nom du contact"))
+    contact_email = models.EmailField(verbose_name=_("Email"))
+    contact_phone = models.CharField(max_length=20, blank=True, verbose_name=_("Téléphone"))
+    website = models.URLField(blank=True, verbose_name=_("Site web"))
+    partnership_type = models.CharField(max_length=100, verbose_name=_("Type de partenariat souhaité"))
+    description = models.TextField(verbose_name=_("Description du projet de partenariat"))
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('demande de partenariat')
+        verbose_name_plural = _('demandes de partenariat')
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return f"{self.organization_name} - {self.get_status_display()}"
+
+
+class ScientificAgenda(models.Model):
+    """Modèle pour l'agenda scientifique"""
+    EVENT_TYPE_CHOICES = [
+        ('conference', 'Conférence'),
+        ('seminar', 'Séminaire'),
+        ('workshop', 'Atelier'),
+        ('defense', 'Soutenance'),
+        ('training', 'Formation'),
+        ('colloquium', 'Colloque'),
+        ('other', 'Autre'),
+    ]
+
+    title = models.CharField(max_length=255)
+    event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES, default='conference')
+    description = models.TextField(blank=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True)
+    speaker = models.CharField(max_length=255, blank=True, help_text="Intervenant(s)")
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='agenda_events')
+    is_public = models.BooleanField(default=True)
+    registration_link = models.URLField(blank=True)
+    image = models.ImageField(upload_to='agenda/', blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('événement scientifique')
+        verbose_name_plural = _('événements scientifiques')
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return f"{self.title} ({self.get_event_type_display()})"
+
+
+class InstitutionalDocument(models.Model):
+    """Modèle pour les documents institutionnels (décrets, actes, etc.)"""
+    CATEGORY_CHOICES = [
+        ('decree', 'Décret'),
+        ('act', 'Acte'),
+        ('convention', 'Convention'),
+        ('protocol', 'Protocole d\'accord'),
+        ('report', 'Rapport annuel'),
+        ('organigramme', 'Organigramme'),
+        ('other', 'Autre'),
+    ]
+
+    title = models.CharField(max_length=255)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
+    description = models.TextField(blank=True)
+    file_path = models.FileField(upload_to='documents/institutional/')
+    reference = models.CharField(max_length=100, blank=True, help_text="Numéro de référence (ex: Décret 0134)")
+    date_issued = models.DateField(blank=True, null=True)
+    is_public = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('document institutionnel')
+        verbose_name_plural = _('documents institutionnels')
+        ordering = ['-date_issued', '-date_created']
+
+    def __str__(self):
+        return f"{self.title} ({self.get_category_display()})"
 

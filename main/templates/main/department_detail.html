@@ -105,6 +105,37 @@
             </div>
         </div>
 
+        <!-- Services du département -->
+        {% if services %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-gear me-2"></i>{% trans "Services du département" %}
+                </h2>
+                <div class="row">
+                    {% for service in services %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            {% if service.image %}
+                            <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}" style="height: 160px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body p-4 text-center">
+                                {% if service.icon %}
+                                <div class="mb-3">
+                                    <i class="bi {{ service.icon }}" style="font-size: 2.5rem; color: var(--ceremac-dark-blue);"></i>
+                                </div>
+                                {% endif %}
+                                <h5 class="card-title" style="color: var(--ceremac-dark-blue);">{{ service.title }}</h5>
+                                <p class="card-text text-muted">{{ service.description|truncatewords:25 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Projets du département -->
         {% if projects %}
         <div class="row mb-5">
@@ -154,6 +185,48 @@
                                 {% if publication.description %}
                                     <p class="card-text">{{ publication.description|truncatewords:10 }}</p>
                                 {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Laboratoires du département -->
+        {% if laboratories %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">
+                    <i class="bi bi-building me-2"></i>{% trans "Laboratoires" %}
+                </h2>
+                <div class="row">
+                    {% for lab in laboratories %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-start">
+                                    {% if lab.image %}
+                                    <img src="{{ lab.image.url }}" alt="{{ lab.name }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    {% else %}
+                                    <div class="rounded me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--ceremac-dark-blue) 0%, var(--ceremac-blue) 100%); min-width: 80px;">
+                                        <i class="bi bi-building text-white" style="font-size: 2rem;"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <h5 class="card-title mb-1" style="color: var(--ceremac-dark-blue);">{{ lab.name }}</h5>
+                                        {% if lab.head_name %}
+                                        <p class="text-muted small mb-1"><i class="bi bi-person me-1"></i> {{ lab.head_name }}</p>
+                                        {% endif %}
+                                        <p class="card-text small">{{ lab.description|truncatewords:25 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="{% url 'main:laboratory_detail' lab.slug %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-arrow-right me-1"></i>{% trans "Voir le laboratoire" %}
+                                </a>
                             </div>
                         </div>
                     </div>

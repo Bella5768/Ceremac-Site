@@ -2,7 +2,18 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Partenaires" %}{% endblock %}
+{% block title %}{% trans "Partenariats" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.partners-banner { overflow: hidden; background: #f8f9fa; padding: 30px 0; }
+.partners-banner-track { display: flex; animation: scroll-logos 25s linear infinite; gap: 80px; align-items: center; }
+.partners-banner-track:hover { animation-play-state: paused; }
+.partners-banner-track img { height: 55px; max-width: 140px; object-fit: contain; filter: grayscale(50%); opacity: 0.8; transition: all 0.3s; }
+.partners-banner-track img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
+@keyframes scroll-logos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+</style>
+{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -12,50 +23,68 @@
         <div class="carousel-inner">
             {% for image in hero_images %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=2000&fit=crop'">
                 <div class="carousel-caption">
-                    <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Nos Partenaires" %}</h1>
+                    <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Partenariats" %}</h1>
+                    <p class="lead text-white">{% trans "Partenaires nationaux et internationaux du CEREMAC" %}</p>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </section>
 {% else %}
-<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=2000&fit=crop');">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-10 mx-auto text-center">
-                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Nos Partenaires" %}</h1>
-            </div>
+        <div class="col-lg-10 mx-auto text-center">
+            <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Partenariats" %}</h1>
+            <p class="lead text-white">{% trans "Partenaires nationaux et internationaux du CEREMAC" %}</p>
         </div>
     </div>
 </section>
 {% endif %}
 
+<!-- Frise défilante des logos -->
+{% if national_partners or international_partners %}
+<section class="partners-banner">
+    <div class="partners-banner-track">
+        {% for partner in national_partners %}
+            {% if partner.logo %}<img src="{{ partner.logo.url }}" alt="{{ partner.name }}" title="{{ partner.name }}">{% endif %}
+        {% endfor %}
+        {% for partner in international_partners %}
+            {% if partner.logo %}<img src="{{ partner.logo.url }}" alt="{{ partner.name }}" title="{{ partner.name }}">{% endif %}
+        {% endfor %}
+        {% for partner in national_partners %}
+            {% if partner.logo %}<img src="{{ partner.logo.url }}" alt="{{ partner.name }}" title="{{ partner.name }}">{% endif %}
+        {% endfor %}
+        {% for partner in international_partners %}
+            {% if partner.logo %}<img src="{{ partner.logo.url }}" alt="{{ partner.name }}" title="{{ partner.name }}">{% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Partenaires Nationaux -->
 <section class="py-5">
     <div class="container">
         {% if national_partners %}
-        <h2 class="section-title mb-4">{% trans "Partenaires Nationaux" %}</h2>
-        <div class="row mb-5">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "National" %}</span>
+            <h2 class="section-title">{% trans "Partenaires Nationaux" %}</h2>
+        </div>
+        <div class="row g-4 mb-5">
             {% for partner in national_partners %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 text-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
                     {% if partner.logo %}
-                    <img src="{{ partner.logo.url }}" class="card-img-top" alt="{{ partner.name }}" style="height: 150px; object-fit: contain; padding: 20px;">
+                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 150px; padding: 20px;">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ partner.name }}</h5>
                         {% if partner.description %}
-                        <p class="card-text" style="text-align: justify;">{{ partner.description|truncatewords:20 }}</p>
+                        <p class="card-text small text-muted">{{ partner.description|truncatewords:25 }}</p>
                         {% endif %}
                         {% if partner.website %}
                         <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
@@ -70,18 +99,23 @@
         {% endif %}
 
         {% if international_partners %}
-        <h2 class="section-title mb-4">{% trans "Partenaires Internationaux" %}</h2>
-        <div class="row">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "International" %}</span>
+            <h2 class="section-title">{% trans "Partenaires Internationaux" %}</h2>
+        </div>
+        <div class="row g-4">
             {% for partner in international_partners %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 text-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
                     {% if partner.logo %}
-                    <img src="{{ partner.logo.url }}" class="card-img-top" alt="{{ partner.name }}" style="height: 150px; object-fit: contain; padding: 20px;">
+                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 150px; padding: 20px;">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ partner.name }}</h5>
                         {% if partner.description %}
-                        <p class="card-text" style="text-align: justify;">{{ partner.description|truncatewords:20 }}</p>
+                        <p class="card-text small text-muted">{{ partner.description|truncatewords:25 }}</p>
                         {% endif %}
                         {% if partner.website %}
                         <a href="{{ partner.website }}" target="_blank" class="btn btn-sm btn-outline-primary">
@@ -96,8 +130,111 @@
         {% endif %}
 
         {% if not national_partners and not international_partners %}
-        <div class="alert alert-info">{% trans "Aucun partenaire pour le moment." %}</div>
+        <div class="alert alert-info text-center">{% trans "Aucun partenaire pour le moment." %}</div>
         {% endif %}
+    </div>
+</section>
+
+<!-- Conventions et protocoles d'accord -->
+{% if conventions %}
+<section class="py-5 section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "Documents" %}</span>
+            <h2 class="section-title">{% trans "Conventions et Protocoles d'Accord" %}</h2>
+        </div>
+        <div class="row g-4">
+            {% for doc in conventions %}
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body d-flex align-items-start p-4">
+                        <div class="me-3">
+                            <i class="bi bi-file-earmark-text" style="font-size: 2.5rem; color: var(--ceremac-deep-blue);"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ doc.title }}</h6>
+                            {% if doc.reference %}<p class="small text-muted mb-1"><i class="bi bi-hash"></i> {{ doc.reference }}</p>{% endif %}
+                            {% if doc.date_issued %}<p class="small text-muted mb-1"><i class="bi bi-calendar"></i> {{ doc.date_issued|date:"d/m/Y" }}</p>{% endif %}
+                            {% if doc.description %}<p class="small text-muted mb-0">{{ doc.description|truncatewords:20 }}</p>{% endif %}
+                        </div>
+                        <a href="{{ doc.file_path.url }}" class="btn btn-sm btn-outline-primary ms-2"><i class="bi bi-download"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Formulaire Devenir Partenaire -->
+<section class="py-5" style="background: #fff;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <span class="eyebrow">{% trans "Collaboration" %}</span>
+                <h2 class="section-title text-start" style="text-align: left !important;">{% trans "Devenir Partenaire" %}</h2>
+                <p class="text-muted mb-4">{% trans "Vous souhaitez collaborer avec le CEREMAC ? Remplissez ce formulaire et notre équipe vous contactera dans les plus brefs délais." %}</p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2"><i class="bi bi-check-circle me-1"></i> {% trans "Recherche" %}</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2"><i class="bi bi-check-circle me-1"></i> {% trans "Formation" %}</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2"><i class="bi bi-check-circle me-1"></i> {% trans "Échange scientifique" %}</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2"><i class="bi bi-check-circle me-1"></i> {% trans "Financement" %}</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form method="POST" action="{% url 'main:partners' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Organisation" %} *</label>
+                                    {{ partnership_form.organization_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Type" %} *</label>
+                                    {{ partnership_form.organization_type }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Pays" %} *</label>
+                                    {{ partnership_form.country }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Type de partenariat" %} *</label>
+                                    {{ partnership_form.partnership_type }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Nom du contact" %} *</label>
+                                    {{ partnership_form.contact_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Email" %} *</label>
+                                    {{ partnership_form.contact_email }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Téléphone" %}</label>
+                                    {{ partnership_form.contact_phone }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small">{% trans "Site web" %}</label>
+                                    {{ partnership_form.website }}
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small">{% trans "Description du projet" %} *</label>
+                                    {{ partnership_form.description }}
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-send me-2"></i>{% trans "Soumettre la demande" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

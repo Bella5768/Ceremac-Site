@@ -1,6 +1,12 @@
 from django import forms
 from django.core.validators import EmailValidator
-from .models import CustomUser, News, Project, Publication, Partner, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage
+from .models import (
+    CustomUser, News, Project, Publication, Partner, Department,
+    DepartmentProject, DepartmentPublication, DepartmentMember, DepartmentService,
+    HeroImage, SiteSettings, Event, Service, StaticPage, Laboratory,
+    CallForProjects, LibraryDocument, PartnershipRequest, ScientificAgenda,
+    InstitutionalDocument
+)
 
 
 class ContactForm(forms.Form):
@@ -195,6 +201,21 @@ class DepartmentMemberForm(forms.ModelForm):
         }
 
 
+class DepartmentServiceForm(forms.ModelForm):
+    class Meta:
+        model = DepartmentService
+        fields = ['department', 'title', 'description', 'icon', 'image', 'order', 'is_active']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du service'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description du service'}),
+            'icon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Icône Bootstrap (ex: bi-clipboard-data)'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
 class HeroImageForm(forms.ModelForm):
     class Meta:
         model = HeroImage
@@ -292,5 +313,114 @@ class StaticPageForm(forms.ModelForm):
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'slug-de-la-page'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10, 'placeholder': 'Contenu de la page (HTML autorisé)'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class PartnershipRequestForm(forms.ModelForm):
+    class Meta:
+        model = PartnershipRequest
+        fields = [
+            'organization_name', 'organization_type', 'country',
+            'contact_name', 'contact_email', 'contact_phone',
+            'website', 'partnership_type', 'description'
+        ]
+        widgets = {
+            'organization_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Nom de l'organisation"}),
+            'organization_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Type (Université, ONG, Entreprise...)"}),
+            'country': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Pays'}),
+            'contact_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom complet'}),
+            'contact_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email@exemple.com'}),
+            'contact_phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+224 XXX XX XX XX'}),
+            'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
+            'partnership_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Recherche, Formation, Échange...'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Décrivez votre projet de partenariat...'}),
+        }
+
+
+class LaboratoryForm(forms.ModelForm):
+    class Meta:
+        model = Laboratory
+        fields = ['department', 'name', 'description', 'scientific_description', 'equipment', 'results', 'image', 'head_name', 'head_photo', 'email', 'phone', 'is_active']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du laboratoire'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description'}),
+            'scientific_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'Description scientifique détaillée'}),
+            'equipment': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Équipements disponibles'}),
+            'results': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Résultats marquants'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'head_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Responsable'}),
+            'head_photo': forms.FileInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class CallForProjectsForm(forms.ModelForm):
+    class Meta:
+        model = CallForProjects
+        fields = ['title', 'description', 'deadline', 'status', 'file_path', 'external_link', 'image', 'is_featured']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Titre de l'appel"}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'external_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class LibraryDocumentForm(forms.ModelForm):
+    class Meta:
+        model = LibraryDocument
+        fields = ['title', 'author', 'description', 'category', 'file_type', 'file_path', 'department', 'year', 'keywords', 'is_public']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du document'}),
+            'author': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Auteur(s)'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'file_type': forms.Select(attrs={'class': 'form-control'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '2025'}),
+            'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Mots-clés séparés par virgules'}),
+            'is_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class ScientificAgendaForm(forms.ModelForm):
+    class Meta:
+        model = ScientificAgenda
+        fields = ['title', 'event_type', 'description', 'start_date', 'end_date', 'location', 'speaker', 'department', 'is_public', 'registration_link', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Titre de l'événement"}),
+            'event_type': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description'}),
+            'start_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lieu'}),
+            'speaker': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Intervenant(s)'}),
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'is_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'registration_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class InstitutionalDocumentForm(forms.ModelForm):
+    class Meta:
+        model = InstitutionalDocument
+        fields = ['title', 'category', 'description', 'file_path', 'reference', 'date_issued', 'is_public']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du document'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'reference': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Référence (ex: Décret 0134)'}),
+            'date_issued': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'is_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

@@ -1,0 +1,663 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Recherche et Innovation" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ===== RESEARCH PAGE STYLES ===== */
+#research-map {
+    height: 500px;
+    border-radius: 16px;
+    z-index: 1;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    border: 3px solid rgba(255,255,255,0.8);
+}
+
+/* Tab navigation */
+.research-tabs {
+    background: #fff;
+    border-bottom: 2px solid #e9ecef;
+    position: sticky;
+    top: 70px;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.research-tabs .nav-link {
+    color: #6c757d;
+    font-weight: 600;
+    padding: 16px 28px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+.research-tabs .nav-link:hover {
+    color: var(--ceremac-deep-blue);
+    background: rgba(93, 58, 26, 0.05);
+}
+.research-tabs .nav-link.active {
+    color: var(--ceremac-deep-blue);
+    border-bottom-color: var(--ceremac-deep-blue);
+    background: transparent;
+}
+.research-tabs .nav-link i {
+    font-size: 1.1rem;
+}
+
+/* Project cards enhanced */
+.project-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+}
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12) !important;
+}
+.project-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.project-card:hover .card-img-top {
+    transform: scale(1.03);
+}
+.project-card .card-img-placeholder {
+    height: 200px;
+    background: linear-gradient(135deg, #2C1810 0%, #5D3A1A 50%, #8B4513 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.project-card .status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+}
+.project-card .status-badge.active { background: rgba(25, 135, 84, 0.9); color: white; }
+.project-card .status-badge.completed { background: rgba(108, 117, 125, 0.9); color: white; }
+
+/* Filter panel */
+.filter-panel {
+    background: linear-gradient(135deg, #fffbf7 0%, #fff 100%);
+    border: 1px solid #f5e6d3;
+    border-radius: 16px;
+    padding: 28px;
+}
+.filter-panel .form-select, .filter-panel .form-control {
+    border-radius: 10px;
+    border: 1px solid #e8d5c0;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.filter-panel .form-select:focus, .filter-panel .form-control:focus {
+    border-color: var(--ceremac-deep-blue);
+    box-shadow: 0 0 0 3px rgba(93, 58, 26, 0.1);
+}
+.filter-panel label {
+    font-weight: 600;
+    color: #344054;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+/* Publication items */
+.pub-item {
+    background: #fff;
+    border: 1px solid #eef2f7;
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.pub-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--ceremac-deep-blue);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.pub-item:hover {
+    border-color: transparent;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transform: translateX(4px);
+}
+.pub-item:hover::before { opacity: 1; }
+.pub-item .pub-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pub-item .pub-icon.article { background: linear-gradient(135deg, #f5e6d3, #e8d5c0); color: #8B4513; }
+.pub-item .pub-icon.report { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #166534; }
+.pub-item .pub-icon.conference { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
+.pub-item .pub-icon.book { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #6b21a8; }
+.pub-item .pub-icon.thesis { background: linear-gradient(135deg, #fce4ec, #f8bbd0); color: #880e4f; }
+.pub-item .pub-icon.other { background: linear-gradient(135deg, #f1f5f9, #e2e8f0); color: #475569; }
+
+/* Map overlay stats */
+.map-stats {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 14px 20px;
+    z-index: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Section intro */
+.section-intro {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+.section-intro p {
+    font-size: 1.05rem;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+/* Results count */
+.results-count {
+    font-size: 0.85rem;
+    color: #6b7280;
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border-radius: 20px;
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     HERO – Recherche et Innovation
+     ============================================================ -->
+<section class="hero-section" style="padding: 140px 0 100px; position: relative; background: linear-gradient(135deg, #2C1810 0%, #5D3A1A 40%, #8B4513 100%); overflow: hidden;">
+    <div style="position: absolute; inset: 0; opacity: 0.08; background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=2000&fit=crop'); background-size: cover; background-position: center;"></div>
+    <div style="position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(205,133,63,0.15) 0%, transparent 70%);"></div>
+    <div style="position: absolute; bottom: -30%; left: -10%; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 mb-3" style="backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;">
+                    <i class="bi bi-lightbulb me-1"></i> {% trans "Centre de Recherche Marine et Côtière" %}
+                </span>
+                <h1 style="font-size: 3.2rem; font-weight: 800; color: white; line-height: 1.15; margin-bottom: 20px;">
+                    {% trans "Recherche" %} <span style="color: #d4af37;">&</span> {% trans "Innovation" %}
+                </h1>
+                <p style="font-size: 1.15rem; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 540px;">
+                    {% trans "Découvrez nos projets de recherche, nos publications scientifiques, nos rapports et innovations au service du développement durable de la Guinée." %}
+                </p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="#projets" class="btn btn-light btn-lg px-4" style="border-radius: 10px; font-weight: 600;">
+                        <i class="bi bi-map me-2"></i>{% trans "Carte des projets" %}
+                    </a>
+                    <a href="#publications" class="btn btn-outline-light btn-lg px-4" style="border-radius: 10px; font-weight: 600;">
+                        <i class="bi bi-journal-text me-2"></i>{% trans "Publications" %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block text-center">
+                <div style="position: relative;">
+                    <div style="width: 280px; height: 280px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center;">
+                            <i class="bi bi-diagram-3" style="font-size: 4rem; color: rgba(212,175,55,0.8);"></i>
+                            <div class="mt-3">
+                                <div style="font-size: 2.2rem; font-weight: 800; color: white;">{{ all_projects.count|default:"0" }}</div>
+                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">{% trans "Projets actifs" %}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     NAVIGATION TABS
+     ============================================================ -->
+<nav class="research-tabs">
+    <div class="container">
+        <ul class="nav nav-tabs border-0" id="researchTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" href="#projets" data-bs-toggle="tab" data-bs-target="#tab-projets" role="tab">
+                    <i class="bi bi-map me-2"></i>{% trans "Projets" %}
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#publications" data-bs-toggle="tab" data-bs-target="#tab-publications" role="tab">
+                    <i class="bi bi-journal-text me-2"></i>{% trans "Publications" %}
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#conferences" data-bs-toggle="tab" data-bs-target="#tab-conferences" role="tab">
+                    <i class="bi bi-mic me-2"></i>{% trans "Conférences" %}
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#innovations" data-bs-toggle="tab" data-bs-target="#tab-innovations" role="tab">
+                    <i class="bi bi-rocket-takeoff me-2"></i>{% trans "Innovations" %}
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ============================================================
+     TAB CONTENT
+     ============================================================ -->
+<div class="tab-content">
+
+<!-- ======================== TAB: PROJETS ======================== -->
+<div class="tab-pane fade show active" id="tab-projets" role="tabpanel">
+<section class="py-5" id="projets">
+    <div class="container">
+        <div class="section-intro">
+            <span class="eyebrow">{% trans "Carte interactive" %}</span>
+            <h2 class="section-title">{% trans "Projets de Recherche" %}</h2>
+            <p>{% trans "Visualisez la localisation géographique de nos projets de recherche en Guinée et dans la sous-région ouest-africaine." %}</p>
+        </div>
+
+        <!-- Carte Leaflet -->
+        <div class="position-relative mb-5">
+            <div id="research-map"></div>
+            <div class="map-stats">
+                <div class="d-flex align-items-center gap-3">
+                    <div>
+                        <div style="font-size: 1.4rem; font-weight: 700; color: var(--ceremac-deep-blue);">{{ all_projects.count|default:"0" }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{% trans "Projets" %}</div>
+                    </div>
+                    <div style="width: 1px; height: 30px; background: #e5e7eb;"></div>
+                    <div>
+                        <div style="font-size: 1.4rem; font-weight: 700; color: #16a34a;">{{ all_projects.count|default:"0" }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{% trans "Localisés" %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grille des projets -->
+        <div class="row g-4">
+            {% for project in all_projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card project-card shadow-sm h-100 position-relative">
+                    <div style="overflow: hidden;">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                        {% else %}
+                        <div class="card-img-placeholder">
+                            <i class="bi bi-folder-check text-white" style="font-size: 3.5rem; opacity: 0.6;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <span class="status-badge {% if project.status == 'current' %}active{% else %}completed{% endif %}">
+                        <i class="bi {% if project.status == 'current' %}bi-play-circle{% else %}bi-check-circle{% endif %} me-1"></i>
+                        {{ project.get_status_display }}
+                    </span>
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-2" style="font-weight: 700; color: #1e293b;">{{ project.title }}</h5>
+                        <p class="card-text text-muted" style="font-size: 0.9rem; line-height: 1.6;">{{ project.description|truncatewords:22 }}</p>
+                        {% if project.date_start %}
+                        <div class="d-flex align-items-center text-muted mt-3" style="font-size: 0.82rem;">
+                            <i class="bi bi-calendar3 me-2"></i>
+                            {{ project.date_start|date:"M Y" }}{% if project.date_end %} — {{ project.date_end|date:"M Y" }}{% endif %}
+                        </div>
+                        {% endif %}
+                        {% if project.department %}
+                        <div class="mt-2">
+                            <span class="badge bg-primary bg-opacity-10 text-primary" style="font-size: 0.75rem;">{{ project.department.name }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                        <a href="{% url 'main:project_detail' project.pk %}" class="btn btn-outline-primary w-100" style="border-radius: 10px; font-weight: 600;">
+                            {% trans "Voir le projet" %} <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-folder2-open" style="font-size: 4rem; color: #d1d5db;"></i>
+                    <h5 class="mt-3 text-muted">{% trans "Aucun projet de recherche pour le moment" %}</h5>
+                    <p class="text-muted">{% trans "Les projets seront affichés ici dès qu'ils seront publiés." %}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- ======================== TAB: PUBLICATIONS ======================== -->
+<div class="tab-pane fade" id="tab-publications" role="tabpanel">
+<section class="py-5" id="publications">
+    <div class="container">
+        <div class="section-intro">
+            <span class="eyebrow">{% trans "Production scientifique" %}</span>
+            <h2 class="section-title">{% trans "Publications Scientifiques" %}</h2>
+            <p>{% trans "Articles, rapports, actes de conférences et thèses produits par les chercheurs du CEREMAC." %}</p>
+        </div>
+
+        <!-- Panneau de filtres amélioré -->
+        <div class="filter-panel mb-5">
+            <div class="d-flex align-items-center mb-4">
+                <i class="bi bi-funnel me-2" style="font-size: 1.2rem; color: var(--ceremac-deep-blue);"></i>
+                <h5 class="mb-0" style="font-weight: 700; color: #1e293b;">{% trans "Filtrer les résultats" %}</h5>
+            </div>
+            <form method="GET" class="row g-3 align-items-end">
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label">{% trans "Année" %}</label>
+                    <select name="year" class="form-select">
+                        <option value="">{% trans "Toutes les années" %}</option>
+                        {% for y in years %}
+                        <option value="{{ y }}" {% if selected_year == y|stringformat:"d" %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label">{% trans "Département" %}</label>
+                    <select name="department" class="form-select">
+                        <option value="">{% trans "Tous les départements" %}</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.pk }}" {% if selected_department == dept.pk|stringformat:"d" %}selected{% endif %}>{{ dept.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">{% trans "Type" %}</label>
+                    <select name="type" class="form-select">
+                        <option value="">{% trans "Tous" %}</option>
+                        <option value="article" {% if selected_type == "article" %}selected{% endif %}>{% trans "Article" %}</option>
+                        <option value="report" {% if selected_type == "report" %}selected{% endif %}>{% trans "Rapport" %}</option>
+                        <option value="conference" {% if selected_type == "conference" %}selected{% endif %}>{% trans "Conférence" %}</option>
+                        <option value="book" {% if selected_type == "book" %}selected{% endif %}>{% trans "Ouvrage" %}</option>
+                        <option value="thesis" {% if selected_type == "thesis" %}selected{% endif %}>{% trans "Thèse" %}</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label">{% trans "Auteur" %}</label>
+                    <input type="text" name="author" class="form-control" value="{{ selected_author|default:'' }}" placeholder="{% trans 'Rechercher...' %}">
+                </div>
+                <div class="col-lg-2 col-md-12">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="border-radius: 10px; font-weight: 600;">
+                            <i class="bi bi-search me-1"></i> {% trans "Filtrer" %}
+                        </button>
+                        <a href="{% url 'main:research' %}" class="btn btn-outline-secondary" style="border-radius: 10px;" title="{% trans 'Réinitialiser' %}">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Résultats count -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <span class="results-count">
+                <i class="bi bi-list-ul me-1"></i> {{ publications|length }} {% trans "résultat(s)" %}
+            </span>
+        </div>
+
+        <!-- Liste des publications -->
+        <div class="row g-3">
+            {% for pub in publications %}
+            <div class="col-12">
+                <div class="pub-item d-flex align-items-start gap-3">
+                    <div class="pub-icon {{ pub.publication_type|default:'other' }}">
+                        {% if pub.publication_type == 'article' %}
+                            <i class="bi bi-file-earmark-text" style="font-size: 1.3rem;"></i>
+                        {% elif pub.publication_type == 'report' %}
+                            <i class="bi bi-clipboard-data" style="font-size: 1.3rem;"></i>
+                        {% elif pub.publication_type == 'conference' %}
+                            <i class="bi bi-mic" style="font-size: 1.3rem;"></i>
+                        {% elif pub.publication_type == 'book' %}
+                            <i class="bi bi-book" style="font-size: 1.3rem;"></i>
+                        {% elif pub.publication_type == 'thesis' %}
+                            <i class="bi bi-mortarboard" style="font-size: 1.3rem;"></i>
+                        {% else %}
+                            <i class="bi bi-journal-text" style="font-size: 1.3rem;"></i>
+                        {% endif %}
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1" style="font-weight: 700; color: #1e293b; line-height: 1.4;">{{ pub.title }}</h6>
+                        <p class="mb-2" style="font-size: 0.88rem; color: #64748b;">
+                            <i class="bi bi-person me-1"></i> {{ pub.author }}
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            {% if pub.publication_date %}
+                            <span class="badge" style="background: #f1f5f9; color: #475569; font-weight: 500; padding: 5px 10px; border-radius: 6px;">
+                                <i class="bi bi-calendar3 me-1"></i> {{ pub.publication_date|date:"Y" }}
+                            </span>
+                            {% endif %}
+                            {% if pub.publication_type %}
+                            <span class="badge" style="background: #f5e6d3; color: #8B4513; font-weight: 500; padding: 5px 10px; border-radius: 6px;">
+                                {{ pub.get_publication_type_display }}
+                            </span>
+                            {% endif %}
+                            {% if pub.journal %}
+                            <span class="badge" style="background: #f0fdf4; color: #166534; font-weight: 500; padding: 5px 10px; border-radius: 6px;">
+                                <i class="bi bi-book me-1"></i> {{ pub.journal }}
+                            </span>
+                            {% endif %}
+                            {% if pub.doi %}
+                            <a href="https://doi.org/{{ pub.doi }}" target="_blank" class="badge text-decoration-none" style="background: #fef3c7; color: #92400e; font-weight: 500; padding: 5px 10px; border-radius: 6px;">
+                                <i class="bi bi-link-45deg me-1"></i> DOI
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if pub.file_path %}
+                    <a href="{{ pub.file_path.url }}" class="btn btn-primary btn-sm px-3" style="border-radius: 10px; white-space: nowrap;" download>
+                        <i class="bi bi-download me-1"></i> PDF
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-journal-x" style="font-size: 4rem; color: #d1d5db;"></i>
+                    <h5 class="mt-3 text-muted">{% trans "Aucune publication trouvée" %}</h5>
+                    <p class="text-muted">{% trans "Essayez de modifier vos critères de recherche ou réinitialisez les filtres." %}</p>
+                    <a href="{% url 'main:research' %}" class="btn btn-outline-primary mt-2">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> {% trans "Réinitialiser les filtres" %}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- ======================== TAB: CONFÉRENCES ======================== -->
+<div class="tab-pane fade" id="tab-conferences" role="tabpanel">
+<section class="py-5">
+    <div class="container">
+        <div class="section-intro">
+            <span class="eyebrow">{% trans "Événements scientifiques" %}</span>
+            <h2 class="section-title">{% trans "Conférences & Colloques" %}</h2>
+            <p>{% trans "Séminaires, colloques et conférences organisés ou co-organisés par le CEREMAC." %}</p>
+        </div>
+
+        <div class="row g-4">
+            {% for pub in publications %}
+                {% if pub.publication_type == 'conference' %}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 14px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3" style="width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #fef3c7, #fde68a); display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-mic" style="font-size: 1.3rem; color: #92400e;"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 700;">{{ pub.title }}</h6>
+                                    <p class="text-muted small mb-1"><i class="bi bi-person me-1"></i> {{ pub.author }}</p>
+                                    {% if pub.publication_date %}
+                                    <span class="badge bg-light text-dark"><i class="bi bi-calendar3 me-1"></i> {{ pub.publication_date|date:"d/m/Y" }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'main:scientific_agenda' %}" class="btn btn-primary btn-lg px-5" style="border-radius: 12px; font-weight: 600;">
+                <i class="bi bi-calendar-event me-2"></i> {% trans "Voir l'agenda scientifique complet" %}
+            </a>
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- ======================== TAB: INNOVATIONS ======================== -->
+<div class="tab-pane fade" id="tab-innovations" role="tabpanel">
+<section class="py-5">
+    <div class="container">
+        <div class="section-intro">
+            <span class="eyebrow">{% trans "Transfert technologique" %}</span>
+            <h2 class="section-title">{% trans "Innovations & Résultats" %}</h2>
+            <p>{% trans "Technologies développées, brevets et résultats transférables issus de nos travaux de recherche." %}</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4" style="border-radius: 16px;">
+                    <div class="card-body">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #f5e6d3, #e8d5c0); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-water" style="font-size: 2rem; color: #8B4513;"></i>
+                        </div>
+                        <h5 style="font-weight: 700;">{% trans "Océanographie" %}</h5>
+                        <p class="text-muted">{% trans "Monitoring des courants, qualité des eaux côtières et modélisation océanographique." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4" style="border-radius: 16px;">
+                    <div class="card-body">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #dcfce7, #bbf7d0); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-tree" style="font-size: 2rem; color: #166534;"></i>
+                        </div>
+                        <h5 style="font-weight: 700;">{% trans "Environnement" %}</h5>
+                        <p class="text-muted">{% trans "Protection de la biodiversité marine, gestion durable des mangroves et écosystèmes côtiers." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4" style="border-radius: 16px;">
+                    <div class="card-body">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #fef3c7, #fde68a); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="bi bi-lightning-charge" style="font-size: 2rem; color: #92400e;"></i>
+                        </div>
+                        <h5 style="font-weight: 700;">{% trans "Énergie" %}</h5>
+                        <p class="text-muted">{% trans "Transition énergétique, énergies renouvelables et valorisation des ressources marines." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-5 p-5" style="background: linear-gradient(135deg, #faf7f4, #f5efe9); border-radius: 20px;">
+            <h4 style="font-weight: 700; color: #1e293b;">{% trans "Intéressé par nos travaux de recherche ?" %}</h4>
+            <p class="text-muted mb-4">{% trans "Contactez-nous pour une collaboration scientifique ou un transfert de technologie." %}</p>
+            <a href="{% url 'main:contact' %}" class="btn btn-primary btn-lg px-5" style="border-radius: 12px; font-weight: 600;">
+                <i class="bi bi-envelope me-2"></i> {% trans "Nous contacter" %}
+            </a>
+        </div>
+    </div>
+</section>
+</div>
+
+</div><!-- / .tab-content -->
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carte Leaflet avec style amélioré
+    var map = L.map('research-map', {
+        scrollWheelZoom: false,
+        zoomControl: true
+    }).setView([9.6412, -13.5784], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 18
+    }).addTo(map);
+
+    var projects = {{ projects_json|safe }};
+    var bounds = [];
+
+    projects.forEach(function(p) {
+        var marker = L.marker([p.lat, p.lng]).addTo(map);
+        marker.bindPopup(
+            '<div style="min-width:200px;">' +
+            '<h6 style="margin:0 0 6px; color:#5D3A1A; font-weight:700;">' + p.title + '</h6>' +
+            '<p style="margin:0 0 6px; font-size:0.85rem; color:#64748b;">' + p.description + '</p>' +
+            '<span style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:600;">' + p.status + '</span>' +
+            '</div>'
+        );
+        bounds.push([p.lat, p.lng]);
+    });
+
+    if (bounds.length > 1) {
+        map.fitBounds(bounds, { padding: [30, 30] });
+    } else if (bounds.length === 0) {
+        L.marker([9.5370, -13.6785]).addTo(map)
+            .bindPopup('<strong>CEREMAC</strong><br>Conakry, Guinée')
+            .openPopup();
+    }
+
+    // Handle hash navigation
+    var hash = window.location.hash;
+    if (hash === '#publications') {
+        var tabEl = document.querySelector('[data-bs-target="#tab-publications"]');
+        if (tabEl) new bootstrap.Tab(tabEl).show();
+    } else if (hash === '#conferences') {
+        var tabEl = document.querySelector('[data-bs-target="#tab-conferences"]');
+        if (tabEl) new bootstrap.Tab(tabEl).show();
+    } else if (hash === '#innovations') {
+        var tabEl = document.querySelector('[data-bs-target="#tab-innovations"]');
+        if (tabEl) new bootstrap.Tab(tabEl).show();
+    }
+
+    // Invalidate map size when tab becomes visible
+    document.querySelector('[data-bs-target="#tab-projets"]').addEventListener('shown.bs.tab', function() {
+        setTimeout(function() { map.invalidateSize(); }, 200);
+    });
+});
+</script>
+{% endblock %}

@@ -1,6 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser, News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings
+from .models import (
+    CustomUser, News, Project, Publication, Partner, ContactMessage,
+    NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication,
+    DepartmentMember, DepartmentService, HeroImage, SiteSettings, Event, Service,
+    StaticPage, Laboratory, CallForProjects, LibraryDocument, PartnershipRequest,
+    ScientificAgenda, InstitutionalDocument
+)
 
 
 @admin.register(CustomUser)
@@ -114,6 +120,14 @@ class DepartmentMemberAdmin(admin.ModelAdmin):
     list_editable = ('is_active', 'is_head')
 
 
+@admin.register(DepartmentService)
+class DepartmentServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'department', 'order', 'is_active', 'date_created')
+    list_filter = ('department', 'is_active')
+    search_fields = ('title', 'description')
+    list_editable = ('order', 'is_active')
+
+
 @admin.register(HeroImage)
 class HeroImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active', 'date_created', 'image_preview')
@@ -158,4 +172,48 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         return '-'
     director_photo_preview.short_description = 'Aperçu photo'
     director_photo_preview.allow_tags = True
+
+
+@admin.register(Laboratory)
+class LaboratoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'department', 'head_name', 'is_active', 'date_created')
+    list_filter = ('department', 'is_active')
+    search_fields = ('name', 'description', 'head_name')
+    prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(CallForProjects)
+class CallForProjectsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'status', 'deadline', 'is_featured', 'date_created')
+    list_filter = ('status', 'is_featured', 'date_created')
+    search_fields = ('title', 'description')
+
+
+@admin.register(LibraryDocument)
+class LibraryDocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'file_type', 'department', 'year', 'download_count', 'is_public')
+    list_filter = ('category', 'file_type', 'department', 'year', 'is_public')
+    search_fields = ('title', 'author', 'description', 'keywords')
+
+
+@admin.register(PartnershipRequest)
+class PartnershipRequestAdmin(admin.ModelAdmin):
+    list_display = ('organization_name', 'contact_name', 'contact_email', 'status', 'date_created')
+    list_filter = ('status', 'date_created')
+    search_fields = ('organization_name', 'contact_name', 'contact_email')
+    readonly_fields = ('date_created', 'date_updated')
+
+
+@admin.register(ScientificAgenda)
+class ScientificAgendaAdmin(admin.ModelAdmin):
+    list_display = ('title', 'event_type', 'start_date', 'location', 'department', 'is_public')
+    list_filter = ('event_type', 'department', 'is_public', 'start_date')
+    search_fields = ('title', 'description', 'speaker', 'location')
+
+
+@admin.register(InstitutionalDocument)
+class InstitutionalDocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'reference', 'date_issued', 'is_public')
+    list_filter = ('category', 'is_public', 'date_issued')
+    search_fields = ('title', 'description', 'reference')
 

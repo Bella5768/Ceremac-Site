@@ -398,6 +398,98 @@
                 {% endif %}
             </div>
         </div>
+
+        <!-- Organigramme Interactif -->
+        {% if departments %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 p-4">
+                        <h3><i class="bi bi-diagram-3 me-2"></i> {% trans "Organigramme" %}</h3>
+                        <p class="text-muted mb-0">{% trans "Structure organisationnelle du CEREMAC" %}</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Direction Générale -->
+                        <div class="text-center mb-4">
+                            <div class="d-inline-block p-3 rounded" style="background: linear-gradient(135deg, var(--ceremac-dark-blue), var(--ceremac-blue)); min-width: 280px;">
+                                {% if site_settings and site_settings.director_photo %}
+                                <img src="{{ site_settings.director_photo.url }}" class="rounded-circle mb-2" style="width: 70px; height: 70px; object-fit: cover; border: 3px solid white;">
+                                {% endif %}
+                                <h5 class="text-white mb-1">{{ site_settings.director_name|default:"Pr Alpha Issaga Pallé Diallo" }}</h5>
+                                <span class="badge bg-warning text-dark">{% trans "Directeur Général" %}</span>
+                            </div>
+                        </div>
+                        <!-- Ligne de connexion -->
+                        <div class="text-center mb-3">
+                            <div style="width: 2px; height: 30px; background: var(--ceremac-dark-blue); margin: 0 auto;"></div>
+                        </div>
+                        <!-- Départements -->
+                        <div class="row g-3 justify-content-center">
+                            {% for dept in departments %}
+                            <div class="col-lg-4 col-md-6">
+                                <a href="{% url 'main:department_detail' dept.pk %}" class="text-decoration-none">
+                                    <div class="card h-100 border-0 text-center p-3" style="background: #f8f9fa; transition: all 0.3s; border-left: 4px solid var(--ceremac-blue) !important;">
+                                        {% if dept.head_photo %}
+                                        <img src="{{ dept.head_photo.url }}" class="rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; object-fit: cover;">
+                                        {% else %}
+                                        <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: var(--ceremac-blue);">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                        {% endif %}
+                                        <h6 class="mb-1" style="color: var(--ceremac-dark-blue); font-size: 0.85rem;">{{ dept.name }}</h6>
+                                        {% if dept.head_of_department %}
+                                        <small class="text-muted">{{ dept.head_of_department }}</small>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Gouvernance et Décrets Officiels -->
+        {% if institutional_docs %}
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 p-4">
+                        <h3><i class="bi bi-bank me-2"></i> {% trans "Gouvernance et Décrets Officiels" %}</h3>
+                        <p class="text-muted mb-0">{% trans "Documents institutionnels et actes de création du CEREMAC" %}</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            {% for doc in institutional_docs %}
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start p-3 rounded" style="background: #f8f9fa;">
+                                    <div class="me-3">
+                                        <i class="bi bi-file-earmark-pdf-fill" style="font-size: 2rem; color: #dc3545;"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">{{ doc.title }}</h6>
+                                        {% if doc.reference %}
+                                        <p class="small text-muted mb-1"><i class="bi bi-hash"></i> {{ doc.reference }}</p>
+                                        {% endif %}
+                                        {% if doc.date_issued %}
+                                        <p class="small text-muted mb-1"><i class="bi bi-calendar"></i> {{ doc.date_issued|date:"d/m/Y" }}</p>
+                                        {% endif %}
+                                        <span class="badge bg-primary bg-opacity-10 text-primary">{{ doc.get_category_display }}</span>
+                                    </div>
+                                    <a href="{{ doc.file_path.url }}" class="btn btn-sm btn-outline-danger ms-2" download title="{% trans 'Télécharger' %}">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

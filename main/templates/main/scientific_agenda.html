@@ -1,0 +1,235 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Agenda Scientifique" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.type-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 0.78rem;
+    font-weight: 600; letter-spacing: 0.3px;
+}
+.type-chip.conference  { background: #f5e6d3; color: #8B4513; }
+.type-chip.seminar     { background: #f0fdf4; color: #166534; }
+.type-chip.workshop    { background: #fefce8; color: #854d0e; }
+.type-chip.defense     { background: #fef2f2; color: #991b1b; }
+.type-chip.training    { background: #faf5ff; color: #6b21a8; }
+.type-chip.colloquium  { background: #faf5f0; color: #A0522D; }
+.type-chip.other       { background: #f8fafc; color: #475569; }
+
+.agenda-card {
+    border: 1px solid #eef2f7; border-radius: 16px;
+    overflow: hidden; background: #fff;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.agenda-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1) !important;
+    border-color: transparent;
+}
+.agenda-card .date-block {
+    width: 70px; min-width: 70px; text-align: center;
+    padding: 12px 8px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--ceremac-deep-blue), var(--ceremac-accent-blue));
+    color: white; flex-shrink: 0;
+}
+.agenda-card .date-block .day { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.agenda-card .date-block .month { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; }
+
+.agenda-filter {
+    background: linear-gradient(135deg, #fffbf7 0%, #fff 100%);
+    border: 1px solid #f5e6d3; border-radius: 16px; padding: 28px;
+}
+.agenda-filter .form-select {
+    border-radius: 10px; border: 1px solid #e8d5c0;
+    padding: 10px 14px; font-size: 0.9rem;
+}
+.agenda-filter .form-select:focus {
+    border-color: var(--ceremac-chocolate);
+    box-shadow: 0 0 0 3px rgba(93, 58, 26, 0.1);
+}
+.agenda-filter label {
+    font-weight: 600; color: #344054; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section style="padding: 140px 0 100px; position: relative; background: linear-gradient(135deg, #2C1810 0%, #5D3A1A 40%, #8B4513 100%); overflow: hidden;">
+    <div style="position: absolute; inset: 0; opacity: 0.07; background-image: url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=2000&fit=crop'); background-size: cover; background-position: center;"></div>
+    <div style="position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 mb-3" style="backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;">
+                    <i class="bi bi-calendar-week me-1"></i> {% trans "Programmation scientifique" %}
+                </span>
+                <h1 style="font-size: 3.2rem; font-weight: 800; color: white; line-height: 1.15; margin-bottom: 20px;">
+                    {% trans "Agenda" %} <span style="color: #d4af37;">{% trans "Scientifique" %}</span>
+                </h1>
+                <p style="font-size: 1.15rem; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 540px;">
+                    {% trans "Conférences, séminaires, soutenances, formations et colloques programmés par le CEREMAC et ses départements." %}
+                </p>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block text-center">
+                <div style="width: 260px; height: 260px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <i class="bi bi-calendar-event" style="font-size: 3.5rem; color: rgba(212,175,55,0.8);"></i>
+                        <div class="mt-3">
+                            <div style="font-size: 2rem; font-weight: 800; color: white;">{{ agenda_events|length }}</div>
+                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">{% trans "Événements" %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Légende types -->
+<section style="background: #fff; border-bottom: 1px solid #eef2f7; padding: 18px 0;">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-center gap-3 align-items-center">
+            <span class="type-chip conference"><i class="bi bi-mic-fill"></i> {% trans "Conférence" %}</span>
+            <span class="type-chip seminar"><i class="bi bi-people-fill"></i> {% trans "Séminaire" %}</span>
+            <span class="type-chip workshop"><i class="bi bi-tools"></i> {% trans "Atelier" %}</span>
+            <span class="type-chip defense"><i class="bi bi-mortarboard-fill"></i> {% trans "Soutenance" %}</span>
+            <span class="type-chip training"><i class="bi bi-book-half"></i> {% trans "Formation" %}</span>
+            <span class="type-chip colloquium"><i class="bi bi-chat-dots-fill"></i> {% trans "Colloque" %}</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Filtres -->
+        <div class="agenda-filter mb-5">
+            <div class="d-flex align-items-center mb-4">
+                <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--ceremac-deep-blue), var(--ceremac-accent-blue)); display: flex; align-items: center; justify-content: center;" class="me-3">
+                    <i class="bi bi-funnel text-white" style="font-size: 1.1rem;"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0" style="font-weight: 700; color: #1e293b;">{% trans "Filtrer les événements" %}</h5>
+                    <small class="text-muted">{% trans "Par type d'événement ou par département" %}</small>
+                </div>
+            </div>
+            <form method="GET" class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label">{% trans "Type d'événement" %}</label>
+                    <select name="type" class="form-select">
+                        <option value="">{% trans "Tous les types" %}</option>
+                        <option value="conference" {% if selected_type == "conference" %}selected{% endif %}>{% trans "Conférence" %}</option>
+                        <option value="seminar" {% if selected_type == "seminar" %}selected{% endif %}>{% trans "Séminaire" %}</option>
+                        <option value="workshop" {% if selected_type == "workshop" %}selected{% endif %}>{% trans "Atelier" %}</option>
+                        <option value="defense" {% if selected_type == "defense" %}selected{% endif %}>{% trans "Soutenance" %}</option>
+                        <option value="training" {% if selected_type == "training" %}selected{% endif %}>{% trans "Formation" %}</option>
+                        <option value="colloquium" {% if selected_type == "colloquium" %}selected{% endif %}>{% trans "Colloque" %}</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label">{% trans "Département" %}</label>
+                    <select name="department" class="form-select">
+                        <option value="">{% trans "Tous les départements" %}</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.pk }}" {% if selected_department == dept.pk|stringformat:"d" %}selected{% endif %}>{{ dept.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="border-radius: 10px; font-weight: 600;">
+                            <i class="bi bi-funnel me-1"></i> {% trans "Filtrer" %}
+                        </button>
+                        <a href="{% url 'main:scientific_agenda' %}" class="btn btn-outline-secondary" style="border-radius: 10px;" title="{% trans 'Réinitialiser' %}">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Résultats count -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <span style="font-size: 0.85rem; color: #6b7280; padding: 8px 16px; background: #f1f5f9; border-radius: 20px;">
+                <i class="bi bi-calendar-event me-1"></i> {{ agenda_events|length }} {% trans "événement(s)" %}
+            </span>
+        </div>
+
+        <!-- Liste des événements -->
+        <div class="row g-4">
+            {% for event in agenda_events %}
+            <div class="col-lg-6">
+                <div class="agenda-card shadow-sm h-100">
+                    {% if event.image %}
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}" style="height: 180px; width: 100%; object-fit: cover;">
+                    {% endif %}
+                    <div class="p-4">
+                        <div class="d-flex gap-3">
+                            <!-- Date block -->
+                            <div class="date-block">
+                                <div class="day">{{ event.start_date|date:"d" }}</div>
+                                <div class="month">{{ event.start_date|date:"M" }}</div>
+                                <div style="font-size: 0.72rem; opacity: 0.7; margin-top: 2px;">{{ event.start_date|date:"Y" }}</div>
+                            </div>
+                            <!-- Content -->
+                            <div class="flex-grow-1">
+                                <span class="type-chip {{ event.event_type }} mb-2">
+                                    {% if event.event_type == 'conference' %}<i class="bi bi-mic-fill"></i>
+                                    {% elif event.event_type == 'seminar' %}<i class="bi bi-people-fill"></i>
+                                    {% elif event.event_type == 'workshop' %}<i class="bi bi-tools"></i>
+                                    {% elif event.event_type == 'defense' %}<i class="bi bi-mortarboard-fill"></i>
+                                    {% elif event.event_type == 'training' %}<i class="bi bi-book-half"></i>
+                                    {% elif event.event_type == 'colloquium' %}<i class="bi bi-chat-dots-fill"></i>
+                                    {% else %}<i class="bi bi-calendar-event"></i>
+                                    {% endif %}
+                                    {{ event.get_event_type_display }}
+                                </span>
+                                <h5 style="font-weight: 700; color: #1e293b; line-height: 1.3; margin-bottom: 10px;">{{ event.title }}</h5>
+                                <div class="d-flex flex-column gap-1 mb-3">
+                                    <span style="font-size: 0.84rem; color: #64748b;">
+                                        <i class="bi bi-clock me-1"></i>
+                                        {{ event.start_date|date:"H:i" }}{% if event.end_date %} — {{ event.end_date|date:"d/m/Y H:i" }}{% endif %}
+                                    </span>
+                                    {% if event.location %}
+                                    <span style="font-size: 0.84rem; color: #64748b;">
+                                        <i class="bi bi-geo-alt me-1"></i> {{ event.location }}
+                                    </span>
+                                    {% endif %}
+                                    {% if event.speaker %}
+                                    <span style="font-size: 0.84rem; color: #64748b;">
+                                        <i class="bi bi-person me-1"></i> {{ event.speaker }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% if event.description %}
+                                <p style="font-size: 0.88rem; color: #64748b; line-height: 1.5; margin-bottom: 0;">{{ event.description|truncatewords:30 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if event.registration_link %}
+                    <div style="border-top: 1px solid #f1f5f9; padding: 14px 20px;">
+                        <a href="{{ event.registration_link }}" target="_blank" class="btn btn-primary btn-sm px-4" style="border-radius: 10px; font-weight: 600;">
+                            <i class="bi bi-box-arrow-up-right me-1"></i> {% trans "S'inscrire" %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-calendar-x" style="font-size: 4rem; color: #d1d5db;"></i>
+                    <h5 class="mt-3 text-muted">{% trans "Aucun événement scientifique programmé" %}</h5>
+                    <p class="text-muted">{% trans "Les événements seront affichés ici dès qu'ils seront programmés." %}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

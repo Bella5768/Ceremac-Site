@@ -5,6 +5,17 @@
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
+{% block extra_css %}
+<style>
+.partners-scroll { overflow: hidden; position: relative; }
+.partners-track { display: flex; animation: scroll-partners 30s linear infinite; gap: 60px; align-items: center; }
+.partners-track:hover { animation-play-state: paused; }
+.partners-track img { height: 60px; max-width: 150px; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s; }
+.partners-track img:hover { filter: grayscale(0%); opacity: 1; }
+@keyframes scroll-partners { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <!-- ============================================================
@@ -49,49 +60,7 @@
 </section>
 
 <!-- ============================================================
-     STATISTIQUES – Indicateurs clés
-     ============================================================ -->
-<section class="stats-section py-5" style="border-top: 1px solid var(--ceremac-gray-200); border-bottom: 1px solid var(--ceremac-gray-200); background: #fff;">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="eyebrow">{% trans "En chiffres" %}</span>
-            <h2 class="section-title">{% trans "L'activité scientifique du centre" %}</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item text-center">
-                    <i class="bi bi-folder-check stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
-                    <div class="stat-number tabular-nums">{{ stats.projects }}+</div>
-                    <div class="stat-label">{% trans "Projets Actifs" %}</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item text-center">
-                    <i class="bi bi-journal-richtext stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
-                    <div class="stat-number tabular-nums">{{ stats.publications }}+</div>
-                    <div class="stat-label">{% trans "Publications" %}</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item text-center">
-                    <i class="bi bi-people-fill stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
-                    <div class="stat-number tabular-nums">{{ stats.partners }}+</div>
-                    <div class="stat-label">{% trans "Partenaires" %}</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="stat-item text-center">
-                    <i class="bi bi-calendar-event stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
-                    <div class="stat-number tabular-nums">{{ stats.news }}+</div>
-                    <div class="stat-label">{% trans "Actualités" %}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================
-     MISSION – Présentation institutionnelle (split layout)
+     PRÉSENTATION SYNTHÉTIQUE
      ============================================================ -->
 <section class="py-5 section-alt">
     <div class="container">
@@ -112,6 +81,48 @@
                         <span class="label">Fig. 01</span> {% trans "Mission scientifique en zone côtière guinéenne." %}
                     </figcaption>
                 </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     CHIFFRES CLÉS – 109 cadres, 5 départements, 13 articles 2025
+     ============================================================ -->
+<section class="stats-section py-5" style="border-top: 1px solid var(--ceremac-gray-200); border-bottom: 1px solid var(--ceremac-gray-200); background: #fff;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "En chiffres" %}</span>
+            <h2 class="section-title">{% trans "Chiffres Clés du CEREMAC" %}</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item text-center">
+                    <i class="bi bi-people-fill stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
+                    <div class="stat-number tabular-nums">{{ stats.members }}</div>
+                    <div class="stat-label">{% trans "Cadres scientifiques" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item text-center">
+                    <i class="bi bi-building stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
+                    <div class="stat-number tabular-nums">{{ stats.departments }}</div>
+                    <div class="stat-label">{% trans "Départements" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item text-center">
+                    <i class="bi bi-journal-richtext stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
+                    <div class="stat-number tabular-nums">{{ stats.publications }}</div>
+                    <div class="stat-label">{% trans "Articles 2025" %}</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item text-center">
+                    <i class="bi bi-handshake stat-icon" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
+                    <div class="stat-number tabular-nums">{{ stats.partners }}+</div>
+                    <div class="stat-label">{% trans "Partenaires" %}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -145,97 +156,7 @@
 </section>
 
 <!-- ============================================================
-     AXES DE RECHERCHE – 3 piliers
-     ============================================================ -->
-<section class="py-5 section-alt">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="eyebrow">{% trans "Axes de recherche" %}</span>
-            <h2 class="section-title">{% trans "Domaines de Recherche" %}</h2>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <article class="research-pillar">
-                    <div class="pillar-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=900&h=600&fit=crop');"></div>
-                    <div class="pillar-body">
-                        <span class="pillar-num">01</span>
-                        <h5>{% trans "Océanographie" %}</h5>
-                        <p>{% trans "Recherche approfondie sur les océans, les courants marins, la température, la salinité et les écosystèmes océaniques." %}</p>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article class="research-pillar">
-                    <div class="pillar-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=900&h=600&fit=crop');"></div>
-                    <div class="pillar-body">
-                        <span class="pillar-num">02</span>
-                        <h5>{% trans "Environnement" %}</h5>
-                        <p>{% trans "Protection et préservation de l'environnement marin et côtier. Surveillance de la qualité des eaux, protection de la biodiversité marine." %}</p>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article class="research-pillar">
-                    <div class="pillar-image" style="background-image: url('https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b4?w=900&h=600&fit=crop');"></div>
-                    <div class="pillar-body">
-                        <span class="pillar-num">03</span>
-                        <h5>{% trans "Recherche" %}</h5>
-                        <p>{% trans "Publications scientifiques dans des revues internationales, projets de recherche innovants, formation de la prochaine génération de chercheurs." %}</p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================
-     VALEURS – 4 piliers numérotés
-     ============================================================ -->
-<section class="py-5" style="background: #fff;">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="eyebrow">{% trans "Principes" %}</span>
-            <h2 class="section-title">{% trans "Nos Valeurs" %}</h2>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="value-pillar">
-                    <span class="value-num">I.</span>
-                    <i class="bi bi-award value-icon"></i>
-                    <h5>{% trans "Excellence" %}</h5>
-                    <p>{% trans "Nous visons l'excellence dans toutes nos recherches et publications scientifiques." %}</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="value-pillar">
-                    <span class="value-num">II.</span>
-                    <i class="bi bi-people value-icon"></i>
-                    <h5>{% trans "Collaboration" %}</h5>
-                    <p>{% trans "Travail en partenariat avec des institutions nationales et internationales." %}</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="value-pillar">
-                    <span class="value-num">III.</span>
-                    <i class="bi bi-shield-check value-icon"></i>
-                    <h5>{% trans "Durabilité" %}</h5>
-                    <p>{% trans "Engagement en faveur du développement durable et de la protection environnementale." %}</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="value-pillar">
-                    <span class="value-num">IV.</span>
-                    <i class="bi bi-lightbulb value-icon"></i>
-                    <h5>{% trans "Innovation" %}</h5>
-                    <p>{% trans "Recherche de solutions innovantes pour les défis environnementaux marins." %}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================
-     ACTUALITÉS – Dernières publications éditoriales
+     ACTUALITÉS – 3 dernières
      ============================================================ -->
 {% if latest_news %}
 <section class="py-5 section-alt">
@@ -271,61 +192,197 @@
 {% endif %}
 
 <!-- ============================================================
-     GALERIE – Carrousel secondaire
+     PROJETS MIS EN AVANT
      ============================================================ -->
+{% if featured_projects %}
 <section class="py-5" style="background: #fff;">
     <div class="container">
-        <div class="text-center mb-5">
-            <span class="eyebrow">{% trans "Galerie" %}</span>
-            <h2 class="section-title">{% trans "Galerie CEREMAC" %}</h2>
-        </div>
-        <div id="ceremacCarousel" class="carousel slide gallery-carousel" data-bs-ride="carousel">
-            {% if hero_images %}
-            <div class="carousel-indicators">
-                {% for image in hero_images %}
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
-                {% endfor %}
+        <div class="d-flex flex-wrap align-items-end justify-content-between mb-5" style="border-bottom: 1px solid var(--ceremac-gray-200); padding-bottom: 20px;">
+            <div>
+                <span class="eyebrow">{% trans "Projets" %}</span>
+                <h2 class="section-title text-start" style="text-align:left !important; margin-bottom:0;">{% trans "Projets en cours" %}</h2>
             </div>
-            <div class="carousel-inner">
-                {% for image in hero_images %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'">
-                    {% if image.description %}
-                    <div class="carousel-caption-academic d-none d-md-block">
-                        <span class="label">Fig. {{ forloop.counter|stringformat:"02d" }}</span>
-                        <h5>{{ image.title }}</h5>
-                        <p>{{ image.description }}</p>
+            <a href="{% url 'main:research' %}" class="btn btn-outline-primary mt-3">{% trans "Tous les projets" %} <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="bi bi-folder-check" style="font-size: 3rem; color: var(--ceremac-deep-blue);"></i>
                     </div>
                     {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">{{ project.get_status_display }}</span>
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.description|truncatewords:25 }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{% url 'main:project_detail' project.pk %}" class="btn btn-sm btn-outline-primary">{% trans "Détails" %} <i class="bi bi-arrow-right"></i></a>
+                    </div>
                 </div>
-                {% endfor %}
             </div>
-            {% else %}
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#ceremacCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active"><img src="{% static 'main/images/1.jpg' %}" class="d-block w-100" alt="CEREMAC" onerror="this.src='https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=600&fit=crop'"></div>
-                <div class="carousel-item"><img src="{% static 'main/images/2.jpg' %}" class="d-block w-100" alt="CEREMAC" onerror="this.src='https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&h=600&fit=crop'"></div>
-                <div class="carousel-item"><img src="{% static 'main/images/3.jpg' %}" class="d-block w-100" alt="CEREMAC" onerror="this.src='https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=600&fit=crop'"></div>
-                <div class="carousel-item"><img src="{% static 'main/images/4.jpg' %}" class="d-block w-100" alt="CEREMAC" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=600&fit=crop'"></div>
-            </div>
-            {% endif %}
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#ceremacCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">{% trans "Précédent" %}</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#ceremacCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">{% trans "Suivant" %}</span>
-            </button>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
+
+<!-- ============================================================
+     PUBLICATIONS RÉCENTES
+     ============================================================ -->
+{% if recent_publications %}
+<section class="py-5 section-alt">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-end justify-content-between mb-5" style="border-bottom: 1px solid var(--ceremac-gray-200); padding-bottom: 20px;">
+            <div>
+                <span class="eyebrow">{% trans "Publications" %}</span>
+                <h2 class="section-title text-start" style="text-align:left !important; margin-bottom:0;">{% trans "Publications Récentes" %}</h2>
+            </div>
+            <a href="{% url 'main:publications' %}" class="btn btn-outline-primary mt-3">{% trans "Toutes les publications" %} <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+        <div class="row g-4">
+            {% for pub in recent_publications %}
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                <i class="bi bi-journal-text" style="font-size: 2rem; color: var(--ceremac-deep-blue);"></i>
+                            </div>
+                            <div>
+                                <h6 class="card-title mb-1">{{ pub.title }}</h6>
+                                <p class="text-muted small mb-1"><i class="bi bi-person"></i> {{ pub.author }}</p>
+                                {% if pub.publication_date %}<p class="text-muted small mb-0"><i class="bi bi-calendar"></i> {{ pub.publication_date|date:"d/m/Y" }}</p>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     PARTENAIRES – Frise défilante
+     ============================================================ -->
+{% if all_partners %}
+<section class="py-5" style="background: #fff;">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="eyebrow">{% trans "Partenaires" %}</span>
+            <h2 class="section-title">{% trans "Nos Partenaires" %}</h2>
+        </div>
+        <div class="partners-scroll">
+            <div class="partners-track">
+                {% for partner in all_partners %}
+                    {% if partner.logo %}
+                    <a href="{{ partner.website|default:'#' }}" target="_blank" title="{{ partner.name }}">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
+                    </a>
+                    {% else %}
+                    <span class="badge bg-light text-dark px-3 py-2" style="font-size: 0.9rem; white-space: nowrap;">{{ partner.name }}</span>
+                    {% endif %}
+                {% endfor %}
+                {% for partner in all_partners %}
+                    {% if partner.logo %}
+                    <a href="{{ partner.website|default:'#' }}" target="_blank" title="{{ partner.name }}">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
+                    </a>
+                    {% else %}
+                    <span class="badge bg-light text-dark px-3 py-2" style="font-size: 0.9rem; white-space: nowrap;">{{ partner.name }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'main:partners' %}" class="btn btn-outline-primary">{% trans "Voir tous les partenaires" %} <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     APPELS À PROJETS
+     ============================================================ -->
+{% if open_calls %}
+<section class="py-5 section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "Opportunités" %}</span>
+            <h2 class="section-title">{% trans "Appels à Projets" %}</h2>
+        </div>
+        <div class="row g-4">
+            {% for call in open_calls %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-3">{% trans "Ouvert" %}</span>
+                        <h5 class="card-title">{{ call.title }}</h5>
+                        <p class="card-text text-muted">{{ call.description|truncatewords:25 }}</p>
+                        {% if call.deadline %}
+                        <p class="small text-danger"><i class="bi bi-clock"></i> {% trans "Date limite:" %} {{ call.deadline|date:"d/m/Y" }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        {% if call.external_link %}
+                        <a href="{{ call.external_link }}" target="_blank" class="btn btn-sm btn-primary">{% trans "Postuler" %} <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+                        {% endif %}
+                        {% if call.file_path %}
+                        <a href="{{ call.file_path.url }}" class="btn btn-sm btn-outline-secondary ms-1"><i class="bi bi-download"></i> {% trans "Télécharger" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================================
+     AGENDA SCIENTIFIQUE
+     ============================================================ -->
+{% if upcoming_agenda %}
+<section class="py-5" style="background: #fff;">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-end justify-content-between mb-5" style="border-bottom: 1px solid var(--ceremac-gray-200); padding-bottom: 20px;">
+            <div>
+                <span class="eyebrow">{% trans "Agenda" %}</span>
+                <h2 class="section-title text-start" style="text-align:left !important; margin-bottom:0;">{% trans "Agenda Scientifique" %}</h2>
+            </div>
+            <a href="{% url 'main:scientific_agenda' %}" class="btn btn-outline-primary mt-3">{% trans "Voir l'agenda complet" %} <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+        <div class="row g-3">
+            {% for event in upcoming_agenda %}
+            <div class="col-12">
+                <div class="card border-0 shadow-sm mb-2">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="text-center me-4" style="min-width: 70px;">
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--ceremac-deep-blue); line-height: 1;">{{ event.start_date|date:"d" }}</div>
+                            <div class="text-uppercase text-muted small">{{ event.start_date|date:"M Y" }}</div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <span class="badge bg-primary bg-opacity-10 text-primary mb-1">{{ event.get_event_type_display }}</span>
+                            <h6 class="mb-1">{{ event.title }}</h6>
+                            {% if event.location %}<p class="small text-muted mb-0"><i class="bi bi-geo-alt"></i> {{ event.location }}</p>{% endif %}
+                        </div>
+                        {% if event.registration_link %}
+                        <a href="{{ event.registration_link }}" class="btn btn-sm btn-outline-primary">{% trans "S'inscrire" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 
 <!-- ============================================================
      CTA FINAL – Bandeau institutionnel
@@ -338,7 +395,7 @@
         <p>{% trans "Participez à nos projets de recherche ou collaborez avec notre équipe pour un avenir durable des océans" %}</p>
         <div class="mt-4">
             <a href="{% url 'main:contact' %}" class="btn btn-primary btn-lg me-2">{% trans "Nous Contacter" %}</a>
-            <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg">{% trans "Découvrir nos Projets" %}</a>
+            <a href="{% url 'main:research' %}" class="btn btn-outline-light btn-lg">{% trans "Découvrir nos Projets" %}</a>
         </div>
     </div>
 </section>

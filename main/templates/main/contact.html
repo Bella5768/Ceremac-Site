@@ -4,6 +4,10 @@
 
 {% block title %}{% trans "Contact" %}{% endblock %}
 
+{% block extra_css %}
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+{% endblock %}
+
 {% block content %}
 <!-- Hero Section -->
 {% if hero_images %}
@@ -12,30 +16,20 @@
         <div class="carousel-inner">
             {% for image in hero_images %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=2000&fit=crop'">
                 <div class="carousel-caption">
                     <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Contactez-nous" %}</h1>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </section>
 {% else %}
-<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=2000&fit=crop');">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-10 mx-auto text-center">
-                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Contactez-nous" %}</h1>
-            </div>
+        <div class="col-lg-10 mx-auto text-center">
+            <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{% trans "Contactez-nous" %}</h1>
         </div>
     </div>
 </section>
@@ -43,37 +37,177 @@
 
 <section class="py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="card shadow-sm">
+        <div class="row g-5">
+            <!-- Formulaire de contact -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm">
                     <div class="card-body p-5">
+                        <h3 class="mb-4"><i class="bi bi-envelope me-2"></i>{% trans "Envoyez-nous un message" %}</h3>
                         <form method="POST" action="{% url 'main:contact' %}">
                             {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="id_name" class="form-label">{% trans "Nom" %}</label>
-                                {{ form.name }}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="id_name" class="form-label">{% trans "Nom" %} *</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_email" class="form-label">{% trans "Email" %} *</label>
+                                    {{ form.email }}
+                                </div>
+                                <div class="col-12">
+                                    <label for="id_subject" class="form-label">{% trans "Sujet" %} *</label>
+                                    {{ form.subject }}
+                                </div>
+                                <div class="col-12">
+                                    <label for="id_message" class="form-label">{% trans "Message" %} *</label>
+                                    {{ form.message }}
+                                </div>
+                                <div class="col-12">
+                                    <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-send me-2"></i>{% trans "Envoyer" %}
+                                    </button>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="id_email" class="form-label">{% trans "Email" %}</label>
-                                {{ form.email }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_subject" class="form-label">{% trans "Sujet" %}</label>
-                                {{ form.subject }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_message" class="form-label">{% trans "Message" %}</label>
-                                {{ form.message }}
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-send"></i> {% trans "Envoyer" %}
-                            </button>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coordonnées -->
+            <div class="col-lg-5">
+                <!-- Informations de contact -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h4 class="mb-4">{% trans "Coordonnées" %}</h4>
+                        
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-geo-alt-fill me-3" style="font-size: 1.5rem; color: var(--ceremac-deep-blue);"></i>
+                            <div>
+                                <strong>{% trans "Adresse" %}</strong>
+                                <p class="text-muted mb-0">
+                                    {% if site_settings and site_settings.contact_address %}
+                                        {{ site_settings.contact_address|linebreaksbr }}
+                                    {% else %}
+                                        CEREMAC<br>
+                                        BP 561, Conakry<br>
+                                        République de Guinée
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-telephone-fill me-3" style="font-size: 1.5rem; color: var(--ceremac-deep-blue);"></i>
+                            <div>
+                                <strong>{% trans "Téléphone" %}</strong>
+                                <p class="text-muted mb-0">
+                                    {% if site_settings and site_settings.contact_phone %}
+                                        {{ site_settings.contact_phone }}
+                                    {% else %}
+                                        +224 XXX XX XX XX
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-envelope-fill me-3" style="font-size: 1.5rem; color: var(--ceremac-deep-blue);"></i>
+                            <div>
+                                <strong>{% trans "Email" %}</strong>
+                                <p class="text-muted mb-0">
+                                    {% if site_settings and site_settings.contact_email %}
+                                        <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>
+                                    {% else %}
+                                        <a href="mailto:contact@ceremac-g.org">contact@ceremac-g.org</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Réseaux sociaux -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="mb-3">{% trans "Suivez-nous" %}</h5>
+                        <div class="d-flex gap-3">
+                            {% if site_settings and site_settings.facebook_url %}
+                            <a href="{{ site_settings.facebook_url }}" target="_blank" class="btn btn-outline-primary rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings and site_settings.twitter_url %}
+                            <a href="{{ site_settings.twitter_url }}" target="_blank" class="btn btn-outline-dark rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings and site_settings.linkedin_url %}
+                            <a href="{{ site_settings.linkedin_url }}" target="_blank" class="btn btn-outline-primary rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings and site_settings.instagram_url %}
+                            <a href="{{ site_settings.instagram_url }}" target="_blank" class="btn btn-outline-danger rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings and site_settings.youtube_url %}
+                            <a href="{{ site_settings.youtube_url }}" target="_blank" class="btn btn-outline-danger rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Carte Google Maps -->
+<section class="py-0">
+    <div class="container-fluid px-0">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.123456!2d-13.6785!3d9.5370!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sCEREMAC+Conakry!5e0!3m2!1sfr!2sgn!4v1620000000000"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
+
+<!-- Contacts par département -->
+{% if departments %}
+<section class="py-5 section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="eyebrow">{% trans "Départements" %}</span>
+            <h2 class="section-title">{% trans "Contacts par Département" %}</h2>
+        </div>
+        <div class="row g-4">
+            {% for dept in departments %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">{{ dept.name }}</h6>
+                        {% if dept.head_of_department %}
+                        <p class="small mb-1"><i class="bi bi-person me-1"></i> <strong>{{ dept.head_of_department }}</strong></p>
+                        {% endif %}
+                        {% if dept.email %}
+                        <p class="small mb-1"><i class="bi bi-envelope me-1"></i> <a href="mailto:{{ dept.email }}">{{ dept.email }}</a></p>
+                        {% endif %}
+                        {% if dept.phone %}
+                        <p class="small mb-0"><i class="bi bi-telephone me-1"></i> {{ dept.phone }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 {% endblock %}
 
