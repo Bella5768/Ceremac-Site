@@ -348,8 +348,7 @@ a { transition: color var(--transition); }
 .hero-section-carousel::after {
     content: '';
     position: absolute; inset: 0;
-    background:
-        linear-gradient(180deg, rgba(93, 58, 26, 0.45) 0%, rgba(93, 58, 26, 0.35) 60%, rgba(93, 58, 26, 0.5) 100%);
+    background: transparent;
     z-index: 2;
     pointer-events: none;
 }
