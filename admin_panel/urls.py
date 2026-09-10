@@ -42,6 +42,12 @@ urlpatterns = [
     path('services/<int:pk>/edit/', views.service_edit, name='service_edit'),
     path('services/<int:pk>/delete/', views.service_delete, name='service_delete'),
     
+    # Menu header
+    path('header-menu/', views.header_menu, name='header_menu'),
+    path('header-menu/create/', views.header_menu_create, name='header_menu_create'),
+    path('header-menu/<int:pk>/edit/', views.header_menu_edit, name='header_menu_edit'),
+    path('header-menu/<int:pk>/delete/', views.header_menu_delete, name='header_menu_delete'),
+    
     # Pages statiques
     path('static-pages/', views.static_pages, name='static_pages'),
     path('static-pages/create/', views.static_page_create, name='static_page_create'),

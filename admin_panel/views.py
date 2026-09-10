@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, StaticPageForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage, HeaderMenuItem
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, StaticPageForm, HeaderMenuItemForm
 
 
 @login_required
@@ -770,6 +770,70 @@ def service_delete(request, pk):
         return redirect('admin_panel:services')
     
     return render(request, 'admin_panel/service_confirm_delete.html', {'service': service})
+
+
+# ============ GESTION DU MENU HEADER ============
+
+@login_required
+def header_menu(request):
+    """Liste des éléments du menu header"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+
+    menu_items = HeaderMenuItem.objects.filter(parent__isnull=True).prefetch_related('children')
+    return render(request, 'admin_panel/header_menu.html', {'menu_items': menu_items})
+
+
+@login_required
+def header_menu_create(request):
+    """Créer un élément de menu header"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+
+    if request.method == 'POST':
+        form = HeaderMenuItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Élément de menu créé avec succès')
+            return redirect('admin_panel:header_menu')
+    else:
+        form = HeaderMenuItemForm()
+
+    return render(request, 'admin_panel/header_menu_form.html', {'form': form, 'action': 'Créer', 'icon': 'bars'})
+
+
+@login_required
+def header_menu_edit(request, pk):
+    """Modifier un élément de menu header"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+
+    menu_item = get_object_or_404(HeaderMenuItem, pk=pk)
+    if request.method == 'POST':
+        form = HeaderMenuItemForm(request.POST, instance=menu_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Élément de menu modifié avec succès')
+            return redirect('admin_panel:header_menu')
+    else:
+        form = HeaderMenuItemForm(instance=menu_item)
+
+    return render(request, 'admin_panel/header_menu_form.html', {'form': form, 'action': 'Modifier', 'icon': 'bars'})
+
+
+@login_required
+def header_menu_delete(request, pk):
+    """Supprimer un élément de menu header"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+
+    menu_item = get_object_or_404(HeaderMenuItem, pk=pk)
+    if request.method == 'POST':
+        menu_item.delete()
+        messages.success(request, 'Élément de menu supprimé avec succès')
+        return redirect('admin_panel:header_menu')
+
+    return render(request, 'admin_panel/header_menu_confirm_delete.html', {'menu_item': menu_item})
 
 
 @login_required

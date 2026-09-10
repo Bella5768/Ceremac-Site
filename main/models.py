@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
+from django.urls import reverse, NoReverseMatch
 from django.conf import settings
 from django.utils import timezone
 from django.utils.text import slugify
@@ -28,6 +28,59 @@ class CustomUser(AbstractUser):
 
     def is_admin(self):
         return self.role == 'admin'
+
+
+class HeaderMenuItem(models.Model):
+    """Élément de menu pour le header modifiable via l'admin et le CMS"""
+    title = models.CharField(max_length=100, verbose_name=_('Titre'))
+    url = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_('URL'),
+        help_text="Chemin (ex: /contact/) ou nom de route Django (ex: main:contact). Laisser vide pour un menu déroulant simple."
+    )
+    icon = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Icône'),
+        help_text="Classe d'icône Bootstrap (ex: bi-house-door)"
+    )
+    order = models.PositiveIntegerField(default=0, verbose_name=_('Ordre'))
+    is_active = models.BooleanField(default=True, verbose_name=_('Actif'))
+    parent = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='children',
+        verbose_name=_('Parent')
+    )
+
+    class Meta:
+        verbose_name = _('Élément de menu header')
+        verbose_name_plural = _('Éléments du menu header')
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        if self.parent:
+            return f"{self.parent.title} > {self.title}"
+        return self.title
+
+    @property
+    def resolved_url(self):
+        """Retourne l'URL finale: résout un nom de route Django si nécessaire."""
+        if not self.url:
+            return '#'
+        if self.url.startswith(('/', 'http://', 'https://', '#')):
+            return self.url
+        try:
+            return reverse(self.url)
+        except NoReverseMatch:
+            return self.url
+
+    @property
+    def active_children(self):
+        return self.children.filter(is_active=True).order_by('order', 'id')
 
 
 class News(models.Model):
@@ -552,9 +605,13 @@ class Event(models.Model):
 class Service(models.Model):
     """Modèle pour les services"""
     title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField()
     icon = models.CharField(max_length=50, blank=True, help_text="Classe d'icône Bootstrap (ex: bi-clipboard-data)")
     image = models.ImageField(upload_to='services/', blank=True, null=True)
+    manager_name = models.CharField(max_length=255, blank=True, verbose_name=_('Nom du responsable'))
+    manager_email = models.EmailField(blank=True, verbose_name=_('Email du responsable'))
+    manager_phone = models.CharField(max_length=20, blank=True, verbose_name=_('Téléphone du responsable'))
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -566,6 +623,14 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('main:service_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 class StaticPage(models.Model):

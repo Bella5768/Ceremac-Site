@@ -411,9 +411,20 @@ def services(request):
     """Page Services"""
     services_list = Service.objects.filter(is_active=True).order_by('order')
     hero_images = HeroImage.objects.filter(is_active=True, page='services').order_by('order')
-    
+
     return render(request, 'main/services.html', {
         'services_list': services_list,
+        'hero_images': hero_images,
+    })
+
+
+def service_detail(request, slug):
+    """Détail d'un service"""
+    service = get_object_or_404(Service, slug=slug, is_active=True)
+    hero_images = HeroImage.objects.filter(is_active=True, page='services').order_by('order')
+
+    return render(request, 'main/service_detail.html', {
+        'service': service,
         'hero_images': hero_images,
     })
 

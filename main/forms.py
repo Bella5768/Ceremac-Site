@@ -1,12 +1,51 @@
 from django import forms
 from django.core.validators import EmailValidator
 from .models import (
-    CustomUser, News, Project, Publication, Partner, Department,
+    CustomUser, News, Project, Publication, Partner, Department, HeaderMenuItem,
     DepartmentProject, DepartmentPublication, DepartmentMember, DepartmentService,
     HeroImage, SiteSettings, Event, Service, StaticPage, Laboratory,
     CallForProjects, LibraryDocument, PartnershipRequest, ScientificAgenda,
     InstitutionalDocument
 )
+
+
+class HeaderMenuItemForm(forms.ModelForm):
+    class Meta:
+        model = HeaderMenuItem
+        fields = ['title', 'url', 'icon', 'parent', 'order', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Libellé du menu'}),
+            'url': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '/contact/ ou main:contact'}),
+            'icon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'bi-house-door'}),
+            'parent': forms.Select(attrs={'class': 'form-select'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': "Ordre d'affichage"}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        parents = HeaderMenuItem.objects.filter(parent__isnull=True)
+        if self.instance.pk:
+            parents = parents.exclude(pk=self.instance.pk)
+        self.fields['parent'].queryset = parents
+        self.fields['parent'].required = False
+        self.fields['parent'].empty_label = 'Aucun (menu principal)'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        parent = cleaned_data.get('parent')
+        url = cleaned_data.get('url')
+
+        if parent and not url:
+            self.add_error('url', "Un sous-menu doit avoir une URL.")
+
+        if parent and self.instance.pk and parent.pk == self.instance.pk:
+            self.add_error('parent', "Un élément ne peut pas être son propre parent.")
+
+        if parent and self.instance.pk and self.instance.children.exists():
+            self.add_error('parent', "Cet élément a déjà des sous-menus : il ne peut pas devenir un sous-menu.")
+
+        return cleaned_data
 
 
 class ContactForm(forms.Form):
@@ -293,12 +332,16 @@ class EventForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['title', 'description', 'icon', 'image', 'order', 'is_active']
+        fields = ['title', 'slug', 'description', 'icon', 'image', 'manager_name', 'manager_email', 'manager_phone', 'order', 'is_active']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du service'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug (généré automatiquement si vide)'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
             'icon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Icône Bootstrap (ex: bi-clipboard-data)'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'manager_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du responsable'}),
+            'manager_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email du responsable'}),
+            'manager_phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Téléphone du responsable'}),
             'order': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ordre d\'affichage'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }

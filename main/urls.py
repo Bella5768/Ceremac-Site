@@ -21,6 +21,7 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('agenda/', views.scientific_agenda, name='scientific_agenda'),
     path('services/', views.services, name='services'),
+    path('service/<slug:slug>/', views.service_detail, name='service_detail'),
     path('page/<slug:slug>/', views.static_page, name='static_page'),
 ]
 

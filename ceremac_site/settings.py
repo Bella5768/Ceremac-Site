@@ -164,7 +164,13 @@ CSRF_TRUSTED_ORIGINS = [
     'http://www.ceremac-g.org',
     'http://ceremac.edu.gn',
     'http://www.ceremac.edu.gn',
+    'http://127.0.0.1:8000',
     'http://127.0.0.1:8001',
+    'http://127.0.0.1:54922',
+    'http://127.0.0.1:64758',
+    'http://localhost:8000',
     'http://localhost:8001',
+    'http://localhost:54922',
+    'http://localhost:64758',
 ]
 

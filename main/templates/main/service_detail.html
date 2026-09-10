@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+{% if hero_images %}
+<section class="hero-section-carousel">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+        <div class="carousel-inner">
+            {% for image in hero_images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+                <div class="carousel-caption">
+                    <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{{ service.title }}</h1>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+{% else %}
+<section class="hero-section" style="padding: 120px 0 100px; background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 style="font-size: 3.5rem; margin-bottom: 25px; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); color: white; font-weight: 700;">{{ service.title }}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Service Image -->
+                {% if service.image %}
+                <div class="text-center mb-4">
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="img-fluid rounded" style="max-height: 400px;">
+                </div>
+                {% endif %}
+
+                <!-- Service Icon -->
+                {% if service.icon %}
+                <div class="text-center mb-4">
+                    <i class="bi {{ service.icon }} display-1 text-primary"></i>
+                </div>
+                {% endif %}
+
+                <!-- Service Description -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">{{ service.title }}</h2>
+                        <div class="card-text" style="white-space: pre-wrap;">{{ service.description }}</div>
+                    </div>
+                </div>
+
+                <!-- Service Manager Information -->
+                {% if service.manager_name %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">
+                            <i class="bi bi-person-circle text-primary me-2"></i>
+                            {% trans "Responsable du Service" %}
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="mb-2"><strong>{% trans "Nom" %}:</strong> {{ service.manager_name }}</p>
+                                {% if service.manager_email %}
+                                <p class="mb-2">
+                                    <strong>{% trans "Email" %}:</strong>
+                                    <a href="mailto:{{ service.manager_email }}" class="text-decoration-none">
+                                        <i class="bi bi-envelope me-1"></i>{{ service.manager_email }}
+                                    </a>
+                                </p>
+                                {% endif %}
+                                {% if service.manager_phone %}
+                                <p class="mb-0">
+                                    <strong>{% trans "Téléphone" %}:</strong>
+                                    <a href="tel:{{ service.manager_phone }}" class="text-decoration-none">
+                                        <i class="bi bi-telephone me-1"></i>{{ service.manager_phone }}
+                                    </a>
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Back Button -->
+                <div class="mt-4 text-center">
+                    <a href="{% url 'main:services' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> {% trans "Retour aux services" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

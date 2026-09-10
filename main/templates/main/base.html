@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load header_menu %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -36,42 +37,32 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                {% get_header_menu as header_menu_items %}
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:index' %}"><i class="bi bi-house-door"></i> {% trans "Accueil" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:about' %}"><i class="bi bi-info-circle"></i> {% trans "À propos" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:projects' %}"><i class="bi bi-building"></i> {% trans "Départements" %}</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-lightbulb"></i> {% trans "Recherche" %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'main:research' %}">{% trans "Projets & Innovation" %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'main:publications' %}">{% trans "Publications" %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'main:library' %}">{% trans "Bibliothèque numérique" %}</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-newspaper"></i> {% trans "Actualités" %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'main:news_list' %}">{% trans "Articles & Communiqués" %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'main:events' %}">{% trans "Événements" %}</a></li>
-                            <li><a class="dropdown-item" href="{% url 'main:scientific_agenda' %}">{% trans "Agenda scientifique" %}</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:partners' %}"><i class="bi bi-handshake"></i> {% trans "Partenariats" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:contact' %}"><i class="bi bi-envelope"></i> {% trans "Contact" %}</a>
-                    </li>
+                    {% for item in header_menu_items %}
+                        {% if item.visible_children %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    {% if item.icon %}<i class="bi {{ item.icon }}"></i> {% endif %}{% trans item.title %}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {% for child in item.visible_children %}
+                                        <li>
+                                            <a class="dropdown-item" href="{{ child.resolved_url }}">
+                                                {% if child.icon %}<i class="bi {{ child.icon }}"></i> {% endif %}{% trans child.title %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ item.resolved_url }}">
+                                    {% if item.icon %}<i class="bi {{ item.icon }}"></i> {% endif %}{% trans item.title %}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">

@@ -1,0 +1,31 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Supprimer l'élément de menu - Administration CEREMAC{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0"><i class="fas fa-trash"></i> Supprimer l'élément de menu</h4>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> Êtes-vous sûr de vouloir supprimer l'élément <strong>{{ menu_item.title }}</strong> ?
+        </div>
+        {% if menu_item.children.exists %}
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> Cet élément contient {{ menu_item.children.count }} sous-menu(s) qui seront également supprimés.
+        </div>
+        {% endif %}
+        <p>Cette action est irréversible.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Confirmer la suppression
+            </button>
+            <a href="{% url 'admin_panel:header_menu' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Annuler
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -58,6 +58,14 @@
                         {% endif %}
                         <h5 class="card-title">{{ service.title }}</h5>
                         <p class="card-text">{{ service.description|truncatewords:30 }}</p>
+                        {% if service.manager_name %}
+                        <p class="card-text small text-muted">
+                            <i class="bi bi-person-circle"></i> {{ service.manager_name }}
+                        </p>
+                        {% endif %}
+                        <a href="{% url 'main:service_detail' service.slug %}" class="btn btn-primary btn-sm">
+                            {% trans "En savoir plus" %}
+                        </a>
                     </div>
                 </div>
             </div>

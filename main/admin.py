@@ -1,13 +1,21 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import (
-    CustomUser, News, Project, Publication, Partner, ContactMessage,
+    CustomUser, News, Project, Publication, Partner, ContactMessage, HeaderMenuItem,
     NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication,
     DepartmentMember, DepartmentService, HeroImage, SiteSettings, Event, Service,
     StaticPage, Laboratory, CallForProjects, LibraryDocument, PartnershipRequest,
     ScientificAgenda, InstitutionalDocument
 )
 
+
+@admin.register(HeaderMenuItem)
+class HeaderMenuItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'url', 'order', 'is_active', 'parent')
+    list_filter = ('is_active', 'parent')
+    search_fields = ('title', 'url')
+    list_editable = ('order', 'is_active', 'parent')
+    ordering = ('order',)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(BaseUserAdmin):
@@ -126,6 +134,33 @@ class DepartmentServiceAdmin(admin.ModelAdmin):
     list_filter = ('department', 'is_active')
     search_fields = ('title', 'description')
     list_editable = ('order', 'is_active')
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'manager_name', 'order', 'is_active', 'date_created', 'image_preview')
+    list_filter = ('is_active', 'date_created')
+    search_fields = ('title', 'description', 'manager_name', 'manager_email')
+    list_editable = ('order', 'is_active')
+    ordering = ('order', 'title')
+    fieldsets = (
+        ('Informations générales', {
+            'fields': ('title', 'slug', 'description', 'order', 'is_active')
+        }),
+        ('Responsable', {
+            'fields': ('manager_name', 'manager_email', 'manager_phone')
+        }),
+        ('Média', {
+            'fields': ('icon', 'image',)
+        }),
+    )
+
+    def image_preview(self, obj):
+        if obj.image:
+            return f'<img src="{obj.image.url}" style="max-height: 50px; max-width: 100px; border-radius: 5px;" />'
+        return '-'
+    image_preview.short_description = 'Aperçu'
+    image_preview.allow_tags = True
 
 
 @admin.register(HeroImage)
