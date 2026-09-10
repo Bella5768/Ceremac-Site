@@ -5,7 +5,7 @@ from .models import (
     NewsletterSubscriber, Department, DepartmentProject, DepartmentPublication,
     DepartmentMember, DepartmentService, HeroImage, SiteSettings, Event, Service,
     StaticPage, Laboratory, CallForProjects, LibraryDocument, PartnershipRequest,
-    ScientificAgenda, InstitutionalDocument
+    ScientificAgenda, InstitutionalDocument, Innovation
 )
 
 
@@ -251,4 +251,21 @@ class InstitutionalDocumentAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'reference', 'date_issued', 'is_public')
     list_filter = ('category', 'is_public', 'date_issued')
     search_fields = ('title', 'description', 'reference')
+
+
+@admin.register(Innovation)
+class InnovationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'status', 'department', 'is_featured', 'is_active', 'date_created', 'image_preview')
+    list_filter = ('category', 'status', 'department', 'is_featured', 'is_active', 'date_created')
+    search_fields = ('title', 'description')
+    list_editable = ('is_featured', 'is_active')
+    ordering = ('-is_featured', '-date_created')
+    prepopulated_fields = {'slug': ('title',)}
+
+    def image_preview(self, obj):
+        if obj.image:
+            return f'<img src="{obj.image.url}" style="max-height: 50px; max-width: 100px; border-radius: 5px;" />'
+        return '-'
+    image_preview.short_description = 'Aperçu'
+    image_preview.allow_tags = True
 

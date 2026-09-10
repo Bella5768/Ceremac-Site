@@ -129,6 +129,9 @@
                     <a class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:services' %}">
                         <i class="fas fa-cogs"></i> Services
                     </a>
+                    <a class="nav-link {% if 'innovation' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:innovations' %}">
+                        <i class="fas fa-lightbulb"></i> Innovations
+                    </a>
                     <a class="nav-link {% if 'header_menu' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'admin_panel:header_menu' %}">
                         <i class="fas fa-bars"></i> Menu du header
                     </a>

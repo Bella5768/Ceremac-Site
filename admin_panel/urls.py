@@ -42,6 +42,12 @@ urlpatterns = [
     path('services/<int:pk>/edit/', views.service_edit, name='service_edit'),
     path('services/<int:pk>/delete/', views.service_delete, name='service_delete'),
     
+    # Innovations
+    path('innovations/', views.manage_innovations, name='innovations'),
+    path('innovations/create/', views.innovation_create, name='innovation_create'),
+    path('innovations/<int:pk>/edit/', views.innovation_edit, name='innovation_edit'),
+    path('innovations/<int:pk>/delete/', views.innovation_delete, name='innovation_delete'),
+    
     # Menu header
     path('header-menu/', views.header_menu, name='header_menu'),
     path('header-menu/create/', views.header_menu_create, name='header_menu_create'),

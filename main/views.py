@@ -11,7 +11,7 @@ from .models import (
     CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember,
     DepartmentService, HeroImage, SiteSettings, Event, Service, StaticPage,
     Laboratory, CallForProjects, LibraryDocument, PartnershipRequest,
-    ScientificAgenda, InstitutionalDocument
+    ScientificAgenda, InstitutionalDocument, Innovation
 )
 from .forms import ContactForm, NewsletterForm, PartnershipRequestForm
 

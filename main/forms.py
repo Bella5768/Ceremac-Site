@@ -5,7 +5,7 @@ from .models import (
     DepartmentProject, DepartmentPublication, DepartmentMember, DepartmentService,
     HeroImage, SiteSettings, Event, Service, StaticPage, Laboratory,
     CallForProjects, LibraryDocument, PartnershipRequest, ScientificAgenda,
-    InstitutionalDocument
+    InstitutionalDocument, Innovation
 )
 
 
@@ -135,13 +135,17 @@ class NewsForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'file_path', 'status', 'date_start', 'date_end']
+        fields = ['title', 'description', 'image', 'file_path', 'status', 'department', 'latitude', 'longitude', 'is_featured', 'date_start', 'date_end']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du projet'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description du projet'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'file_path': forms.FileInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'latitude': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Latitude'}),
+            'longitude': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Longitude'}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'date_start': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'date_end': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
@@ -150,13 +154,17 @@ class ProjectForm(forms.ModelForm):
 class PublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        fields = ['title', 'author', 'description', 'file_path', 'publication_date']
+        fields = ['title', 'author', 'description', 'publication_type', 'department', 'file_path', 'publication_date', 'journal', 'doi']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de la publication'}),
             'author': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Auteur(s)'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'publication_type': forms.Select(attrs={'class': 'form-control'}),
+            'department': forms.Select(attrs={'class': 'form-control'}),
             'file_path': forms.FileInput(attrs={'class': 'form-control'}),
             'publication_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'journal': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Journal/Conférence'}),
+            'doi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DOI'}),
         }
 
 
@@ -460,10 +468,29 @@ class InstitutionalDocumentForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du document'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Description'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description'}),
             'file_path': forms.FileInput(attrs={'class': 'form-control'}),
-            'reference': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Référence (ex: Décret 0134)'}),
+            'reference': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Référence'}),
             'date_issued': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
+
+class InnovationForm(forms.ModelForm):
+    class Meta:
+        model = Innovation
+        fields = ['title', 'slug', 'description', 'category', 'status', 'department', 'image', 'file_path', 'start_date', 'end_date', 'is_featured', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre de l\'innovation'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug (généré automatiquement si vide)'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Description'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'file_path': forms.FileInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

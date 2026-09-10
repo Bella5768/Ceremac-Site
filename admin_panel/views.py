@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
 from django.utils import timezone
-from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage, HeaderMenuItem
-from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, StaticPageForm, HeaderMenuItemForm
+from main.models import News, Project, Publication, Partner, ContactMessage, NewsletterSubscriber, CustomUser, Department, DepartmentProject, DepartmentPublication, DepartmentMember, HeroImage, SiteSettings, Event, Service, StaticPage, HeaderMenuItem, Innovation
+from main.forms import NewsForm, ProjectForm, PublicationForm, PartnerForm, DepartmentForm, DepartmentProjectForm, DepartmentPublicationForm, DepartmentMemberForm, HeroImageForm, UserForm, SiteSettingsForm, EventForm, ServiceForm, StaticPageForm, HeaderMenuItemForm, InnovationForm
 
 
 @login_required
@@ -24,6 +24,7 @@ def admin_dashboard(request):
         'subscribers_count': NewsletterSubscriber.objects.filter(is_active=True).count(),
         'events_count': Event.objects.count(),
         'services_count': Service.objects.count(),
+        'innovations_count': Innovation.objects.count(),
     }
     
     return render(request, 'admin_panel/dashboard.html', context)
@@ -770,6 +771,71 @@ def service_delete(request, pk):
         return redirect('admin_panel:services')
     
     return render(request, 'admin_panel/service_confirm_delete.html', {'service': service})
+
+
+# ============ GESTION DES INNOVATIONS ============
+
+@login_required
+def manage_innovations(request):
+    """Gestion des innovations"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    innovations = Innovation.objects.all()
+    return render(request, 'admin_panel/innovations.html', {'innovations': innovations})
+
+
+@login_required
+def innovation_create(request):
+    """Créer une innovation"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    if request.method == 'POST':
+        form = InnovationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Innovation créée avec succès')
+            return redirect('admin_panel:innovations')
+    else:
+        form = InnovationForm()
+    
+    return render(request, 'admin_panel/innovation_form.html', {'form': form, 'action': 'Créer', 'icon': 'lightbulb'})
+
+
+@login_required
+def innovation_edit(request, pk):
+    """Modifier une innovation"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    innovation = get_object_or_404(Innovation, pk=pk)
+    
+    if request.method == 'POST':
+        form = InnovationForm(request.POST, request.FILES, instance=innovation)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Innovation modifiée avec succès')
+            return redirect('admin_panel:innovations')
+    else:
+        form = InnovationForm(instance=innovation)
+    
+    return render(request, 'admin_panel/innovation_form.html', {'form': form, 'action': 'Modifier', 'icon': 'lightbulb'})
+
+
+@login_required
+def innovation_delete(request, pk):
+    """Supprimer une innovation"""
+    if not request.user.is_admin():
+        return redirect('members:index')
+    
+    innovation = get_object_or_404(Innovation, pk=pk)
+    if request.method == 'POST':
+        innovation.delete()
+        messages.success(request, 'Innovation supprimée avec succès')
+        return redirect('admin_panel:innovations')
+    
+    return render(request, 'admin_panel/innovation_confirm_delete.html', {'innovation': innovation})
 
 
 # ============ GESTION DU MENU HEADER ============

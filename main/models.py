@@ -656,6 +656,56 @@ class StaticPage(models.Model):
         super().save(*args, **kwargs)
 
 
+class Innovation(models.Model):
+    """Modèle pour les projets d'innovation"""
+    STATUS_CHOICES = [
+        ('idea', 'Idée'),
+        ('development', 'En développement'),
+        ('prototype', 'Prototype'),
+        ('testing', 'En test'),
+        ('completed', 'Terminé'),
+        ('deployed', 'Déployé'),
+    ]
+
+    CATEGORY_CHOICES = [
+        ('technology', 'Technologie'),
+        ('process', 'Procédé'),
+        ('product', 'Produit'),
+        ('service', 'Service'),
+        ('research', 'Recherche'),
+    ]
+
+    title = models.CharField(max_length=255, verbose_name=_('Titre'))
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    description = models.TextField(verbose_name=_('Description'))
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='technology', verbose_name=_('Catégorie'))
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='idea', verbose_name=_('Statut'))
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='innovations', verbose_name=_('Département'))
+    image = models.ImageField(upload_to='innovations/', blank=True, null=True, verbose_name=_('Image'))
+    file_path = models.FileField(upload_to='documents/innovations/', blank=True, null=True, verbose_name=_('Fichier'))
+    start_date = models.DateField(blank=True, null=True, verbose_name=_('Date de début'))
+    end_date = models.DateField(blank=True, null=True, verbose_name=_('Date de fin'))
+    is_featured = models.BooleanField(default=False, verbose_name=_('Mis en avant'))
+    is_active = models.BooleanField(default=True, verbose_name=_('Actif'))
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('Date de création'))
+
+    class Meta:
+        verbose_name = _('innovation')
+        verbose_name_plural = _('innovations')
+        ordering = ['-is_featured', '-date_created']
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('main:innovation_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
 class Laboratory(models.Model):
     """Modèle pour les laboratoires"""
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='laboratories')
