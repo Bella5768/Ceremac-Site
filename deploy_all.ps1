@@ -24,7 +24,8 @@ Write-Host "Pour déployer sur PythonAnywhere, vous avez deux options :" -Foregr
 Write-Host ""
 Write-Host "Option 1 - Via SSH (automatisé) :" -ForegroundColor Cyan
 Write-Host "  - Connectez-vous à PythonAnywhere via SSH"
-Write-Host "  - Exécutez: cd ~/Ceremac-Site && git pull"
+Write-Host "  - Exécutez: cd ~/Ceremac-Site"
+Write-Host "  - Exécutez: git pull"
 Write-Host "  - Exécutez: source .venv/bin/activate"
 Write-Host "  - Exécutez: python manage.py migrate"
 Write-Host "  - Exécutez: python manage.py collectstatic --noinput"
